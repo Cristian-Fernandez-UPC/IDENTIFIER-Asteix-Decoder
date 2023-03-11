@@ -12,7 +12,7 @@ namespace Project_1
     {
         // In this class we are going to decode all the category 10 messages
 
-        public Conversions convertor;
+        Conversions convertor = new Conversions();
         public string[] message;
         public string Full_FSPEC;
         public string CAT = "10";
@@ -55,18 +55,32 @@ namespace Project_1
 
             bool i = false;
             int a = 3; // We start in the FSPEC octet
-            Full_FSPEC = null;
+            Full_FSPEC = "";
             while (i == false)
             {
                 if (message[a].EndsWith("1"))
-                    Full_FSPEC = Full_FSPEC + Full_FSPEC.Remove(Full_FSPEC.Length - 1);
+                    Full_FSPEC = Full_FSPEC + message[a].Remove(message[a].Length - 1);
                 else
                     i = true;
+
+                // The last case of FSPEC
+                if (a>=3 && i==true)
+                {
+                    if (message[a - 1].EndsWith("1"))
+                    {
+                        Full_FSPEC = Full_FSPEC + message[a].Remove(message[a].Length - 1);
+                    }
+                }
+
+                if (a==3 && i==true)
+                {
+                    Full_FSPEC = message[a].Remove(message[a].Length - 1);
+                }
                 a++;
             }
 
             char[] FSPEC = Full_FSPEC.ToCharArray(0, Full_FSPEC.Length);
-            int position = a - 3; // Number of octets that fill the FSPEC 
+            int position = a; // Number of octets that fill the FSPEC 
 
 
             // DEFINITION OF FSPEC
@@ -75,7 +89,7 @@ namespace Project_1
             if (FSPEC[1] == '1')
                 position = this.Message_Type(message, position);
             if (FSPEC[2] == '1')
-                position = this.Target_Report_Descriptor(message, position);
+                position = this.Target_Report_Description(message, position);
             if (FSPEC[3] == '1')
                 position = this.Time_of_Day(message, position);
             if (FSPEC[4] == '1')
@@ -126,7 +140,7 @@ namespace Project_1
 
 
         // DATA ITEM I010/020 [Target Report Description]
-        public int Target_Report_Descriptor(string[] message, int position)
+        public int Target_Report_Description(string[] message, int position)
         {
             this.TYP = message[position].Substring(0, 3);
             if (this.TYP == "000") { this.TYP = "SSR multilateration"; }
@@ -207,7 +221,11 @@ namespace Project_1
 
 
         // DATA ITEM I010/040 [Measured Position in Polar Coordinates]
-
+        public int Measured_Position_in_Polar_Coordinates(string[] message, int position)
+        {
+            // FALTA ACABAR
+            return position;
+        }
         // DATA ITEM I010/041 [Position in WGS-84 Coordinates]
         public int Position_in_WGS84_Coordinates(string[] message, int position)
         {
@@ -223,6 +241,12 @@ namespace Project_1
 
 
         // DATA ITEM I010/042 [Position in Cartesioan Coordinates]
+        public int Position_in_Cartesian_Coordinates(string[] message, int position)
+        {
+            // FALTA ACABAR
+            return position;
+        }
+
 
         // DATA ITEM I010/060 [Mode-3/A Code in Octal Representation]
 

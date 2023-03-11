@@ -14,13 +14,15 @@ namespace Project_1
 {
     public partial class FileLoader : Form
     {
-        private const string AstFileFilter = "Archivos AST (*.ast)|*.ast";
-        
+        new DataInspectorInterface TABLE = new DataInspectorInterface();
+        public const string AstFileFilter = "Archivos AST (*.ast)|*.ast";
+        FileReader read = new FileReader();
 
         public FileLoader()
         {
             InitializeComponent();
             openFileDialog1.Filter = AstFileFilter;
+            
         }
 
         private void FileLoader_Load(object sender, EventArgs e)
@@ -38,10 +40,13 @@ namespace Project_1
                 var filePath = openFileDialog.FileName;
                 textBox1.Text = filePath;
 
-                // Llama al método para decodificar el archivo .ast
-                AsterixDecoder(filePath);
+                read.ReadFile(filePath); // Leemos el fichero
+                TABLE.Load_Data_To_Table(read.getTableCAT10());
+                
             }
         }
+
+
         private static void AsterixDecoder(string filePath)
         {
             // decodificar el archivo .ast

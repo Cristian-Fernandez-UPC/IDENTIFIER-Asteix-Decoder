@@ -60,7 +60,7 @@ namespace Project_1
             // If the hexadecimal only has one character we add a zero before to allow the conversion to binary work correcly
             if (hexamessage.Length == 1)
             {
-                return string.Concat('0', hexamessage);
+                hexamessage = string.Concat('0', hexamessage);
             }
 
             StringBuilder Octet = new StringBuilder();

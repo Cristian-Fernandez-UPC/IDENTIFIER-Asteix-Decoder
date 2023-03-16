@@ -39,7 +39,7 @@ namespace Project_1
             {
                 var filePath = openFileDialog.FileName;
                 textBox1.Text = filePath;
-
+                
                 read.ReadFile(filePath); // Leemos el fichero
                 TABLE.Load_Data_To_Table(read.getTableCAT10());
                 

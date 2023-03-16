@@ -86,18 +86,36 @@ namespace Project_1
 
         public string Twos_Complement(string binarynumber)
         {
-            int decimalNumber = Convert.ToInt32(binarynumber, 2);
+            string complement = "";
+            bool flip = false;
 
-            // Invert all the bits in the binary number
-            int invertedNumber = ~decimalNumber;
+            for (int i = binarynumber.Length - 1; i >= 0; i--)
+            {
+                if (binarynumber[i] == '0' && !flip)
+                {
+                    complement = "0" + complement;
+                }
+                else if (binarynumber[i] == '1' && !flip)
+                {
+                    flip = true;
+                    complement = "1" + complement;
+                }
+                else if (binarynumber[i] == '0' && flip)
+                {
+                    complement = "1" + complement;
+                }
+                else if (binarynumber[i] == '1' && flip)
+                {
+                    complement = "0" + complement;
+                }
+            }
 
-            // Add 1 to the inverted number
-            int twosComplement = invertedNumber + 1;
+            if (!flip)
+            {
+                complement = binarynumber.PadLeft(complement.Length + 1, '0');
+            }
 
-            // Convert the result back to binary
-            string binaryTwosComplement = Convert.ToString(twosComplement, 2);
-
-            return binaryTwosComplement;
+            return complement;
         }
     }
 }

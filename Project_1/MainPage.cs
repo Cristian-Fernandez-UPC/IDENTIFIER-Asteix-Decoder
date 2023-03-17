@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,6 +20,9 @@ namespace Project_1
         private IconButton currentBtn;
         private Panel leftBorderBtn;
         private Form currentChildForm;
+
+        public FileLoader File_Loader = new FileLoader();
+        public DataInspectorInterface Data_Inspector = new DataInspectorInterface();
 
         // Constructor
         public MainPage()
@@ -100,13 +104,15 @@ namespace Project_1
         private void iconButton1_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color1);
-            OpenChildForm(new FileLoader());
+            OpenChildForm(File_Loader);
         }
 
         private void iconButton2_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color1);
-            OpenChildForm(new DataInspectorInterface());
+            OpenChildForm(Data_Inspector);
+            Data_Inspector.Load_Data_To_Table(File_Loader.GetFileReaded().getTableCAT10());
+ 
         }
 
 

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,7 +15,6 @@ namespace Project_1
 {
     public partial class FileLoader : Form
     {
-        new DataInspectorInterface TABLE = new DataInspectorInterface();
         public const string AstFileFilter = "Archivos AST (*.ast)|*.ast";
         FileReader read = new FileReader();
 
@@ -41,12 +41,15 @@ namespace Project_1
                 textBox1.Text = filePath;
                 
                 read.ReadFile(filePath); // Leemos el fichero
-                TABLE.Load_Data_To_Table(read.getTableCAT10());
-                
             }
         }
 
 
+        public FileReader GetFileReaded()
+        {
+            return read;
+        }
+        
         private static void AsterixDecoder(string filePath)
         {
             // decodificar el archivo .ast

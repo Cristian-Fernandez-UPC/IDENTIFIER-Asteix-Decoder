@@ -230,9 +230,6 @@ namespace Project_1
             // Adding all this new information
             CAT10_table.Rows.Add(row);
             CAT10_table.AcceptChanges();
-
-
-
         }
     }
 }

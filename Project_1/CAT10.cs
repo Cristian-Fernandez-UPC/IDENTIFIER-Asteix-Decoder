@@ -219,8 +219,8 @@ namespace Project_1
         // DATA ITEM I010/010 [Data Source Identifier]------------DONE
         public int Data_Source_Identifier(string[] message,int position)
         {
-            this.SAC = convertor.Binary_Octet_To_Hexadecimal(message[position]);
-            this.SIC = convertor.Binary_Octet_To_Hexadecimal(message[position+1]);
+            this.SAC = Convert.ToString(Convert.ToInt32(message[position], 2));
+            this.SIC = Convert.ToString(Convert.ToInt32(message[position + 1], 2));
             position = position+2;
 
             return position;
@@ -311,7 +311,7 @@ namespace Project_1
         public int Measured_Position_in_Polar_Coordinates(string[] message, int position)
         {
             this.RHO = Convert.ToString(Convert.ToInt32(string.Concat(message[position], message[position + 1]), 2)) + " m";
-            this.Theta = Convert.ToString(Convert.ToDouble(Convert.ToInt32(string.Concat(message[position + 2], message[position + 3]), 2)*(360/(Math.Pow(2, 16)))))+ "°";
+            this.Theta = String.Format("{0:0.00}", Convert.ToDouble(Convert.ToInt32(string.Concat(message[position + 2], message[position + 3]), 2)) * (360 / (Math.Pow(2, 16)))) + "°";
             position = position + 4;
 
             return position;
@@ -321,9 +321,20 @@ namespace Project_1
         // DATA ITEM I010/041 [Position in WGS-84 Coordinates]------------DONE
         public int Position_in_WGS84_Coordinates(string[] message, int position)
         {
-            this.Latitude_WGS84 = Convert.ToString(Convert.ToInt32(convertor.Binary_Octet_To_Hexadecimal(convertor.Twos_Complement(string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3]))))*(180/(2^31)));
-            this.Longitude_WGS84 = Convert.ToString(Convert.ToInt32(convertor.Binary_Octet_To_Hexadecimal(convertor.Twos_Complement(string.Concat(message[position + 4], message[position + 5], message[position + 6], message[position + 7]))))*(180/(2^31)));
-            position = position + 8;
+            double Latitude = convertor.TWO_Complement(string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3])) * (180.0 / Math.Pow(2, 31));
+            position += 4;
+            double Longitude = convertor.TWO_Complement(string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3])) * (180.0 / Math.Pow(2, 31));
+            position += 4;
+            int Latdegres = (int)Math.Truncate(Latitude);
+            double Latmin = (Latitude - Latdegres) * 60.0;
+            double Latsec = Math.Round((Latmin - Math.Truncate(Latmin)) * 60.0, 5);
+            Latmin = Math.Truncate(Latmin);
+            int Londegres = (int)Math.Truncate(Longitude);
+            double Lonmin = (Longitude - Londegres) * 60.0;
+            double Lonsec = Math.Round((Lonmin - Math.Truncate(Lonmin)) * 60.0, 5);
+            Lonmin = Math.Truncate(Lonmin);
+            this.Latitude_WGS84 = $"{Latdegres}º {Latmin}' {Latsec}''";
+            this.Longitude_WGS84 = $"{Londegres}º {Lonmin}' {Lonsec}''";
 
             return position;
         }
@@ -332,8 +343,8 @@ namespace Project_1
         // DATA ITEM I010/042 [Position in Cartesioan Coordinates]-----------DONE
         public int Position_in_Cartesian_Coordinates(string[] message, int position)
         {
-            this.X_Component = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(String.Concat(message[position], message[position + 1])),2)) + "m";
-            this.Y_Component = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(String.Concat(message[position + 1], message[position + 3])), 2)) + "m";
+            this.X_Component = Convert.ToString(convertor.TWO_Complement(String.Concat(message[position], message[position + 1]))) + "m";
+            this.Y_Component = Convert.ToString(convertor.TWO_Complement(String.Concat(message[position + 2], message[position + 3]))) + "m";
             position = position + 4;
 
             return position;
@@ -385,7 +396,7 @@ namespace Project_1
             if (this.G_FL == "0") { this.G_FL = "Default"; }
             if (this.G_FL == "1") { this.G_FL = "Garbled code"; }
 
-            this.FL = V_FL = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(fullmessage.Substring(2, 14))) * (1 / 4));
+            this.FL = V_FL = Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage.Substring(2, 14))) * (1 / 4));
 
             position = position + 2;
 
@@ -417,12 +428,12 @@ namespace Project_1
         // DATA ITEM I010/140 [Time of Day]---------------DONE
         public int Time_of_Day(string[] message, int position)
         {
-            string binaryTime = string.Concat(message[position], message[position + 1], message[position + 2]);
-            int timeInSeconds = Convert.ToInt32(binaryTime, 2) / 128;
-            Time_of_day_in_seconds = timeInSeconds;
-            TimeSpan timeOfDay = TimeSpan.FromSeconds(timeInSeconds);
-            Time_of_day_in_format = timeOfDay.ToString(@"hh\:mm\:ss\:fff");
-            position= position + 3;
+            int binaryValue = Convert.ToInt32(string.Concat(message[position], message[position + 1], message[position + 2]), 2);
+            double seconds = binaryValue / 128.0;
+            Time_of_day_in_seconds = Convert.ToInt32(Math.Truncate(seconds));
+            TimeSpan time = TimeSpan.FromSeconds(seconds);
+            Time_of_day_in_format = time.ToString(@"hh\:mm\:ss\:fff");
+            position = position + 3;
 
             return position;
         }
@@ -521,9 +532,9 @@ namespace Project_1
         // DATA ITEM I010/200 [Calculated Track Velocity in Polar Coordiantes]----------DONE
         public int Calculated_Track_Velocity_in_Polar_Coordinates(string[] message, int position)
         {
-            this.Ground_Speed = Convert.ToString((Convert.ToInt32(String.Concat(message[position], message[position + 1]), 2)*(2^(-14)))*1852) + "m/s"; // In m/s
-            this.Track_Angle = Convert.ToString(Convert.ToInt32(String.Concat(message[position + 2], message[position + 3]), 2) * (360 / (2^16)))+ "°";
-            if (Convert.ToInt32(String.Concat(message[position], message[position + 1]), 2) * (2 ^ (-14)) >= 2)
+            this.Ground_Speed = String.Format("{0:0.00}", (Convert.ToInt32(String.Concat(message[position], message[position + 1]), 2)* (Math.Pow(2, -14)) *1852)) + "m/s"; // In m/s
+            this.Track_Angle = String.Format("{0:0.00}", Convert.ToInt32(String.Concat(message[position + 2], message[position + 3]), 2) * (360 / Math.Pow(2, 16)))+ "°";
+            if (Convert.ToInt32(String.Concat(message[position], message[position + 1]), 2) * (Math.Pow(2, -14)) >= 2)
                 this.Ground_Speed = "Max value exceded (> 2NM/s)";
             position = position + 4;
 
@@ -534,8 +545,8 @@ namespace Project_1
         // DATA ITEM I010/202 [Calculated Track Velocity in Cartesian Cooridinates]-----------DONE
         public int Calculated_Track_Velocity_in_Cartesian_Coordiantes(string[] message, int position)
         {
-            this.Vx = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(String.Concat(message[position], message[position + 1])),2)*0.25) + " m/s";
-            this.Vy = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(String.Concat(message[position + 2], message[position + 3])),2) * 0.25) + " m/s";
+            this.Vx = Convert.ToString(convertor.TWO_Complement(String.Concat(message[position], message[position + 1]))*0.25) + " m/s";
+            this.Vy = Convert.ToString(convertor.TWO_Complement(String.Concat(message[position + 2], message[position + 3])) * 0.25) + " m/s";
             position = position + 4;
 
             return position;
@@ -545,12 +556,12 @@ namespace Project_1
         // DATA ITEM I010/210 [Calculated Acceleration]--------------DONE
         public int Calculated_Acceleration(string[] message, int position)
         {
-            this.Ax = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(message[position]))*0.25) + "m/s^2";
-            this.Ay = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(message[position+1])) * 0.25) + "m/s^2";
+            this.Ax = Convert.ToString(convertor.TWO_Complement(message[position]) * 0.25) + "m/s^2";
+            this.Ay = Convert.ToString(convertor.TWO_Complement(message[position+1]) * 0.25) + "m/s^2";
 
-            if (Convert.ToInt32(convertor.Twos_Complement(message[position])) * 0.25 >= 31 || Convert.ToInt32(convertor.Twos_Complement(message[position])) * 0.25 <= -31)
+            if (convertor.TWO_Complement(message[position]) * 0.25 >= 31 || (convertor.TWO_Complement(message[position])) * 0.25 <= -31)
                 this.Ax = "Max acceleration value exceeded (+-32 m/s^2)";
-            if (Convert.ToInt32(convertor.Twos_Complement(message[position+1])) * 0.25 >= 31 || Convert.ToInt32(convertor.Twos_Complement(message[position+1])) * 0.25 <= -31)
+            if ((convertor.TWO_Complement(message[position+1])) * 0.25 >= 31 || (convertor.TWO_Complement(message[position+1]) * 0.25 <= -31))
                 this.Ay = "Max acceleration value exceeded (+-32 m/s^2)";
 
             position = position + 2;
@@ -572,6 +583,7 @@ namespace Project_1
         // DATA ITEM I010/245 [Target Identification]----------DONE
         public int Target_Identification(string[] message, int position)
         {
+            string charecter;
             this.STI = message[position].Substring(0, 2);
             if (this.STI == "00") { this.STI = "Callsign or registration downlinked from transponder"; }
             if (this.STI == "01") { this.STI = "Callsign not downlinked from transponder"; }
@@ -579,10 +591,193 @@ namespace Project_1
 
             string fullmessage = String.Concat(message[position + 1], message[position + 2], message[position + 3], message[position + 4], message[position + 5], message[position + 6]);
             this.Target_ID = "";
-            int i = 0;
-            while (i<=fullmessage.Length)
+            int i = 2;
+            while (i<fullmessage.Length)
             {
-                this.Target_ID = this.Target_ID + convertor.Binary_Octet_To_Hexadecimal(fullmessage.Substring(i, 6));
+                string reversedStr = fullmessage.Substring(i, 4);
+                charecter = fullmessage.Substring(i-2, 4);
+                //char[] stringArray = charecter.ToCharArray();
+                //Array.Reverse(stringArray);
+                //string reversedStr = new string(stringArray);
+                if (reversedStr == "0000")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "0001")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "A";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "Q";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "1";
+                }
+                if (reversedStr == "0010")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "B";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "R";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "2";
+                }
+                if (reversedStr == "0011")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "C";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "S";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "3";
+                }
+                if (reversedStr == "0100")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "D";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "T";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "4";
+                }
+                if (reversedStr == "0101")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "E";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "U";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "5";
+                }
+                if (reversedStr == "0110")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "F";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "V";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "6";
+                }
+                if (reversedStr == "0111")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "G";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "W";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "7";
+                }
+                if (reversedStr == "1000")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "H";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "X";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "8";
+                }
+                if (reversedStr == "1001")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "I";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "Y";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "9";
+                }
+                if (reversedStr == "1010")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "J";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "Z";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "1011")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "K";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "1100")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "L";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "1101")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "M";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "1110")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "N";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "1111")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "O";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+
+
+
                 i = i + 6;
             }
             position = position + 7;
@@ -620,7 +815,7 @@ namespace Project_1
         // DATA ITEM I010/270 [Target Size & Orientation]--------------DONE
         public int Target_Size__and_Orientation(string[] message, int position)
         {
-            this.Lenght = convertor.Binary_Octet_To_Hexadecimal(message[position].Substring(0, 7)) + "m";
+            this.Lenght = Convert.ToString(Convert.ToInt32(message[position].Substring(0, 7), 2)) + "m";
 
             if (message[position].Substring(7, 1) == "1")
             {
@@ -632,7 +827,7 @@ namespace Project_1
                 {
                     // Extension into next extent
                     position = position + 1;
-                    this.Width = convertor.Binary_Octet_To_Hexadecimal(message[position].Substring(0, 7)) + "m";
+                    this.Width = Convert.ToString(Convert.ToInt32(message[position].Substring(0, 7), 2)) + "m";
 
                     position = position + 1;
                 }

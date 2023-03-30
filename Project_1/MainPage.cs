@@ -22,7 +22,9 @@ namespace Project_1
         private Form currentChildForm;
 
         public FileLoader File_Loader = new FileLoader();
+
         public DataInspectorInterface Data_Inspector = new DataInspectorInterface();
+
 
         // Constructor
         public MainPage()
@@ -105,15 +107,29 @@ namespace Project_1
         {
             ActivateButton(sender, RGBColors.color1);
             OpenChildForm(File_Loader);
+            
         }
 
         private void iconButton2_Click(object sender, EventArgs e)
         {
+            File_Loader.Close();
             ActivateButton(sender, RGBColors.color1);
             OpenChildForm(Data_Inspector);
-            Data_Inspector.Load_Data_To_Table(File_Loader.GetFileReaded().getTableCAT10());
+            //filereaded.ReadFile(File_Loader.GetFilePath());
+            //dataGridView1.DataSource= filereaded.getTableCAT10();
+
+
  
         }
+
+
+
+
+
+
+
+
+
 
 
         // Drag Form

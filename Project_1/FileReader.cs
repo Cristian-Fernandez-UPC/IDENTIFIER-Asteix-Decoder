@@ -24,7 +24,14 @@ namespace Project_1
 
         // TABLE
         public DataTable CAT10_table = new DataTable();       // We create a table that will be fulfilled with all the data needed
-        
+        public DataGridView CAT10_data = new DataGridView(); 
+        public DataGridView getDataGridView()
+        {
+            this.CAT10_data.DataSource = this.CAT10_table;
+            
+            return this.CAT10_data;
+        }
+
         public DataTable getTableCAT10()
         {
             return CAT10_table;
@@ -74,7 +81,7 @@ namespace Project_1
             }
 
             // Here we will work with this hexadecimal list (which are octets in binary) to pass the messages to Categories Classes to be decoded
-            for (int q = 0; q < 10; q++)
+            for (int q = 0; q < hexadecimallist.Count; q++)
             {
                 //  EN VEZ DE 3 hexadecimallist.Count
                 string[] arraystring = hexadecimallist[q];
@@ -86,7 +93,7 @@ namespace Project_1
                     CAT10 newcat10 = new CAT10(arraystring, convertor);
                     
                     CAT10_list.Add(newcat10);
-                    this.ADD_Row_Table_CAT10(newcat10);
+                    ADD_Row_Table_CAT10(newcat10);
                 }
                 // Elif for the following categories
             }
@@ -190,21 +197,22 @@ namespace Project_1
 
             // Filling the rows
             DataRow row = CAT10_table.NewRow();
+            string nl = Environment.NewLine;
             row[0] = newrow.CAT;
             row[1] = newrow.SAC;
             row[2] = newrow.SIC;
             row[3] = newrow.Target_ID;
             row[4] = newrow.Track_number;
-            row[5] = "TYP: " + newrow.TYP + "\n" + "DCR: " + newrow.DCR + "\n" + "CHN: " + newrow.CHN + "\n" + "GBS: " + newrow.GBS + "\n" + "CRT: " + newrow.CRT;
+            row[5] = "TYP: " + newrow.TYP + nl + "DCR: " + newrow.DCR + nl + "CHN: " + newrow.CHN + nl + "GBS: " + newrow.GBS + nl + "CRT: " + newrow.CRT;
             row[6] = newrow.MessageTYPE;
             row[7] = newrow.FL;
             row[8] = newrow.Time_of_day_in_format;
             row[9] = "CNF: " + newrow.CNF + "\n" + "TRE: " + newrow.TRE + "\n" + "CST: " + newrow.CST + "\n" + "MAH: " + newrow.MAH + "\n" + "TCC: " + newrow.TCC + "\n" + "STH: " + newrow.STH + "\n" + "TOM: " + newrow.TOM + "\n" + "DOU: " + newrow.DOU + "\n" + "MRS: " + newrow.MRS + "\n" + "GHO: " + newrow.GHO;
             row[10] = "Latitude= " + newrow.Latitude_WGS84 + "\n" + "Longitude= " + newrow.Longitude_WGS84;
-            row[11] = "X= " + newrow.X_Component + "Y= " + newrow.Y_Component;
-            row[12] = "RHO= " + newrow.RHO + "THETA= " + newrow.Theta;
-            row[13] = "Ground speed= " + newrow.Ground_Speed + "Track Angle= " + newrow.Track_Angle;
-            row[14] = "V_x= " + newrow.Vx + "V_y= " + newrow.Vy;
+            row[11] = "X= " + newrow.X_Component + "\n" + "Y= " + newrow.Y_Component;
+            row[12] = "RHO= " + newrow.RHO+ "\n" + "THETA= " + newrow.Theta;
+            row[13] = "Ground speed= " + newrow.Ground_Speed + "\n" + "Track Angle= " + newrow.Track_Angle;
+            row[14] = "V_x= " + newrow.Vx+ "\n" + "V_y= " + newrow.Vy;
             row[15] = "Lenght: " + newrow.Lenght + "\n" + "Orientation: " + newrow.Orientation + "\n" + "Width: " + newrow.Width;
             row[16] = newrow.TargetAddress;
             row[17] = "NOGO:" + newrow.NOGO + "\n" + "OVL:" + newrow.OVL + "\n" + "TSV:" + newrow.TSV + "\n" + "DIV:" + newrow.DIV + "\n" + "TTF:" + newrow.TTF;
@@ -229,7 +237,7 @@ namespace Project_1
 
             // Adding all this new information
             CAT10_table.Rows.Add(row);
-            CAT10_table.AcceptChanges();
+            //CAT10_table.AcceptChanges();
 
 
 

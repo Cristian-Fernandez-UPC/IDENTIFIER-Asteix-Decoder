@@ -117,5 +117,24 @@ namespace Project_1
 
             return complement;
         }
+
+        public double TWO_Complement(string bits)
+        {
+            if (bits[0] == '0')
+            {
+                int num = Convert.ToInt32(bits, 2);
+                return Convert.ToDouble(num);
+            }
+            else
+            {
+                string invertedBits = "";
+                for (int i = 1; i < bits.Length; i++)
+                {
+                    invertedBits += bits[i] == '1' ? '0' : '1';
+                }
+                int num = Convert.ToInt32(invertedBits, 2);
+                return -(num + 1);
+            }
+        }
     }
 }

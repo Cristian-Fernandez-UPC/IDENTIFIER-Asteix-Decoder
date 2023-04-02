@@ -531,6 +531,15 @@
             this.iconPictureBox6.MouseEnter += new System.EventHandler(this.iconPictureBox6_MouseEnter);
             this.iconPictureBox6.MouseLeave += new System.EventHandler(this.iconPictureBox6_MouseLeave);
             // 
+            // iconDropDownButton1
+            // 
+            this.iconDropDownButton1.IconChar = FontAwesome.Sharp.IconChar.None;
+            this.iconDropDownButton1.IconColor = System.Drawing.Color.Black;
+            this.iconDropDownButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.iconDropDownButton1.Name = "iconDropDownButton1";
+            this.iconDropDownButton1.Size = new System.Drawing.Size(23, 23);
+            this.iconDropDownButton1.Text = "iconDropDownButton1";
+            // 
             // FileLoader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);

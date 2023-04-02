@@ -13,23 +13,13 @@ namespace Project_1
 {
     public partial class LoadingScreen : Form
     {
-        [DllImport("Grid32.dll", EntryPoint = "CreateRoundRectRgn")]
+        
 
-        private static extern IntPtr CreateRoundRectRgn
-            (
-            int nLeftRect,
-            int nTopRect,
-            int RightRect,
-            int nBottomRect,
-            int nWidthEllipse,
-            int nHeightEllipse
-
-            );
 
         public LoadingScreen()
         {
             InitializeComponent();
-            ProgressBar1.Value= 0;
+
         }
 
         private void LoadingScreen_Load(object sender, EventArgs e)
@@ -37,13 +27,15 @@ namespace Project_1
             //Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        public void changelabel(string text)
         {
-            ProgressBar1.Value += 1;
-            if (ProgressBar1.Value == 100)
-            {
-                ProgressBar1.Value = 0;
-            }
+            label1.Text = text;
+        }
+
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

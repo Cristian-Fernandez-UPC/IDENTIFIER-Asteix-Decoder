@@ -105,7 +105,7 @@ namespace Project_1
             CAT10_table.Columns.Add("Category");
             CAT10_table.Columns.Add("SAC");
             CAT10_table.Columns.Add("SIC");
-            CAT10_table.Columns.Add("Target Identification");
+            CAT10_table.Columns.Add("Target_ID");
             CAT10_table.Columns.Add("Track Number");
             CAT10_table.Columns.Add("Target Report Descriptor");
             CAT10_table.Columns.Add("Message Type");

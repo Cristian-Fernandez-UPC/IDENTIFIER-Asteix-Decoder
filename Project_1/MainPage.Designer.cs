@@ -95,7 +95,7 @@
             this.iconButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.iconButton1.Font = new System.Drawing.Font("Calibri Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.iconButton1.ForeColor = System.Drawing.Color.White;
-            this.iconButton1.IconChar = FontAwesome.Sharp.IconChar.FileCirclePlus;
+            this.iconButton1.IconChar = FontAwesome.Sharp.IconChar.Database;
             this.iconButton1.IconColor = System.Drawing.Color.White;
             this.iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.iconButton1.IconSize = 100;
@@ -105,7 +105,7 @@
             this.iconButton1.Padding = new System.Windows.Forms.Padding(40, 0, 40, 0);
             this.iconButton1.Size = new System.Drawing.Size(637, 149);
             this.iconButton1.TabIndex = 1;
-            this.iconButton1.Text = "Load a File";
+            this.iconButton1.Text = "Data Interface";
             this.iconButton1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.iconButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.iconButton1.UseVisualStyleBackColor = false;

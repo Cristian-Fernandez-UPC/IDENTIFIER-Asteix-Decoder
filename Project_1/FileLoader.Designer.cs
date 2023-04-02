@@ -533,12 +533,7 @@
             // 
             // iconDropDownButton1
             // 
-            this.iconDropDownButton1.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.iconDropDownButton1.IconColor = System.Drawing.Color.Black;
-            this.iconDropDownButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconDropDownButton1.Name = "iconDropDownButton1";
-            this.iconDropDownButton1.Size = new System.Drawing.Size(23, 23);
-            this.iconDropDownButton1.Text = "iconDropDownButton1";
+
             // 
             // FileLoader
             // 

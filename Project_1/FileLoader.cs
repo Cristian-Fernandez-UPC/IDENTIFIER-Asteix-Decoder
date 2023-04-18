@@ -108,11 +108,13 @@ namespace Project_1
                     this.file_loaded = 1;
                     i = 1;
                 }
-                //read.ReadFile(filePath); // Leemos el fichero
-                
+
+
                 this.dataGridView1.DataSource = read.getTableCAT10();
                 this.dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-                
+                toggleButton1.Checked = true;
+                toggleButton2.Checked = true;
+
                 loadingscreen.Close();
 
 
@@ -235,6 +237,19 @@ namespace Project_1
                 toggleButton2.CheckedChanged += toggleButton2_CheckedChanged;
             }
         }
+
+
+        private void toggleButton3_CheckedChanged_1(object sender, EventArgs e)
+        {
+            toggleButton1.Checked = false;
+            toggleButton2.Checked = false;
+            this.dataGridView1.DataSource = read.getTableCAT21();
+            this.dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+        }
+
+
+
+
 
         private void iconPictureBox4_MouseEnter(object sender, EventArgs e)
         {

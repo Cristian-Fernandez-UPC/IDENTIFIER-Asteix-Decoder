@@ -26,44 +26,44 @@ namespace Project_1
         public string MessageTYPE;             // DATA ITEM I021/000
         public string SAC;                     // DATA ITEM I021/010
         public string SIC;                     // DATA ITEM I021/010
-        public string RA;                     // DATA ITEM I021/008
-        public string TC;                     // DATA ITEM I021/008
-        public string TS;                     // DATA ITEM I021/008
+        public string RA;                      // DATA ITEM I021/008
+        public string TC;                      // DATA ITEM I021/008
+        public string TS;                      // DATA ITEM I021/008
         public string ARV;                     // DATA ITEM I021/008
-        public string CDTI;                     // DATA ITEM I021/008
-        public string NotTCAS;                     // DATA ITEM I021/008
-        public string SA;                     // DATA ITEM I021/008
+        public string CDTI;                    // DATA ITEM I021/008
+        public string NotTCAS;                 // DATA ITEM I021/008
+        public string SA;                      // DATA ITEM I021/008
         public string ATP;                     // DATA ITEM I021/040
         public string ARC;                     // DATA ITEM I021/040
-        public string RC;                     // DATA ITEM I021/040
+        public string RC;                      // DATA ITEM I021/040
         public string RAB;                     // DATA ITEM I021/040
-        public string FX;                     // DATA ITEM I021/040
-        public string DCR;                   // DATA ITEM I021/040
-        public string GBS;          // DATA ITEM I021/040
-        public string SIM;         // DATA ITEM I021/040
-        public string TST;             // DATA ITEM I021/040
-        public string SAA;             // DATA ITEM I021/040
-        public string CL;                // DATA ITEM I021/040
-        public string CA;                // DATA ITEM I021/040
-        public string Track_number;                // DATA ITEM I010/060
-        public string Service_identification;            // DATA ITEM I010/060
-        public string IM;                    // DATA ITEM I010/090
-        public string RE;                    // DATA ITEM I010/090
+        public string FX;                      // DATA ITEM I021/040
+        public string DCR;                     // DATA ITEM I021/040
+        public string GBS;                     // DATA ITEM I021/040
+        public string SIM;                     // DATA ITEM I021/040
+        public string TST;                     // DATA ITEM I021/040
+        public string SAA;                     // DATA ITEM I021/040
+        public string CL;                      // DATA ITEM I021/040
+        public string CA;                      // DATA ITEM I021/040
+        public string Track_number;            // DATA ITEM I010/060
+        public string Service_identification;  // DATA ITEM I010/060
+        public string IM;                      // DATA ITEM I010/090
+        public string RE;                      // DATA ITEM I010/090
         public string FL;                      // DATA ITEM I010/090
-        public string VNS;                 // DATA ITEM I010/091
-        public string VN;                     // DATA ITEM I010/131
-        public string LTT;   // DATA ITEM I010/140
+        public string VNS;                     // DATA ITEM I010/091
+        public string VN;                      // DATA ITEM I010/131
+        public string LTT;                     // DATA ITEM I010/140
         public int Time_of_day_in_seconds;     // DATA ITEM I010/140
-        public string OctalA;            // DATA ITEM I010/161
-        public string OctalB;                     // DATA ITEM I010/170
-        public string OctalC;                     // DATA ITEM I010/170
-        public string OctalD;                     // DATA ITEM I010/170
-        public string M3AC;                     // DATA ITEM I010/170
-        public string FlightLevel;                     // DATA ITEM I010/170
+        public string OctalA;                  // DATA ITEM I010/161
+        public string OctalB;                  // DATA ITEM I010/170
+        public string OctalC;                  // DATA ITEM I010/170
+        public string OctalD;                  // DATA ITEM I010/170
+        public string M3AC;                    // DATA ITEM I010/170
+        public string FlightLevel;             // DATA ITEM I010/170
         public string ICF;                     // DATA ITEM I010/170
-        public string LNAV;                     // DATA ITEM I010/170
-        public string PS;                     // DATA ITEM I010/170
-        public string SS;                     // DATA ITEM I010/170
+        public string LNAV;                    // DATA ITEM I010/170
+        public string PS;                      // DATA ITEM I010/170
+        public string SS;                      // DATA ITEM I010/170
         public string TAR;                     // DATA ITEM I010/170
         public string Ground_Speed;            // DATA ITEM I010/200
         public string Track_Angle;             // DATA ITEM I010/200
@@ -71,39 +71,39 @@ namespace Project_1
         public string Vy;                      // DATA ITEM I010/202
         public string Ax;                      // DATA ITEM I010/210
         public string Ay;                      // DATA ITEM I010/210
-        public string ToAfP;           // DATA ITEM I010/220
-        public string Tort;                     // DATA ITEM I010/245
-        public string ECAT;               // DATA ITEM I010/245
-        public string WS;               // DATA ITEM I010/250
-        public string WD;         // DATA ITEM I010/250
-        public string TMP;            // DATA ITEM I010/250
-        public string TRB;            // DATA ITEM I010/250
-        public string SAS;                  // DATA ITEM I010/270
-        public string Source;             // DATA ITEM I010/270
-        public string Altitude;                   // DATA ITEM I010/270
+        public string ToAfP;                   // DATA ITEM I010/220
+        public string Tort;                    // DATA ITEM I010/245
+        public string ECAT;                    // DATA ITEM I010/245
+        public string WS;                      // DATA ITEM I010/250
+        public string WD;                      // DATA ITEM I010/250
+        public string TMP;                     // DATA ITEM I010/250
+        public string TRB;                     // DATA ITEM I010/250
+        public string SAS;                     // DATA ITEM I010/270
+        public string Source;                  // DATA ITEM I010/270
+        public string Altitude;                // DATA ITEM I010/270
         public int REP;                        // DATA ITEM I010/270
-        public string MV;                  // DATA ITEM I010/270
-        public string AH;                // DATA ITEM I010/270
-        public string AM;        // DATA ITEM I010/300
-        public string AltitudeF;                     // DATA ITEM I010/310
+        public string MV;                      // DATA ITEM I010/270
+        public string AH;                      // DATA ITEM I010/270
+        public string AM;                      // DATA ITEM I010/300
+        public string AltitudeF;               // DATA ITEM I010/310
         public string MSG;                     // DATA ITEM I010/310
-        public string TIS;                 // DATA ITEM I010/500
-        public string TID;                 // DATA ITEM I010/500
-        public string NAV;                // DATA ITEM I010/500
-        public string NVD;                    // DATA ITEM I010/550
+        public string TIS;                     // DATA ITEM I010/500
+        public string TID;                     // DATA ITEM I010/500
+        public string NAV;                     // DATA ITEM I010/500
+        public string NVB;                     // DATA ITEM I010/550
         public string OVL;                     // DATA ITEM I010/550
         public string TSV;                     // DATA ITEM I010/550
         public string DIV;                     // DATA ITEM I010/550
         public string TTF;                     // DATA ITEM I010/550
         public int X = 1;
-        public string REP1;                  // DATA ITEM I010/270
-        public string TCA;                // DATA ITEM I010/270
-        public string NC;        // DATA ITEM I010/300
-        public string TCPNumber;                     // DATA ITEM I010/310
-        public string AltitudeTID;                     // DATA ITEM I010/310
-        public string LATITUDE;                 // DATA ITEM I010/500
-        public string LONGITUDE;                 // DATA ITEM I010/500
-        public string PT;                // DATA ITEM I010/500
+        public string REP1;                    // DATA ITEM I010/270
+        public string TCA;                     // DATA ITEM I010/270
+        public string NC;                      // DATA ITEM I010/300
+        public string TCPNumber;               // DATA ITEM I010/310
+        public string AltitudeTID;             // DATA ITEM I010/310
+        public string LATITUDE;                // DATA ITEM I010/500
+        public string LONGITUDE;               // DATA ITEM I010/500
+        public string PT;                      // DATA ITEM I010/500
         public string TD;                      // DATA ITEM I010/550
         public string TRA;                     // DATA ITEM I010/550
         public string TOA;                     // DATA ITEM I010/550
@@ -118,6 +118,67 @@ namespace Project_1
         public string LW;
         public string MAM;
         public string RID;
+
+
+        // Falta definir
+        public string Latitude_WGS84;          
+        public string Longitude_WGS84;
+        public string Latitude_WGS84_HI_RES;
+        public string Longitude_WGS84_HI_RES;
+        public string ToAfV;
+        public string TargetAddress; 
+        public string ToMRfP;
+        public string ToMRfP_HI_RES;
+        public string ToMRfV;
+        public string ToMRfV_HI_RES;
+        public string GeometricHeight;
+        public string QualityIndicators;
+        public string RollAngle;
+        public string MagneticHeading;
+        public string BarometricVerticalRate;
+        public string GeometricVerticalRate;
+        public string Target_ID;
+        public string RA_Status;
+        public string TC_Status;
+        public string TS_Status;
+        public string ARV_Status;
+        public string CDTI_A_Status;
+        public string not_TCAS_Status;
+        public string SA_Status;
+        public string ModeSMBData;
+        public string TYP;
+        public string STYP;
+        public string ARA;
+        public string RAC;
+        public string RAT;
+        public string MTE;
+        public string TTI;
+        public string TID_acas;
+
+        public string AOS;
+        public string TRD;
+        public string M3A;
+        public string QI;
+        public string TI;
+        public string MAM_ages;
+        public string GH;
+        public string FL_ages;
+        public string ISA;
+        public string FSA;
+        public string AS;
+        public string TAS;
+        public string MH;
+        public string MVR;
+        public string GVR;
+        public string GV;
+        public string TAR_ages;
+        public string TI_ages;
+        public string TS_ages;
+        public string MET;
+        public string ROA;
+        public string ARA_ages;
+        public string SCC;
+
 
 
         public CAT21(string[] message_in_hexa, Conversions convertor)
@@ -259,10 +320,10 @@ namespace Project_1
             }
             if (FSPEC.Count() > 43)
             {
-                if (FSPEC[47] == '1')
-                    position = this.Reserved_expantion_Field(message, position);
-                if (FSPEC[48] == '1')
-                    position = this.Spetial_Purpose_Field(message, position);
+                //if (FSPEC[47] == '1')
+                //    position = this.Reserved_expantion_Field(message, position);
+                //if (FSPEC[48] == '1')
+                //    position = this.Spetial_Purpose_Field(message, position);
             }
         }
 
@@ -391,8 +452,8 @@ namespace Project_1
         public int Track_Number(string[] message, int position)
         {
             
-            string fullmessage = String.Concat(message[position], message[position + 1]);
-            this.Track_number = Convert.ToString(Convert.ToInt32(fullmessage));
+            //string fullmessage = String.Concat(message[position], message[position + 1]);
+            //this.Track_number = Convert.ToString(Convert.ToInt32(fullmessage));
             position = position + 2;
 
             return position;
@@ -410,8 +471,8 @@ namespace Project_1
         // DATA ITEM I021/071
         public int Time_of_Aplicability_for_Position(string[] message, int position)
         {
-            string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2]);
-            this.ToAfP = Convert.ToString(Convert.ToInt32((fullmessage)) * 1/128) + "s";
+            //string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2]);
+            //this.ToAfP = Convert.ToString(Convert.ToInt32((fullmessage)) * 1/128) + "s";
             position = position + 3;
 
             return position;
@@ -439,7 +500,7 @@ namespace Project_1
         public int Time_of_Aplicability_for_Velocity(string[] message, int position)
         {
             string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2]);
-            this.ToAfP = Convert.ToString(Convert.ToInt32((fullmessage)) * 1 / 128) + "s";
+            this.ToAfV = Convert.ToString(Convert.ToInt32((fullmessage)) * 1 / 128) + "s";
             position = position + 3;
 
             return position;
@@ -493,8 +554,8 @@ namespace Project_1
         // DATA ITEM I021/073
         public int Time_of_Message_Reception_of_Position(string[] message, int position)
         {
-            string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2]);
-            this.ToAfP = Convert.ToString(Convert.ToInt32((fullmessage)) * 1 / 128) + "s";
+            //string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2]);
+            //this.ToMRfP = Convert.ToString(Convert.ToInt32((fullmessage)) * 1 / 128) + "s";
             position = position + 3;
 
             return position;
@@ -510,8 +571,8 @@ namespace Project_1
         // DATA ITEM I021/075
         public int Time_of_Message_Reception_of_Velocity(string[] message, int position)
         {
-            string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2]);
-            this.ToAfP = Convert.ToString(Convert.ToInt32((fullmessage)) * 1 / 128) + "s";
+            //string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2]);
+            //this.ToMRfV = Convert.ToString(Convert.ToInt32((fullmessage)) * 1 / 128) + "s";
             position = position + 3;
             return position;
         }
@@ -527,8 +588,8 @@ namespace Project_1
         // DATA ITEM I021/140
         public int Geometric_Height(string[] message, int position)
         {
-            string fullmessage = String.Concat(message[position], message[position + 1]);
-            this.Track_number = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(fullmessage) )* 6.25 + "ft");
+            //string fullmessage = String.Concat(message[position], message[position + 1]);
+            //this.GeometricHeight = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(fullmessage) )* 6.25 + "ft");
             position = position + 2;
 
             return position;
@@ -595,8 +656,8 @@ namespace Project_1
         // DATA ITEM I021/145
         public int Flight_Level(string[] message, int position)
         {
-            string fullmessage = String.Concat(message[position], message[position + 1]);
-            this.FlightLevel = "Flight Level: " + Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(fullmessage)));
+            //string fullmessage = String.Concat(message[position], message[position + 1]);
+            //this.FlightLevel = "Flight Level: " + Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(fullmessage)));
 
             position = position + 2;
 
@@ -607,7 +668,7 @@ namespace Project_1
         public int Magnetic_Heading(string[] message, int position)
         {
             string fullmessage = String.Concat(message[position], message[position + 1]);
-            this.Track_number = Convert.ToString(Convert.ToInt32((fullmessage) )* 360*2E-16 + "deg");
+            this.MagneticHeading = Convert.ToString(Convert.ToInt32((fullmessage) )* 360*2E-16 + "deg");
             position = position + 2;
 
             return position;
@@ -647,16 +708,16 @@ namespace Project_1
         // DATA ITEM I021/155
         public int Barometric_Vertical_Rate(string[] message, int position)
         {
-            string fullmessage = string.Concat(message[position], message[position] + 1);
-            this.RE = fullmessage.Substring(0, 1);
-            if (this.RE == "0")
-            {
-                this.RE = "Value in defined range: " + Convert.ToString(Convert.ToInt32((fullmessage.Substring(1, 15)))*6.25 + "feet/minute");
-            }
-            if (this.RE == "1")
-            {
-                this.RE = "Value exceeds defined range";
-            }
+            //string fullmessage = string.Concat(message[position], message[position] + 1);
+            //this.BarometricVerticalRate = fullmessage.Substring(0, 1);
+            //if (this.BarometricVerticalRate == "0")
+            //{
+            //    this.BarometricVerticalRate = "Value in defined range: " + Convert.ToString(Convert.ToInt32((fullmessage.Substring(1, 15)))*6.25 + "feet/minute");
+            //}
+            //if (this.BarometricVerticalRate == "1")
+            //{
+            //    this.BarometricVerticalRate = "Value exceeds defined range";
+            //}
             position = position + 2;
 
             return position;
@@ -666,14 +727,14 @@ namespace Project_1
         public int Geometric_Vertical_Rate(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position] + 1);
-            this.RE = fullmessage.Substring(0, 1);
-            if (this.RE == "0")
+            this.GeometricVerticalRate = fullmessage.Substring(0, 1);
+            if (this.GeometricVerticalRate == "0")
             {
-                this.RE = "Value in defined range: " + Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage.Substring(1, 15)) * 6.25) + "feet/minute");
+                this.GeometricVerticalRate = "Value in defined range: " + Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage.Substring(1, 15)) * 6.25) + "feet/minute");
             }
-            if (this.RE == "1")
+            if (this.GeometricVerticalRate == "1")
             {
-                this.RE = "Value exceeds defined range";
+                this.GeometricVerticalRate = "Value exceeds defined range";
             }
             position = position + 2;
 
@@ -683,20 +744,20 @@ namespace Project_1
         // DATA ITEM I021/160
         public int Airborne_Ground_Vector(string[] message, int position)
         {
-            string fullmessage = string.Concat(message[position], message[position] + 1);
-            string fullmessage2 = string.Concat(message[position] + 2, message[position] + 3);
-            this.RE = fullmessage.Substring(0, 1);
-            if (this.RE == "0")
-            {
-                this.Ground_Speed = "Value in defined range: " + Convert.ToString(Convert.ToInt32((fullmessage.Substring(1, 15)) )* 2E-14 + "NM/s");
-                this.Track_Angle = "Value in defined range: " + Convert.ToString(Convert.ToInt32((fullmessage2.Substring(1, 15)) )* 360 * 2E-16 + "deg");
+            //string fullmessage = string.Concat(message[position], message[position] + 1);
+            //string fullmessage2 = string.Concat(message[position] + 2, message[position] + 3);
+            //this.RE = fullmessage.Substring(0, 1);
+            //if (this.RE == "0")
+            //{
+            //    this.Ground_Speed = "Value in defined range: " + Convert.ToString(Convert.ToInt32((fullmessage.Substring(1, 15)) )* 2E-14 + "NM/s");
+            //    this.Track_Angle = "Value in defined range: " + Convert.ToString(Convert.ToInt32((fullmessage2.Substring(1, 15)) )* 360 * 2E-16 + "deg");
 
-            }
-            if (this.RE == "1")
-            {
-                this.Ground_Speed = "Value exceeds defined range";
-                this.Track_Angle = "Value exceeds defined range";
-            }
+            //}
+            //if (this.RE == "1")
+            //{
+            //    this.Ground_Speed = "Value exceeds defined range";
+            //    this.Track_Angle = "Value exceeds defined range";
+            //}
             position = position + 4;
 
             return position;
@@ -715,8 +776,8 @@ namespace Project_1
         // DATA ITEM I021/077
         public int Time_of_Report_Transmission(string[] message, int position)
         {
-            string fullmessage = string.Concat(message[position], message[position] + 1, message[position] + 2);
-            this.Tort = Convert.ToString(Convert.ToInt32(fullmessage) * 1 / 128);
+            //string fullmessage = string.Concat(message[position], message[position] + 1, message[position] + 2);
+            //this.Tort = Convert.ToString(Convert.ToInt32(fullmessage) * 1 / 128);
             position = position + 3;
             return position;
         }
@@ -878,9 +939,9 @@ namespace Project_1
                     if (this.NAV == "0") { this.NAV = "Trajectory Intent Data is available for this aircraft"; }
                     if (this.NAV == "1") { this.NAV = "Trajectory Intent Data is not available for this aircraft"; }
 
-                    this.NVD = message[position].Substring(2, 1);
-                    if (this.NVD == "0") { this.NVD = "Trajectory Intent Data is valid"; }
-                    if (this.NVD == "1") { this.NVD = "Trajectory Intent Data is not valid"; }
+                    this.NVB = message[position].Substring(2, 1);
+                    if (this.NVB == "0") { this.NVB = "Trajectory Intent Data is valid"; }
+                    if (this.NVB == "1") { this.NVB = "Trajectory Intent Data is not valid"; }
 
                     this.FX = message[position].Substring(7, 1);
                     if (this.FX == "0") { this.FX = "no extension"; }

@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CAT10.cs" />
+    <Compile Include="CAT21.cs" />
     <Compile Include="Conversions.cs" />
     <Compile Include="DataInspectorInterface.cs">
       <SubType>Form</SubType>

@@ -21,6 +21,8 @@ namespace Project_1
             return CAT10_list;
         }
         Conversions convertor = new Conversions();
+//        public List<CAT21> CAT21_list = new List<CAT21>();
+
 
         // TABLE
         public DataTable CAT10_table = new DataTable();       // We create a table that will be fulfilled with all the data needed
@@ -96,6 +98,13 @@ namespace Project_1
                     ADD_Row_Table_CAT10(newcat10);
                 }
                 // Elif for the following categories
+                //if (CAT == 21)
+                //{
+                //    CAT21 newcat21 = new CAT21(arraystring, convertor);
+
+                //    CAT21_list.Add(newcat21);
+
+                //}
             }
         }
 

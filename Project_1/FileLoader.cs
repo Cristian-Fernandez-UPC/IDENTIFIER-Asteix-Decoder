@@ -21,6 +21,7 @@ using System.Windows.Controls;
 using Panel = System.Windows.Forms.Panel;
 using System.ComponentModel;
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
+using PrintDialog = System.Windows.Forms.PrintDialog;
 
 namespace Project_1
 {
@@ -29,7 +30,6 @@ namespace Project_1
         public static Color color1 = Color.FromArgb(52, 192, 215);
         public const string AstFileFilter = "Archivos AST (*.ast)|*.ast";
         FileReader read = new FileReader();
-        
         FilterException exception = new FilterException();
         public string FILE_PATH;
         int previous_case = 0;
@@ -133,6 +133,8 @@ namespace Project_1
                     {
                         dataView.RowFilter = $"Target_ID LIKE '%{textBox1.Text}%'";
                         dataGridView1.DataSource = dataView;
+                        togglesrestart();
+
                     }
                     catch
                     {
@@ -152,6 +154,7 @@ namespace Project_1
         {
             if (this.file_loaded == 1)
             {
+                textBox1.Text = "Enter an ID";
                 DataView dataView = new DataView(read.getTableCAT10());
                 if (this.previous_case == 0)
                 {
@@ -194,6 +197,7 @@ namespace Project_1
         {
             if (this.file_loaded == 1)
             {
+                textBox1.Text = "Enter an ID";
                 DataView dataView = new DataView(read.getTableCAT10());
                 if (this.previous_case2 == 0)
                 {
@@ -244,60 +248,112 @@ namespace Project_1
 
         private void iconPictureBox4_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count > 0)
+            if (this.file_loaded == 1)
             {
-                SaveFileDialog sfd = new SaveFileDialog();
-                sfd.Filter = "CSV (*.csv)|*.csv";
-                sfd.FileName = "Output.csv";
-                bool fileError = false;
-                if (sfd.ShowDialog() == DialogResult.OK)
+                //togglesrestart();
+
+                if (toggleButton4.Checked == true && toggleButton5.Checked == false)
                 {
-                    if (File.Exists(sfd.FileName))
+                    SaveFileDialog sfd = new SaveFileDialog() { Filter = "Archivo CSV|*.csv" };
+                    if (sfd.ShowDialog() == DialogResult.OK)
                     {
-                        try
+                        List<string> filas = new List<string>();
+                        List<string> cabeceras = new List<string>();
+                        foreach (DataGridViewColumn col in dataGridView1.Columns)
                         {
-                            File.Delete(sfd.FileName);
+                            cabeceras.Add(col.HeaderText);
                         }
-                        catch (IOException ex)
-                        {
-                            fileError = true;
-                            MessageBox.Show("It wasn't possible to write the data to the disk." + ex.Message);
-                        }
-                    }
-                    if (!fileError)
-                    {
-                        try
-                        {
-                            int columnCount = dataGridView1.Columns.Count;
-                            string columnNames = "";
-                            string[] outputCsv = new string[dataGridView1.Rows.Count + 1];
-                            for (int i = 0; i < columnCount; i++)
-                            {
-                                columnNames += dataGridView1.Columns[i].HeaderText.ToString() + ",";
-                            }
-                            outputCsv[0] += columnNames;
+                        string SEP = "\t";
+                        filas.Add(string.Join(SEP, cabeceras));
 
-                            for (int i = 1; (i - 1) < dataGridView1.Rows.Count; i++)
-                            {
-                                for (int j = 0; j < columnCount; j++)
-                                {
-                                    outputCsv[i] += dataGridView1.Rows[i - 1].Cells[j].Value.ToString() + ",";
-                                }
-                            }
-
-                            File.WriteAllLines(sfd.FileName, outputCsv, Encoding.UTF8);
-                            MessageBox.Show("Data Exported Successfully !!!", "Info");
-                        }
-                        catch (Exception ex)
+                        foreach (DataGridViewRow fila in dataGridView1.Rows)
                         {
-                            MessageBox.Show("Error :" + ex.Message);
+                            try
+                            {
+                                List<string> celdas = new List<string>();
+                                foreach (DataGridViewCell c in fila.Cells)
+                                    celdas.Add(c.Value.ToString().Replace("\r\n", ","));
+
+                                filas.Add(string.Join(SEP, celdas));
+                            }
+                            catch (Exception ex) { }
                         }
+
+                        File.WriteAllLines(sfd.FileName, filas);
+                        MessageBox.Show("CSV file saved successfully!");
                     }
                 }
+                if (toggleButton4.Checked == false && toggleButton5.Checked == true)
+                {
+
+                    // Create a PrintDialog and show it to the user
+                    PrintDialog printDialog = new PrintDialog();
+                    if (printDialog.ShowDialog() != DialogResult.OK)
+                        return;
+
+                    // Create a PrintDocument and set its properties
+                    System.Drawing.Printing.PrintDocument printDocument = new System.Drawing.Printing.PrintDocument();
+                    printDocument.DocumentName = "DataGridView Print";
+                    printDocument.DefaultPageSettings.Landscape = true;
+                    printDocument.PrinterSettings = printDialog.PrinterSettings;
+
+                    // Handle the PrintPage event of the PrintDocument
+                    printDocument.PrintPage += (s, pe) =>
+                    {
+                        // Define the margin and spacing for the header and footer
+                        int headerMargin = 50;
+                        int footerMargin = 30;
+                        int footerSpacing = 10;
+
+                        // Define the height of the header and footer
+                        int headerHeight = (int)headerFont.GetHeight();
+                        int footerHeight = (int)footerFont.GetHeight() + footerSpacing;
+
+                        // Define the rectangle for the header
+                        Rectangle headerRect = new Rectangle(pe.MarginBounds.Left, pe.MarginBounds.Top, pe.MarginBounds.Width, headerHeight);
+
+                        // Define the rectangle for the footer
+                        Rectangle footerRect = new Rectangle(pe.MarginBounds.Left, pe.MarginBounds.Bottom - footerHeight, pe.MarginBounds.Width, footerHeight);
+
+                        // Draw the header text
+                        pe.Graphics.DrawString("Header Text", headerFont, Brushes.Black, headerRect);
+
+                        // Draw the footer text
+                        pe.Graphics.DrawString("Footer Text", footerFont, Brushes.Black, footerRect);
+
+                        // Define the rectangle for the DataGridView
+                        Rectangle dgvRect = new Rectangle(pe.MarginBounds.Left, headerRect.Bottom + headerMargin, pe.MarginBounds.Width, footerRect.Top - headerRect.Bottom - headerMargin);
+
+                        // Draw the DataGridView
+                        dataGridView1.DrawToBitmap(new Bitmap(dataGridView1.Width, dataGridView1.Height), dgvRect);
+                    };
+
+                    // Show a SaveFileDialog to the user and save the document
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
+                    saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        printDocument.PrinterSettings.PrintToFile = true;
+                        printDocument.PrinterSettings.PrintFileName = saveFileDialog.FileName;
+                        printDocument.Print();
+                    }
+                }
+                if(toggleButton4.Checked == false && toggleButton5.Checked == false)
+                {
+                    MessageBox.Show("Please select the output format");
+                }
+                if(toggleButton4.Checked == true && toggleButton5.Checked == true)
+                {
+                    MessageBox.Show("Please select only one format (.csv or .xml)");
+                }
+
             }
             else
             {
-                MessageBox.Show("No Record To Export !!!", "Info");
+                toggleButton4.Checked = false;
+                toggleButton5.Checked = false;
+                exception.ShowDialog();
             }
         }
 
@@ -373,5 +429,21 @@ namespace Project_1
                 exception.ShowDialog();
             }
         }
+
+        private void iconPictureBox6_Click(object sender, EventArgs e)
+        {
+            if (this.file_loaded == 1)
+            {
+                
+            }
+            else
+            {
+                exception.ShowDialog();
+            }
+        }
+
+        private Font headerFont = new Font("Arial", 12, FontStyle.Bold);
+        private Font footerFont = new Font("Arial", 10, FontStyle.Regular);
+
     }
 }

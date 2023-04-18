@@ -207,30 +207,30 @@ namespace Project_1
             row[6] = newrow.MessageTYPE;
             row[7] = newrow.FL;
             row[8] = newrow.Time_of_day_in_format;
-            row[9] = "CNF: " + newrow.CNF + "\n" + "TRE: " + newrow.TRE + "\n" + "CST: " + newrow.CST + "\n" + "MAH: " + newrow.MAH + "\n" + "TCC: " + newrow.TCC + "\n" + "STH: " + newrow.STH + "\n" + "TOM: " + newrow.TOM + "\n" + "DOU: " + newrow.DOU + "\n" + "MRS: " + newrow.MRS + "\n" + "GHO: " + newrow.GHO;
-            row[10] = "Latitude= " + newrow.Latitude_WGS84 + "\n" + "Longitude= " + newrow.Longitude_WGS84;
-            row[11] = "X= " + newrow.X_Component + "\n" + "Y= " + newrow.Y_Component;
-            row[12] = "RHO= " + newrow.RHO+ "\n" + "THETA= " + newrow.Theta;
-            row[13] = "Ground speed= " + newrow.Ground_Speed + "\n" + "Track Angle= " + newrow.Track_Angle;
-            row[14] = "V_x= " + newrow.Vx+ "\n" + "V_y= " + newrow.Vy;
-            row[15] = "Lenght: " + newrow.Lenght + "\n" + "Orientation: " + newrow.Orientation + "\n" + "Width: " + newrow.Width;
+            row[9] = "CNF: " + newrow.CNF + nl + "TRE: " + newrow.TRE + nl + "CST: " + newrow.CST + nl + "MAH: " + newrow.MAH + nl + "TCC: " + newrow.TCC + nl + "STH: " + newrow.STH + nl + "TOM: " + newrow.TOM + nl + "DOU: " + newrow.DOU + nl + "MRS: " + newrow.MRS + nl + "GHO: " + newrow.GHO;
+            row[10] = "Latitude= " + newrow.Latitude_WGS84 + nl + "Longitude= " + newrow.Longitude_WGS84;
+            row[11] = "X= " + newrow.X_Component + nl + "Y= " + newrow.Y_Component;
+            row[12] = "RHO= " + newrow.RHO+ nl + "THETA= " + newrow.Theta;
+            row[13] = "Ground speed= " + newrow.Ground_Speed + nl + "Track Angle= " + newrow.Track_Angle;
+            row[14] = "V_x= " + newrow.Vx+ nl + "V_y= " + newrow.Vy;
+            row[15] = "Lenght: " + newrow.Lenght + nl + "Orientation: " + newrow.Orientation + nl + "Width: " + newrow.Width;
             row[16] = newrow.TargetAddress;
-            row[17] = "NOGO:" + newrow.NOGO + "\n" + "OVL:" + newrow.OVL + "\n" + "TSV:" + newrow.TSV + "\n" + "DIV:" + newrow.DIV + "\n" + "TTF:" + newrow.TTF;
+            row[17] = "NOGO:" + newrow.NOGO + nl + "OVL:" + newrow.OVL + nl + "TSV:" + newrow.TSV + nl + "DIV:" + newrow.DIV + nl + "TTF:" + newrow.TTF;
             row[18] = newrow.Vehicle_Fleet_ID;
-            row[19] = "TRB:" + newrow.TRB + "\n" + "MSG:" + newrow.MSG;
+            row[19] = "TRB:" + newrow.TRB + nl + "MSG:" + newrow.MSG;
             row[20] = newrow.MHeight;
-            row[21] = newrow.V_Mode3A + "\n" + newrow.G_Mode3A + "\n" + newrow.L_Mode3A + "\n" + newrow.Mode3A_reply;
+            row[21] = newrow.V_Mode3A + nl + newrow.G_Mode3A + nl + newrow.L_Mode3A + nl + newrow.Mode3A_reply;
             if (newrow.MB_Data_ModeS != null)
                 row[22] = newrow.MB_Data_ModeS;
             else
                 row[22] = this.MB_Data_ModeSmessage;
-            row[23] = "Omega_X:" + newrow.omega_x + "\n" + "Omega_Y:" + newrow.omega_y + "\n" + "Omega_XY:" + newrow.omega_y;
+            row[23] = "Omega_X:" + newrow.omega_x + nl + "Omega_Y:" + newrow.omega_y + nl + "Omega_XY:" + newrow.omega_y;
             if (newrow.REP != 0)
                 row[24] = newrow.REP;
             else
                 row[24] = this.REPmessage;
             row[25] = newrow.PAM;
-            row[26] = "Ax: " + newrow.Ax + "\n" + "Ay: " + newrow.Ay;
+            row[26] = "Ax: " + newrow.Ax + nl + "Ay: " + newrow.Ay;
 
 
             

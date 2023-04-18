@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
@@ -54,11 +54,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.toggleButton5 = new Project_1.ToggleButton();
-            this.toggleButton4 = new Project_1.ToggleButton();
-            this.toggleButton3 = new Project_1.ToggleButton();
-            this.toggleButton2 = new Project_1.ToggleButton();
-            this.toggleButton1 = new Project_1.ToggleButton();
             this.panel6 = new System.Windows.Forms.Panel();
             this.iconPictureBox3 = new FontAwesome.Sharp.IconPictureBox();
             this.iconPictureBox5 = new FontAwesome.Sharp.IconPictureBox();
@@ -67,6 +62,11 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.iconPictureBox6 = new FontAwesome.Sharp.IconPictureBox();
+            this.toggleButton5 = new Project_1.ToggleButton();
+            this.toggleButton4 = new Project_1.ToggleButton();
+            this.toggleButton3 = new Project_1.ToggleButton();
+            this.toggleButton2 = new Project_1.ToggleButton();
+            this.toggleButton1 = new Project_1.ToggleButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).BeginInit();
@@ -96,14 +96,14 @@
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.Location = new System.Drawing.Point(28, 227);
@@ -111,8 +111,8 @@
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 92;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.SkyBlue;
-            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.SkyBlue;
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView1.RowTemplate.Height = 37;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(3187, 639);
@@ -360,78 +360,6 @@
             this.label12.TabIndex = 34;
             this.label12.Text = "E X P O R T I N G    S E C T I O N";
             // 
-            // toggleButton5
-            // 
-            this.toggleButton5.AutoSize = true;
-            this.toggleButton5.Location = new System.Drawing.Point(2005, 120);
-            this.toggleButton5.MinimumSize = new System.Drawing.Size(45, 22);
-            this.toggleButton5.Name = "toggleButton5";
-            this.toggleButton5.OffBackColor = System.Drawing.Color.Gray;
-            this.toggleButton5.OffToggleColor = System.Drawing.Color.Crimson;
-            this.toggleButton5.OnBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(192)))), ((int)(((byte)(215)))));
-            this.toggleButton5.OnToggleColor = System.Drawing.Color.WhiteSmoke;
-            this.toggleButton5.Size = new System.Drawing.Size(45, 27);
-            this.toggleButton5.TabIndex = 32;
-            this.toggleButton5.UseVisualStyleBackColor = true;
-            // 
-            // toggleButton4
-            // 
-            this.toggleButton4.AutoSize = true;
-            this.toggleButton4.Location = new System.Drawing.Point(2005, 74);
-            this.toggleButton4.MinimumSize = new System.Drawing.Size(45, 22);
-            this.toggleButton4.Name = "toggleButton4";
-            this.toggleButton4.OffBackColor = System.Drawing.Color.Gray;
-            this.toggleButton4.OffToggleColor = System.Drawing.Color.Crimson;
-            this.toggleButton4.OnBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(192)))), ((int)(((byte)(215)))));
-            this.toggleButton4.OnToggleColor = System.Drawing.Color.WhiteSmoke;
-            this.toggleButton4.Size = new System.Drawing.Size(45, 27);
-            this.toggleButton4.TabIndex = 30;
-            this.toggleButton4.UseVisualStyleBackColor = true;
-            // 
-            // toggleButton3
-            // 
-            this.toggleButton3.AutoSize = true;
-            this.toggleButton3.Location = new System.Drawing.Point(951, 154);
-            this.toggleButton3.MinimumSize = new System.Drawing.Size(45, 22);
-            this.toggleButton3.Name = "toggleButton3";
-            this.toggleButton3.OffBackColor = System.Drawing.Color.Gray;
-            this.toggleButton3.OffToggleColor = System.Drawing.Color.Crimson;
-            this.toggleButton3.OnBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(192)))), ((int)(((byte)(215)))));
-            this.toggleButton3.OnToggleColor = System.Drawing.Color.WhiteSmoke;
-            this.toggleButton3.Size = new System.Drawing.Size(45, 27);
-            this.toggleButton3.TabIndex = 21;
-            this.toggleButton3.UseVisualStyleBackColor = true;
-            // 
-            // toggleButton2
-            // 
-            this.toggleButton2.AutoSize = true;
-            this.toggleButton2.Location = new System.Drawing.Point(951, 105);
-            this.toggleButton2.MinimumSize = new System.Drawing.Size(45, 22);
-            this.toggleButton2.Name = "toggleButton2";
-            this.toggleButton2.OffBackColor = System.Drawing.Color.Gray;
-            this.toggleButton2.OffToggleColor = System.Drawing.Color.Crimson;
-            this.toggleButton2.OnBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(192)))), ((int)(((byte)(215)))));
-            this.toggleButton2.OnToggleColor = System.Drawing.Color.WhiteSmoke;
-            this.toggleButton2.Size = new System.Drawing.Size(45, 27);
-            this.toggleButton2.TabIndex = 19;
-            this.toggleButton2.UseVisualStyleBackColor = true;
-            this.toggleButton2.CheckedChanged += new System.EventHandler(this.toggleButton2_CheckedChanged);
-            // 
-            // toggleButton1
-            // 
-            this.toggleButton1.AutoSize = true;
-            this.toggleButton1.Location = new System.Drawing.Point(951, 57);
-            this.toggleButton1.MinimumSize = new System.Drawing.Size(45, 22);
-            this.toggleButton1.Name = "toggleButton1";
-            this.toggleButton1.OffBackColor = System.Drawing.Color.Gray;
-            this.toggleButton1.OffToggleColor = System.Drawing.Color.Crimson;
-            this.toggleButton1.OnBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(192)))), ((int)(((byte)(215)))));
-            this.toggleButton1.OnToggleColor = System.Drawing.Color.WhiteSmoke;
-            this.toggleButton1.Size = new System.Drawing.Size(45, 27);
-            this.toggleButton1.TabIndex = 13;
-            this.toggleButton1.UseVisualStyleBackColor = true;
-            this.toggleButton1.CheckedChanged += new System.EventHandler(this.toggleButton1_CheckedChanged);
-            // 
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.White;
@@ -528,12 +456,81 @@
             this.iconPictureBox6.Size = new System.Drawing.Size(49, 42);
             this.iconPictureBox6.TabIndex = 40;
             this.iconPictureBox6.TabStop = false;
+            this.iconPictureBox6.Click += new System.EventHandler(this.iconPictureBox6_Click);
             this.iconPictureBox6.MouseEnter += new System.EventHandler(this.iconPictureBox6_MouseEnter);
             this.iconPictureBox6.MouseLeave += new System.EventHandler(this.iconPictureBox6_MouseLeave);
             // 
-            // iconDropDownButton1
+            // toggleButton5
             // 
-
+            this.toggleButton5.AutoSize = true;
+            this.toggleButton5.Location = new System.Drawing.Point(2005, 120);
+            this.toggleButton5.MinimumSize = new System.Drawing.Size(45, 22);
+            this.toggleButton5.Name = "toggleButton5";
+            this.toggleButton5.OffBackColor = System.Drawing.Color.Gray;
+            this.toggleButton5.OffToggleColor = System.Drawing.Color.Crimson;
+            this.toggleButton5.OnBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(192)))), ((int)(((byte)(215)))));
+            this.toggleButton5.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.toggleButton5.Size = new System.Drawing.Size(45, 27);
+            this.toggleButton5.TabIndex = 32;
+            this.toggleButton5.UseVisualStyleBackColor = true;
+            // 
+            // toggleButton4
+            // 
+            this.toggleButton4.AutoSize = true;
+            this.toggleButton4.Location = new System.Drawing.Point(2005, 74);
+            this.toggleButton4.MinimumSize = new System.Drawing.Size(45, 22);
+            this.toggleButton4.Name = "toggleButton4";
+            this.toggleButton4.OffBackColor = System.Drawing.Color.Gray;
+            this.toggleButton4.OffToggleColor = System.Drawing.Color.Crimson;
+            this.toggleButton4.OnBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(192)))), ((int)(((byte)(215)))));
+            this.toggleButton4.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.toggleButton4.Size = new System.Drawing.Size(45, 27);
+            this.toggleButton4.TabIndex = 30;
+            this.toggleButton4.UseVisualStyleBackColor = true;
+            // 
+            // toggleButton3
+            // 
+            this.toggleButton3.AutoSize = true;
+            this.toggleButton3.Location = new System.Drawing.Point(951, 154);
+            this.toggleButton3.MinimumSize = new System.Drawing.Size(45, 22);
+            this.toggleButton3.Name = "toggleButton3";
+            this.toggleButton3.OffBackColor = System.Drawing.Color.Gray;
+            this.toggleButton3.OffToggleColor = System.Drawing.Color.Crimson;
+            this.toggleButton3.OnBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(192)))), ((int)(((byte)(215)))));
+            this.toggleButton3.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.toggleButton3.Size = new System.Drawing.Size(45, 27);
+            this.toggleButton3.TabIndex = 21;
+            this.toggleButton3.UseVisualStyleBackColor = true;
+            // 
+            // toggleButton2
+            // 
+            this.toggleButton2.AutoSize = true;
+            this.toggleButton2.Location = new System.Drawing.Point(951, 105);
+            this.toggleButton2.MinimumSize = new System.Drawing.Size(45, 22);
+            this.toggleButton2.Name = "toggleButton2";
+            this.toggleButton2.OffBackColor = System.Drawing.Color.Gray;
+            this.toggleButton2.OffToggleColor = System.Drawing.Color.Crimson;
+            this.toggleButton2.OnBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(192)))), ((int)(((byte)(215)))));
+            this.toggleButton2.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.toggleButton2.Size = new System.Drawing.Size(45, 27);
+            this.toggleButton2.TabIndex = 19;
+            this.toggleButton2.UseVisualStyleBackColor = true;
+            this.toggleButton2.CheckedChanged += new System.EventHandler(this.toggleButton2_CheckedChanged);
+            // 
+            // toggleButton1
+            // 
+            this.toggleButton1.AutoSize = true;
+            this.toggleButton1.Location = new System.Drawing.Point(951, 57);
+            this.toggleButton1.MinimumSize = new System.Drawing.Size(45, 22);
+            this.toggleButton1.Name = "toggleButton1";
+            this.toggleButton1.OffBackColor = System.Drawing.Color.Gray;
+            this.toggleButton1.OffToggleColor = System.Drawing.Color.Crimson;
+            this.toggleButton1.OnBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(192)))), ((int)(((byte)(215)))));
+            this.toggleButton1.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.toggleButton1.Size = new System.Drawing.Size(45, 27);
+            this.toggleButton1.TabIndex = 13;
+            this.toggleButton1.UseVisualStyleBackColor = true;
+            this.toggleButton1.CheckedChanged += new System.EventHandler(this.toggleButton1_CheckedChanged);
             // 
             // FileLoader
             // 

@@ -60,7 +60,6 @@ namespace Project_1
             openFileDialog1.Filter = AstFileFilter;
             RoundPanelCorners(panel3, 20);
             textBox1.Text = "Enter an ID";
-
         }
 
 
@@ -69,7 +68,6 @@ namespace Project_1
         {
 
         }
-
 
 
 
@@ -112,6 +110,7 @@ namespace Project_1
 
                 this.dataGridView1.DataSource = read.getTableCAT10();
                 this.dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                
                 toggleButton1.Checked = true;
                 toggleButton2.Checked = true;
 
@@ -408,6 +407,8 @@ namespace Project_1
             {
                 dataGridView1.DataSource = read.getTableCAT10();
                 togglesrestart();
+                toggleButton1.Checked = true;
+                toggleButton2.Checked = true;
 
             }
             else
@@ -460,5 +461,9 @@ namespace Project_1
         private Font headerFont = new Font("Arial", 12, FontStyle.Bold);
         private Font footerFont = new Font("Arial", 10, FontStyle.Regular);
 
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

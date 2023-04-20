@@ -71,7 +71,7 @@
             this.iconButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.iconButton2.Font = new System.Drawing.Font("Calibri Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.iconButton2.ForeColor = System.Drawing.Color.White;
-            this.iconButton2.IconChar = FontAwesome.Sharp.IconChar.Database;
+            this.iconButton2.IconChar = FontAwesome.Sharp.IconChar.MapMarkedAlt;
             this.iconButton2.IconColor = System.Drawing.Color.White;
             this.iconButton2.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.iconButton2.IconSize = 100;
@@ -81,7 +81,7 @@
             this.iconButton2.Padding = new System.Windows.Forms.Padding(40, 0, 40, 0);
             this.iconButton2.Size = new System.Drawing.Size(637, 149);
             this.iconButton2.TabIndex = 3;
-            this.iconButton2.Text = "Data Interface";
+            this.iconButton2.Text = "Map Interface";
             this.iconButton2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.iconButton2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.iconButton2.UseVisualStyleBackColor = false;

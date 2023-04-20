@@ -23,7 +23,7 @@ namespace Project_1
 
         public FileLoader File_Loader = new FileLoader();
 
-        public DataInspectorInterface Data_Inspector = new DataInspectorInterface();
+        public MapInterface Data_Inspector = new MapInterface();
 
 
         // Constructor
@@ -54,6 +54,8 @@ namespace Project_1
             iconPictureBox1.IconChar = IconChar.HomeLg;
             iconPictureBox1.IconColor = Color.White;
             label1.Text = "Home";
+            File_Loader.Hide();
+            Data_Inspector.Hide();
         }
 
         //Structs
@@ -112,7 +114,6 @@ namespace Project_1
 
         private void iconButton2_Click(object sender, EventArgs e)
         {
-            File_Loader.Close();
             ActivateButton(sender, RGBColors.color1);
             OpenChildForm(Data_Inspector);
             //filereaded.ReadFile(File_Loader.GetFilePath());
@@ -121,15 +122,6 @@ namespace Project_1
 
  
         }
-
-
-
-
-
-
-
-
-
 
 
         // Drag Form
@@ -150,7 +142,7 @@ namespace Project_1
             if (currentChildForm != null)
             {
                 //open only form
-                currentChildForm.Close();
+                currentChildForm.Hide();
             }
             currentChildForm = childForm;
             childForm.TopLevel = false;

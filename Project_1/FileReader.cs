@@ -15,8 +15,8 @@ namespace Project_1
     public class FileReader
     {
         // LIST
-        public List<CAT10> CAT10_list = new List<CAT10>();    // We create a list where all CAT10 messages will be
-        public List<CAT21> CAT21_list = new List<CAT21>();    // We create a list where all CAT21 messages will be
+        //public List<CAT10> CAT10_list = new List<CAT10>();    // We create a list where all CAT10 messages will be
+        //public List<CAT21> CAT21_list = new List<CAT21>();    // We create a list where all CAT21 messages will be
 
         Conversions convertor = new Conversions();
 
@@ -50,6 +50,7 @@ namespace Project_1
         // READING PROCESS
         public void ReadFile(string filepath)
         {
+
             byte[] file_in_bytes = File.ReadAllBytes(filepath);
             List<byte[]> bytelist = new List<byte[]>();
             int i = 0;
@@ -95,17 +96,16 @@ namespace Project_1
                 if (CAT == 10)
                 {
                     CAT10 newcat10 = new CAT10(arraystring, convertor);
-
-                    CAT10_list.Add(newcat10);
+                    //CAT10_list.Add(newcat10);
                     ADD_Row_Table_CAT10(newcat10);
                 }
-                //if (CAT == 21)
-                //{
-                //    CAT21 newcat21 = new CAT21(arraystring, convertor);
-                //    CAT21_list.Add(newcat21);
-                //    ADD_Row_Table_CAT21(newcat21);
+                if (CAT == 21)
+                {
+                    CAT21 newcat21 = new CAT21(arraystring, convertor);
+                    //CAT21_list.Add(newcat21);
+                    ADD_Row_Table_CAT21(newcat21);
 
-                //}
+                }
             }
         }
 

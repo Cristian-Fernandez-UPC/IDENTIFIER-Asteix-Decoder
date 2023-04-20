@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Project_1
 {
-    public partial class DataInspectorInterface : Form
+    public partial class MapInterface : Form
     {
 
 
@@ -24,7 +24,7 @@ namespace Project_1
 
         }
 
-        public DataInspectorInterface()
+        public MapInterface()
         {
             InitializeComponent();
 

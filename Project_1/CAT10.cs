@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Project_1
 {
@@ -111,7 +106,7 @@ namespace Project_1
                     i = true;
 
                 // The last case of FSPEC
-                if (a>=3 && i==true)
+                if (a >= 3 && i == true)
                 {
                     if (message[a - 1].EndsWith("1"))
                     {
@@ -119,7 +114,7 @@ namespace Project_1
                     }
                 }
 
-                if (a==3 && i==true)
+                if (a == 3 && i == true)
                 {
                     Full_FSPEC = message[a].Remove(message[a].Length - 1);
                 }
@@ -217,11 +212,11 @@ namespace Project_1
 
 
         // DATA ITEM I010/010 [Data Source Identifier]------------DONE
-        public int Data_Source_Identifier(string[] message,int position)
+        public int Data_Source_Identifier(string[] message, int position)
         {
             this.SAC = Convert.ToString(Convert.ToInt32(message[position], 2));
             this.SIC = Convert.ToString(Convert.ToInt32(message[position + 1], 2));
-            position = position+2;
+            position = position + 2;
 
             return position;
         }
@@ -256,7 +251,7 @@ namespace Project_1
             if (this.CRT == "0") { this.CRT = "No Corrupted reply in multilateration"; }
             if (this.CRT == "1") { this.CRT = "Corrupted replies in multilateration"; }
 
-            if(message[position].Substring(7,1) == "1")
+            if (message[position].Substring(7, 1) == "1")
             {
                 // Extension into first extent
                 position = position + 1;
@@ -354,7 +349,7 @@ namespace Project_1
         // DATA ITEM I010/060 [Mode-3/A Code in Octal Representation]----------DONE
         public int Mode3A_Code_in_Octal_Representation(string[] message, int position)
         {
-            string fullmessage = String.Concat(message[position],message[position +1]);
+            string fullmessage = String.Concat(message[position], message[position + 1]);
             this.V_Mode3A = fullmessage.Substring(0, 1);
             this.G_Mode3A = fullmessage.Substring(1, 1);
             this.L_Mode3A = fullmessage.Substring(2, 1);
@@ -374,9 +369,9 @@ namespace Project_1
             else
                 this.L_Mode3A = "L: Mode-3/A code not extracted during the last scan";
 
-            this.Mode3A_reply = fullmessage.Substring(4, 12);
+            this.Mode3A_reply = Convert.ToString(Convert.ToInt32(fullmessage.Substring(4, 12), 2), 8).PadLeft(4,'0');
 
-
+            
 
             position = position + 2;
 
@@ -532,8 +527,8 @@ namespace Project_1
         // DATA ITEM I010/200 [Calculated Track Velocity in Polar Coordiantes]----------DONE
         public int Calculated_Track_Velocity_in_Polar_Coordinates(string[] message, int position)
         {
-            this.Ground_Speed = String.Format("{0:0.00}", (Convert.ToInt32(String.Concat(message[position], message[position + 1]), 2)* (Math.Pow(2, -14)) *1852)) + "m/s"; // In m/s
-            this.Track_Angle = String.Format("{0:0.00}", Convert.ToInt32(String.Concat(message[position + 2], message[position + 3]), 2) * (360 / Math.Pow(2, 16)))+ "°";
+            this.Ground_Speed = String.Format("{0:0.00}", (Convert.ToInt32(String.Concat(message[position], message[position + 1]), 2) * (Math.Pow(2, -14)) * 1852)) + "m/s"; // In m/s
+            this.Track_Angle = String.Format("{0:0.00}", Convert.ToInt32(String.Concat(message[position + 2], message[position + 3]), 2) * (360 / Math.Pow(2, 16))) + "°";
             if (Convert.ToInt32(String.Concat(message[position], message[position + 1]), 2) * (Math.Pow(2, -14)) >= 2)
                 this.Ground_Speed = "Max value exceded (> 2NM/s)";
             position = position + 4;
@@ -545,7 +540,7 @@ namespace Project_1
         // DATA ITEM I010/202 [Calculated Track Velocity in Cartesian Cooridinates]-----------DONE
         public int Calculated_Track_Velocity_in_Cartesian_Coordiantes(string[] message, int position)
         {
-            this.Vx = Convert.ToString(convertor.TWO_Complement(String.Concat(message[position], message[position + 1]))*0.25) + " m/s";
+            this.Vx = Convert.ToString(convertor.TWO_Complement(String.Concat(message[position], message[position + 1])) * 0.25) + " m/s";
             this.Vy = Convert.ToString(convertor.TWO_Complement(String.Concat(message[position + 2], message[position + 3])) * 0.25) + " m/s";
             position = position + 4;
 
@@ -557,11 +552,11 @@ namespace Project_1
         public int Calculated_Acceleration(string[] message, int position)
         {
             this.Ax = Convert.ToString(convertor.TWO_Complement(message[position]) * 0.25) + "m/s^2";
-            this.Ay = Convert.ToString(convertor.TWO_Complement(message[position+1]) * 0.25) + "m/s^2";
+            this.Ay = Convert.ToString(convertor.TWO_Complement(message[position + 1]) * 0.25) + "m/s^2";
 
             if (convertor.TWO_Complement(message[position]) * 0.25 >= 31 || (convertor.TWO_Complement(message[position])) * 0.25 <= -31)
                 this.Ax = "Max acceleration value exceeded (+-32 m/s^2)";
-            if ((convertor.TWO_Complement(message[position+1])) * 0.25 >= 31 || (convertor.TWO_Complement(message[position+1]) * 0.25 <= -31))
+            if ((convertor.TWO_Complement(message[position + 1])) * 0.25 >= 31 || (convertor.TWO_Complement(message[position + 1]) * 0.25 <= -31))
                 this.Ay = "Max acceleration value exceeded (+-32 m/s^2)";
 
             position = position + 2;
@@ -569,7 +564,7 @@ namespace Project_1
             return position;
         }
 
-        
+
         // DATA ITEM I010/220 [Target Address]-----------DONE
         public int Target_Address(string[] message, int position)
         {
@@ -592,10 +587,10 @@ namespace Project_1
             string fullmessage = String.Concat(message[position + 1], message[position + 2], message[position + 3], message[position + 4], message[position + 5], message[position + 6]);
             this.Target_ID = "";
             int i = 2;
-            while (i<fullmessage.Length)
+            while (i < fullmessage.Length)
             {
                 string reversedStr = fullmessage.Substring(i, 4);
-                charecter = fullmessage.Substring(i-2, 4);
+                charecter = fullmessage.Substring(i - 2, 4);
                 //char[] stringArray = charecter.ToCharArray();
                 //Array.Reverse(stringArray);
                 //string reversedStr = new string(stringArray);
@@ -790,13 +785,13 @@ namespace Project_1
         public int Mode_S_MB_Data(string[] message, int position)
         {
             this.REP_ModeS = convertor.Binary_Octet_To_Hexadecimal(message[position]);
-            if (Convert.ToInt32(this.REP_ModeS) < 0) 
-            { 
-                this.MB_Data_ModeS = new string[Convert.ToInt32(this.REP_ModeS)]; 
+            if (Convert.ToInt32(this.REP_ModeS) < 0)
+            {
+                this.MB_Data_ModeS = new string[Convert.ToInt32(this.REP_ModeS)];
                 this.BDS1_ModeS = new string[Convert.ToInt32(this.REP_ModeS)];
                 this.BDS2_ModeS = new string[Convert.ToInt32(this.REP_ModeS)];
             }
-            position = position +1;
+            position = position + 1;
             int i = 0;
 
             while (i < Convert.ToInt32(this.REP_ModeS))
@@ -807,7 +802,7 @@ namespace Project_1
                 position = position + 8;
                 i = i + 1;
             }
-            
+
             return position;
         }
 
@@ -821,8 +816,8 @@ namespace Project_1
             {
                 // Extension into first extent
                 position = position + 1;
-                this.Orientation = Convert.ToString(Convert.ToInt32(message[position].Substring(0, 7),2)*2.81) + "°";
-                
+                this.Orientation = Convert.ToString(Convert.ToInt32(message[position].Substring(0, 7), 2) * 2.81) + "°";
+
                 if (message[position].Substring(7, 1) == "1")
                 {
                     // Extension into next extent
@@ -856,16 +851,16 @@ namespace Project_1
             while (i < this.REP)
             {
                 this.DRHO[i] = convertor.Binary_Octet_To_Hexadecimal(message[position]) + "m";
-                this.DRHO[i] = Convert.ToString(Convert.ToInt32(convertor.Binary_Octet_To_Hexadecimal(message[position]))*0.15)+ "°";
+                this.DRHO[i] = Convert.ToString(Convert.ToInt32(convertor.Binary_Octet_To_Hexadecimal(message[position])) * 0.15) + "°";
 
                 position = position + 2;
-                i ++;
+                i++;
             }
 
             return position;
         }
 
-        
+
         // DATA ITEM I010/300 [Vehicle Fleet Identification]------------DONE
         public int Vehicle_Fleet_Identfication(string[] message, int position)
         {
@@ -941,9 +936,9 @@ namespace Project_1
         // DATA ITEM I010/500 [Standard Deviation of Position]---------------DONE
         public int Standard_Deviation_of_Position(string[] message, int position)
         {
-            this.omega_x = Convert.ToString(Convert.ToInt32(convertor.Binary_Octet_To_Hexadecimal(message[position])) * 0.25) +"m";
-            this.omega_y = Convert.ToString(Convert.ToInt32(convertor.Binary_Octet_To_Hexadecimal(message[position + 1])) * 0.25) +"m";
-            this.omega_xy = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(String.Concat(message[position + 2], message[position + 3]))) * 0.25) +"m^2";
+            this.omega_x = Convert.ToString(Convert.ToInt32(convertor.Binary_Octet_To_Hexadecimal(message[position])) * 0.25) + "m";
+            this.omega_y = Convert.ToString(Convert.ToInt32(convertor.Binary_Octet_To_Hexadecimal(message[position + 1])) * 0.25) + "m";
+            this.omega_xy = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(String.Concat(message[position + 2], message[position + 3]))) * 0.25) + "m^2";
             position = position + 4;
 
             return position;

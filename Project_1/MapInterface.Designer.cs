@@ -1,6 +1,6 @@
 ﻿namespace Project_1
 {
-    partial class DataInspectorInterface
+    partial class MapInterface
     {
         /// <summary>
         /// Required designer variable.
@@ -61,16 +61,16 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // DataInspectorInterface
+            // MapInterface
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.ClientSize = new System.Drawing.Size(1924, 1061);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "DataInspectorInterface";
+            this.Name = "MapInterface";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Data Interface";
+            this.Text = "Map Interface";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

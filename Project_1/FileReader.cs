@@ -381,23 +381,7 @@ namespace Project_1
             if (newrow.AH == null) { newrow.AH = "No Data"; }
             if (newrow.AM == null) { newrow.AM = "No Data"; }
             if (newrow.AltitudeF == null) { newrow.AltitudeF = "No Data"; }
-            if (newrow.TIS == null) { newrow.TIS = "No Data"; }
-            if (newrow.TID == null) { newrow.TID = "No Data"; }
-            if (newrow.NAV == null) { newrow.NAV = "No Data"; }
-            if (newrow.NVB == null) { newrow.NVB = "No Data"; }
-            if (newrow.REP1 == null) { newrow.REP1 = "No Data"; }
-            if (newrow.TCA == null) { newrow.TCA = "No Data"; }
-            if (newrow.NC == null) { newrow.NC = "No Data"; }
-            if (newrow.TCPNumber == null) { newrow.TCPNumber = "No Data"; }
-            if (newrow.AltitudeTID == null) { newrow.AltitudeTID = "No Data"; }
-            if (newrow.LATITUDE == null) { newrow.LATITUDE = "No Data"; }
-            if (newrow.LONGITUDE == null) { newrow.LONGITUDE = "No Data"; }
-            if (newrow.PT == null) { newrow.PT = "No Data"; }
-            if (newrow.TD == null) { newrow.TD = "No Data"; }
-            if (newrow.TRA == null) { newrow.TRA = "No Data"; }
-            if (newrow.TOA == null) { newrow.TOA = "No Data"; }
-            if (newrow.TOV == null) { newrow.TOV = "No Data"; }
-            if (newrow.TTR == null) { newrow.TTR = "No Data"; }
+            if (newrow.TrajectoryIntent == null) { newrow.TrajectoryIntent = "No Data"; }            
             if (newrow.RP == null) { newrow.RP = "No Data"; }
             if (newrow.RA_Status == null) { newrow.RA_Status = "No Data"; }
             if (newrow.TC_Status == null) { newrow.TC_Status = "No Data"; }
@@ -414,14 +398,7 @@ namespace Project_1
             if (newrow.LW == null) { newrow.LW = "No Data"; }
             if (newrow.MAM == null) { newrow.MAM = "No Data"; }
             if (newrow.ModeSMBData == null) { newrow.ModeSMBData = "No Data"; }
-            if (newrow.TYP == null) { newrow.TYP = "No Data"; }
-            if (newrow.STYP == null) { newrow.STYP = "No Data"; }
-            if (newrow.ARA == null) { newrow.ARA = "No Data"; }
-            if (newrow.RAC == null) { newrow.RAC = "No Data"; }
-            if (newrow.RAT == null) { newrow.RAT = "No Data"; }
-            if (newrow.MTE == null) { newrow.MTE = "No Data"; }
-            if (newrow.TTI == null) { newrow.TTI = "No Data"; }
-            if (newrow.TID_acas == null) { newrow.TID_acas = "No Data"; }
+            if (newrow.ACAS == null) { newrow.ACAS = "No Data"; }
             if (newrow.RID == null) { newrow.RID = "No Data"; }
             if (newrow.AOS == null) { newrow.AOS = "No Data"; }
             if (newrow.TRD == null) { newrow.TRD = "No Data"; }
@@ -436,7 +413,7 @@ namespace Project_1
             if (newrow.AS == null) { newrow.AS = "No Data"; }
             if (newrow.TAS == null) { newrow.TAS = "No Data"; }
             if (newrow.MH == null) { newrow.MH = "No Data"; }
-            if (newrow.MVR == null) { newrow.MVR = "No Data"; }
+            if (newrow.BVR == null) { newrow.BVR = "No Data"; }
             if (newrow.GVR == null) { newrow.GVR = "No Data"; }
             if (newrow.GV == null) { newrow.GV = "No Data"; }
             if (newrow.TAR_ages == null) { newrow.TAR_ages = "No Data"; }
@@ -486,14 +463,15 @@ namespace Project_1
             row[32] = "WS: " + newrow.WS + nl + "WD: " + newrow.WD + nl + "TMP: " + newrow.TMP + nl + "TRB: " + newrow.TRB;
             row[33] = "SAS: " + newrow.SAS + nl + "Source: " + newrow.Source + nl + "Altitude: " + newrow.Altitude;
             row[34] = "MV: " + newrow.MV + nl + "AH: " + newrow.AH + nl + "AM: " + newrow.AM + nl + "Final Altitude: " + newrow.AltitudeF;
-            row[35] = "TIS: " + newrow.TIS + nl + "TID: " + newrow.TID + nl + "NAV: " + newrow.NAV + nl + "NVB: " + newrow.NVB + nl + "REP: " + newrow.REP1 + nl + "TCA: " + newrow.TCA + nl + "NC: " + newrow.NC + nl + "TCP Number: " + newrow.TCPNumber + nl + "Altitude: " + newrow.AltitudeTID + nl + "Latitude: " + newrow.LATITUDE + nl + "Longitude: " + newrow.LONGITUDE + nl + "Point Type: " + newrow.PT + nl + "TD: " + newrow.TD + nl + "TRA: " + newrow.TRA + nl + "TOA: " + newrow.TOA + nl + "TOV: " + newrow.TOV + nl + "TTR: " + newrow.TTR;
-            row[36] = "RA: " + newrow.RA_Status + nl + "TC: " + newrow.TC_Status + nl + "TS: " + newrow.TS_Status + nl + "ARV: " + newrow.ARV_Status + nl + "CDTI/A: " + newrow.CDTI_A_Status + nl + "not TCAS: " + newrow.not_TCAS_Status + nl + "SA: " + newrow.SA_Status;
-            row[37] = "POA: " + newrow.POA + nl + "CDTIS: " + newrow.CDTIS + nl + "B2LOW: " + newrow.B2low + nl + "RAS: " + newrow.RAS + nl + "IDENT: " + newrow.IDENT + nl + "LW: " + newrow.LW;
-            row[38] = newrow.MAM;
-            row[39] = newrow.ModeSMBData;
-            row[40] = "TYP: " + newrow.TYP + nl + "STYP: " + newrow.STYP + nl + "ARA: " + newrow.ARA + nl + "RAC: " + newrow.RAC + nl + "RAT: " + newrow.RAT + nl + "MTE: " + newrow.MTE + nl + "TTI: " + newrow.TTI + nl + "TID: " + newrow.TID_acas;
-            row[41] = newrow.RID;
-            row[42] = "AOS: " + newrow.AOS + nl + "TRD: " + newrow.TRD + nl + "M3A: " + newrow.M3A + nl + "QI: " + newrow.QI + nl + "TI: " + newrow.TI + nl + "MAM: " + newrow.MAM_ages + nl + "GH: " + newrow.GH + nl + "FL: " + newrow.FL_ages + nl + "ISA: " + newrow.ISA + nl + "FSA: " + newrow.FSA + nl + "AS: " + newrow.AS + nl + "TAS: " + newrow.TAS + nl + "MH: " + newrow.MH + nl + "MVR: " + newrow.MVR + nl + "GVR: " + newrow.GVR + nl + "GV: " + newrow.GV + nl + "TAR: " + newrow.TAR + nl + "TI: " + newrow.TI + nl + "TS: " + newrow.TS + nl + "MET: " + newrow.MET + nl + "ROA: " + newrow.ROA + nl + "ARA: " + newrow.ARA + nl + "SCC: " + newrow.SCC;
+            row[35] = newrow.TrajectoryIntent;
+            row[36] = newrow.RP;
+            row[37] = "RA: " + newrow.RA_Status + nl + "TC: " + newrow.TC_Status + nl + "TS: " + newrow.TS_Status + nl + "ARV: " + newrow.ARV_Status + nl + "CDTI/A: " + newrow.CDTI_A_Status + nl + "not TCAS: " + newrow.not_TCAS_Status + nl + "SA: " + newrow.SA_Status;
+            row[38] = "POA: " + newrow.POA + nl + "CDTIS: " + newrow.CDTIS + nl + "B2LOW: " + newrow.B2low + nl + "RAS: " + newrow.RAS + nl + "IDENT: " + newrow.IDENT + nl + "LW: " + newrow.LW;
+            row[39] = newrow.MAM;
+            row[40] = newrow.ModeSMBData;
+            row[41] = newrow.ACAS;
+            row[42] = newrow.RID;
+            row[43] = "AOS: " + newrow.AOS + nl + "TRD: " + newrow.TRD + nl + "M3A: " + newrow.M3A + nl + "QI: " + newrow.QI + nl + "TI: " + newrow.TI + nl + "MAM: " + newrow.MAM_ages + nl + "GH: " + newrow.GH + nl + "FL: " + newrow.FL_ages + nl + "ISA: " + newrow.ISA + nl + "FSA: " + newrow.FSA + nl + "AS: " + newrow.AS + nl + "TAS: " + newrow.TAS + nl + "MH: " + newrow.MH + nl + "BVR: " + newrow.BVR + nl + "GVR: " + newrow.GVR + nl + "GV: " + newrow.GV + nl + "TAR: " + newrow.TAR_ages + nl + "TI: " + newrow.TI_ages + nl + "TS: " + newrow.TS_ages + nl + "MET: " + newrow.MET + nl + "ROA: " + newrow.ROA + nl + "ARA: " + newrow.ARA_ages + nl + "SCC: " + newrow.SCC;
 
 
             CAT21_table.Rows.Add(row);

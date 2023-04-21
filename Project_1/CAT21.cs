@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Forms;
+using System.Windows.Markup;
 using static iTextSharp.text.pdf.qrcode.Version;
 
 namespace Project_1
@@ -25,21 +26,22 @@ namespace Project_1
         public int cat21num;
         public int airportCode;
 
-        public string MessageTYPE;             // DATA ITEM I021/000
+        public string RA_Status;               // DATA ITEM I021/008
+        public string TC_Status;               // DATA ITEM I021/008
+        public string TS_Status;               // DATA ITEM I021/008
+        public string ARV_Status;              // DATA ITEM I021/008
+        public string CDTI_A_Status;           // DATA ITEM I021/008
+        public string not_TCAS_Status;         // DATA ITEM I021/008
+        public string SA_Status;               // DATA ITEM I021/008
         public string SAC;                     // DATA ITEM I021/010
         public string SIC;                     // DATA ITEM I021/010
-        public string RA;                      // DATA ITEM I021/008
-        public string TC;                      // DATA ITEM I021/008
-        public string TS;                      // DATA ITEM I021/008
-        public string ARV;                     // DATA ITEM I021/008
-        public string CDTI;                    // DATA ITEM I021/008
-        public string NotTCAS;                 // DATA ITEM I021/008
-        public string SA;                      // DATA ITEM I021/008
+        public string Service_identification;  // DATA ITEM I010/010
+        public string RP;                      // DATA ITEM I010/016
+        public string ECAT;                    // DATA ITEM I010/020
         public string ATP;                     // DATA ITEM I021/040
         public string ARC;                     // DATA ITEM I021/040
         public string RC;                      // DATA ITEM I021/040
         public string RAB;                     // DATA ITEM I021/040
-        public string FX;                      // DATA ITEM I021/040
         public string DCR;                     // DATA ITEM I021/040
         public string GBS;                     // DATA ITEM I021/040
         public string SIM;                     // DATA ITEM I021/040
@@ -51,160 +53,129 @@ namespace Project_1
         public string CRP;                     // Data Item I021/040
         public string LDPJ;                    // Data Item I021/040
         public string RCF;                     // Data Item I021/040
-        public string CA;                      // DATA ITEM I021/040
-        public string Track_number;            // DATA ITEM I010/060
-        public string Service_identification;  // DATA ITEM I010/060
-        public string IM;                      // DATA ITEM I010/090
-        public string RE;                      // DATA ITEM I010/090
-        public string FL;                      // DATA ITEM I010/090
-        public string VNS;                     // DATA ITEM I010/091
-        public string VN;                      // DATA ITEM I010/131
-        public string LTT;                     // DATA ITEM I010/140
+        public string M3AC;                    // DATA ITEM I010/070
+        public string ToAfP;                   // DATA ITEM I010/071
+        public string ToAfV;                   // DATA ITEM I010/072
+        public string ToMRfP;                  // DATA ITEM I010/073
+        public string ToMRfP_HI_RES;           // DATA ITEM I010/074
+        public string ToMRfV;                  // DATA ITEM I010/075
+        public string ToMRfV_HI_RES;           // DATA ITEM I010/076
+        public string Tort;                    // DATA ITEM I010/077
+        public string TargetAddress;           // DATA ITEM I021/080
+        public string QualityIndicators;       // DATA ITEM I021/090
+        public string ICB;                     // DATA ITEM I021/090
+        public string NUCp;                    // DATA ITEM I021/090
+        public string NIC;                     // DATA ITEM I021/090
+        public string NUCr_NACv;               // DATA ITEM I021/090
+        public string NUCp_NIC;                // DATA ITEM I021/090
+        public string NICbaro;                 // DATA ITEM I021/090
+        public string SIL;                     // DATA ITEM I021/090
+        public string NACp;                    // DATA ITEM I021/090
+        public string SIL2;                    // DATA ITEM I021/090
+        public string SDA;                     // DATA ITEM I021/090
+        public string GVA;                     // DATA ITEM I021/090
+        public string PIC;                     // DATA ITEM I021/090
+        public int REP;                        // DATA ITEM I010/110
+        public string TIS;                     // DATA ITEM I010/110
+        public string TID;                     // DATA ITEM I010/110
+        public string NAV;                     // DATA ITEM I010/110
+        public string NVB;                     // DATA ITEM I010/110
+        public int REP1;                       // DATA ITEM I010/110
+        public string TrajectoryIntent;        // DATA ITEM I021/110
+        public string[] TCA;                   // DATA ITEM I021/110
+        public string[] NC;                    // DATA ITEM I021/110
+        public int[] TCPNumber;                // DATA ITEM I021/110
+        public string[] AltitudeTID;           // DATA ITEM I021/110
+        public string[] LATITUDE;              // DATA ITEM I021/110
+        public string[] LONGITUDE;             // DATA ITEM I021/110
+        public string[] Point_Type;            // DATA ITEM I021/110
+        public string[] TD;                    // DATA ITEM I021/110
+        public string[] TRA;                   // DATA ITEM I021/110
+        public string[] TOA;                   // DATA ITEM I021/110
+        public string[] TOV;                   // DATA ITEM I021/110
+        public string[] TTR;                   // DATA ITEM I021/110
+        public string[] PT;                    // DATA ITEM I021/110
+        public string Latitude_WGS84;          // DATA ITEM I010/130
+        public string Longitude_WGS84;         // DATA ITEM I010/130
+        public string Latitude_WGS84_HI_RES;   // DATA ITEM I010/131
+        public string Longitude_WGS84_HI_RES;  // DATA ITEM I010/131
+        public string MAM;                     // DATA ITEM I010/132
+        public string GeometricHeight;         // DATA ITEM I010/140
+        public string FlightLevel;             // DATA ITEM I010/145
+        public string SAS;                     // DATA ITEM I010/146
+        public string Source;                  // DATA ITEM I010/146
+        public string Altitude;                // DATA ITEM I010/146
+        public string MV;                      // DATA ITEM I010/148
+        public string AH;                      // DATA ITEM I010/148
+        public string AM;                      // DATA ITEM I010/148
+        public string AltitudeF;               // DATA ITEM I010/148
+        public string IM;                      // DATA ITEM I010/150
+        public string RE;                      // DATA ITEM I010/151
+        public string MagneticHeading;         // DATA ITEM I010/152
+        public string BarometricVerticalRate;  // DATA ITEM I010/155
+        public string GeometricVerticalRate;   // DATA ITEM I010/157
+        public string Ground_Speed;            // DATA ITEM I010/160
+        public string Track_Angle;             // DATA ITEM I010/160
+        public string Track_number;            // DATA ITEM I010/161
+        public string TAR;                     // DATA ITEM I010/165
+        public string Target_ID;               // DATA ITEM I010/170
+        public string ICF;                     // DATA ITEM I010/200
+        public string LNAV;                    // DATA ITEM I010/200
+        public string PS;                      // DATA ITEM I010/200
+        public string SS;                      // DATA ITEM I010/200
+        public string VNS;                     // DATA ITEM I010/210
+        public string VN;                      // DATA ITEM I010/210
+        public string LTT;                     // DATA ITEM I010/210
+        public string WS;                      // DATA ITEM I010/220
+        public string WD;                      // DATA ITEM I010/220
+        public string TMP;                     // DATA ITEM I010/220
+        public string TRB;                     // DATA ITEM I010/220
+        public string RollAngle;               // Dara Item I021/230
+        public string ModeSMBData;             // Data Item I021/250 
+        public string[] MB_Data_ModeS;         // Data Item I021/250 
+        public string[] BDS1_ModeS;            // Data Item I021/250 
+        public string[] BDS2_ModeS;            // Data Item I021/250 
+        public string ACAS;                    // Data Item I021/260 
+        public string TYP;                     // Data Item I021/260 
+        public string STYP;                    // Data Item I021/260 
+        public string ARA;                     // Data Item I021/260 
+        public string RAC;                     // Data Item I021/260 
+        public string RAT;                     // Data Item I021/260 
+        public string MTE;                     // Data Item I021/260 
+        public string TTI;                     // Data Item I021/260 
+        public string TID_acas;                // Data Item I021/260 
+        public string POA;                     // Data Item I021/271 
+        public string CDTIS;                   // Data Item I021/271 
+        public string B2low;                   // Data Item I021/271 
+        public string RAS;                     // Data Item I021/271 
+        public string IDENT;                   // Data Item I021/271 
+        public string LW;                      // Data Item I021/271
+        public string FL;                      // DATA ITEM I010/145
+        public string AOS;                     // DATA ITEM I021/295
+        public string TRD;                     // DATA ITEM I021/295
+        public string M3A;                     // DATA ITEM I021/295
+        public string QI;                      // DATA ITEM I021/295
+        public string TI;                      // DATA ITEM I021/295
+        public string MAM_ages;                // DATA ITEM I021/295
+        public string GH;                      // DATA ITEM I021/295
+        public string FL_ages;                 // DATA ITEM I021/295
+        public string ISA;                     // DATA ITEM I021/295
+        public string FSA;                     // DATA ITEM I021/295
+        public string AS;                      // DATA ITEM I021/295
+        public string TAS;                     // DATA ITEM I021/295
+        public string MH;                      // DATA ITEM I021/295
+        public string BVR;                     // DATA ITEM I021/295
+        public string GVR;                     // DATA ITEM I021/295
+        public string GV;                      // DATA ITEM I021/295
+        public string TAR_ages;                // DATA ITEM I021/295
+        public string TI_ages;                 // DATA ITEM I021/295
+        public string TS_ages;                 // DATA ITEM I021/295
+        public string MET;                     // DATA ITEM I021/295
+        public string ROA;                     // DATA ITEM I021/295
+        public string ARA_ages;                // DATA ITEM I021/295
+        public string SCC;                     // DATA ITEM I021/295
+        public string RID;                     // DATA ITEM I021/400
 
-        public string NUCr_NACv;               // DATA ITEM I021/140
-        public string NUCp_NIC;                // DATA ITEM I021/140
-        public string NICbaro;                 // DATA ITEM I021/140
-        public string SIL;                     // DATA ITEM I021/140
-        public string NACp;                    // DATA ITEM I021/140
-        public string SIL2;                    // DATA ITEM I021/140
-        public string SDA;                     // DATA ITEM I021/140
-        public string GVA;                     // DATA ITEM I021/140
-        public string PIC;                     // DATA ITEM I021/140
-        public string ICB;                     // DATA ITEM I021/140
-        public string NUCp;                    // DATA ITEM I021/140
-        public string NIC;                     // DATA ITEM I021/140
-
-
-        public int Time_of_day_in_seconds;     // DATA ITEM I010/140
-        public string OctalA;                  // DATA ITEM I010/161
-        public string OctalB;                  // DATA ITEM I010/170
-        public string OctalC;                  // DATA ITEM I010/170
-        public string OctalD;                  // DATA ITEM I010/170
-        public string M3AC;                    // DATA ITEM I010/170
-        public string FlightLevel;             // DATA ITEM I010/170
-        public string ICF;                     // DATA ITEM I010/170
-        public string LNAV;                    // DATA ITEM I010/170
-        public string PS;                      // DATA ITEM I010/170
-        public string SS;                      // DATA ITEM I010/170
-        public string TAR;                     // DATA ITEM I010/170
-        public string Ground_Speed;            // DATA ITEM I010/200
-        public string Track_Angle;             // DATA ITEM I010/200
-        public string Vx;                      // DATA ITEM I010/202
-        public string Vy;                      // DATA ITEM I010/202
-        public string Ax;                      // DATA ITEM I010/210
-        public string Ay;                      // DATA ITEM I010/210
-        public string ToAfP;                   // DATA ITEM I010/220
-        public string Tort;                    // DATA ITEM I010/245
-        public string ECAT;                    // DATA ITEM I010/245
-        public string WS;                      // DATA ITEM I010/250
-        public string WD;                      // DATA ITEM I010/250
-        public string TMP;                     // DATA ITEM I010/250
-        public string TRB;                     // DATA ITEM I010/250
-        public string SAS;                     // DATA ITEM I010/270
-        public string Source;                  // DATA ITEM I010/270
-        public string Altitude;                // DATA ITEM I010/270
-        public int REP;                        // DATA ITEM I010/270
-        public string MV;                      // DATA ITEM I010/270
-        public string AH;                      // DATA ITEM I010/270
-        public string AM;                      // DATA ITEM I010/300
-        public string AltitudeF;               // DATA ITEM I010/310
-        public string MSG;                     // DATA ITEM I010/310
-        public string TIS;                     // DATA ITEM I010/500
-        public string TID;                     // DATA ITEM I010/500
-        public string NAV;                     // DATA ITEM I010/500
-        public string NVB;                     // DATA ITEM I010/550
-        public string OVL;                     // DATA ITEM I010/550
-        public string TSV;                     // DATA ITEM I010/550
-        public string DIV;                     // DATA ITEM I010/550
-        public string TTF;                     // DATA ITEM I010/550
-        public int X = 1;
-        public string REP1;                    // DATA ITEM I010/270
-        public string TCA;                     // DATA ITEM I010/270
-        public string NC;                      // DATA ITEM I010/300
-        public string TCPNumber;               // DATA ITEM I010/310
-        public string AltitudeTID;             // DATA ITEM I010/310
-        public string LATITUDE;                // DATA ITEM I010/500
-        public string LONGITUDE;               // DATA ITEM I010/500
-        public string PT;                      // DATA ITEM I010/500
-        public string TD;                      // DATA ITEM I010/550
-        public string TRA;                     // DATA ITEM I010/550
-        public string TOA;                     // DATA ITEM I010/550
-        public string TOV;                     // DATA ITEM I010/550
-        public string TTR;                     // DATA ITEM I010/550
-        public string RP;
-        public string POA;
-        public string CDTIS;
-        public string B2low;
-        public string RAS;
-        public string IDENT;
-        public string LW;
-        public string MAM;
-        public string RID;
-
-
-
-
-
-
-
-        // Falta definir
-        public string Latitude_WGS84;          
-        public string Longitude_WGS84;
-        public string Latitude_WGS84_HI_RES;
-        public string Longitude_WGS84_HI_RES;
-        public string ToAfV;
-        public string TargetAddress; 
-        public string ToMRfP;
-        public string ToMRfP_HI_RES;
-        public string ToMRfV;
-        public string ToMRfV_HI_RES;
-        public string GeometricHeight;
-        public string QualityIndicators;
-        public string RollAngle;
-        public string MagneticHeading;
-        public string BarometricVerticalRate;
-        public string GeometricVerticalRate;
-        public string Target_ID;
-        public string RA_Status;
-        public string TC_Status;
-        public string TS_Status;
-        public string ARV_Status;
-        public string CDTI_A_Status;
-        public string not_TCAS_Status;
-        public string SA_Status;
-        public string ModeSMBData;
-        public string TYP;
-        public string STYP;
-        public string ARA;
-        public string RAC;
-        public string RAT;
-        public string MTE;
-        public string TTI;
-        public string TID_acas;
-
-        public string AOS;
-        public string TRD;
-        public string M3A;
-        public string QI;
-        public string TI;
-        public string MAM_ages;
-        public string GH;
-        public string FL_ages;
-        public string ISA;
-        public string FSA;
-        public string AS;
-        public string TAS;
-        public string MH;
-        public string MVR;
-        public string GVR;
-        public string GV;
-        public string TAR_ages;
-        public string TI_ages;
-        public string TS_ages;
-        public string MET;
-        public string ROA;
-        public string ARA_ages;
-        public string SCC;
 
 
 
@@ -355,45 +326,7 @@ namespace Project_1
         }
 
 
-        // Data Item I021/008
-        public int Aircraft_Operational_Status(string[] message, int position)
-        {
-            this.RA = message[position].Substring(0, 1);
-            if (this.RA == "0") { this.RA = "TCAS II or ACAS RA not active"; }
-            if (this.RA == "1") { this.RA = "TCAS RA active"; }
-
-            this.TC = message[position].Substring(1,2);
-            if (this.TC == "00") { this.TC = "no capability for Trajectory Change Reports"; }
-            if (this.TC == "01") { this.TC = "support for TC+0 reports only"; }
-            if (this.TC == "10") { this.TC = "support for multiple TC reports"; }
-            if (this.TC == "11") { this.TC = "reserved"; }
-
-            this.TS = message[position].Substring(3,1);
-            if (this.TS == "0") { this.TS = "no capability to support Target State Reports"; }
-            if (this.TS == "1") { this.TS = "capable of supporting target State Reports"; }
-
-            this.ARV = message[position].Substring(4,1);
-            if (this.ARV == "0") { this.ARV = "no capability to generate ARV-reports"; }
-            if (this.ARV == "1") { this.ARV = "capable of generate ARV-reports"; }
-
-            this.CDTI = message[position].Substring(5,1);
-            if (this.CDTI == "0") { this.CDTI = "CDTI not operational"; }
-            if (this.CDTI == "1") { this.CDTI = "CDTI operational"; }
-
-            this.NotTCAS = message[position].Substring(6,1);
-            if (this.NotTCAS == "0") { this.NotTCAS = "TCAS operationa"; }
-            if (this.NotTCAS == "1") { this.NotTCAS = "TCAS not operational"; }
-
-            this.SA = message[position].Substring(7,1);
-            if (this.SA == "0") { this.SA = "Antenna Diversity"; }
-            if (this.SA == "1") { this.SA = "Single Antenna only"; }
-            else
-            {
-                // End of Data Item
-                position = position + 1;
-            }
-            return position;
-        }
+        
 
         // Data Item I021/010 [Data Source Identifier]--------------------DONE
         public int Data_Source_Identifier(string[] message, int position)
@@ -404,6 +337,7 @@ namespace Project_1
 
             return position;
         }
+
 
         // Data Item I021/040 [Target Report Descriptor]-----------------DONE
         public int Target_Report_Descriptor(string[] message, int position)
@@ -463,9 +397,6 @@ namespace Project_1
                 if (this.CL == "10") { this.CL = "No information"; }
                 if (this.CL == "11") { this.CL = "Reserved for future use"; }
 
-                this.FX = message[position].Substring(7, 1);
-                if (this.FX == "0") { this.FX = "End of item"; }
-                if (this.FX == "1") { this.FX = "Extension into second extension"; }
 
                 if (message[position].Substring(7, 1) == "1")
                 {
@@ -506,6 +437,7 @@ namespace Project_1
             return position;
         }
 
+
         // Data Item I021/161 [Track Number]---------------------------DONE
         public int Track_Number(string[] message, int position)
         {
@@ -517,6 +449,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/015 [Service Identification]-------------------DONE
         public int Service_Identification(string[] message, int position)
         {
@@ -525,6 +458,7 @@ namespace Project_1
 
             return position;
         }
+
 
         // DATA ITEM I021/071 [Time of Aplicability for Position]-----------------DONE
         public int Time_of_Aplicability_for_Position(string[] message, int position)
@@ -537,6 +471,7 @@ namespace Project_1
 
             return position;
         }
+
 
         // DATA ITEM I021/130 [Position on WGS84 Coordinates]--------------------DONE
         public int Position_in_WGS84_Coordinates(string[] message, int position)
@@ -559,6 +494,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/131 [Position in WGS84 Coordinates High Resoultion]------------------DONE
         public int Position_in_WGS84_Coordinates_Highres(string[] message, int position)
         {
@@ -580,6 +516,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/072 [Time of Aplicability fro Velocity]-------------------DONE
         public int Time_of_Aplicability_for_Velocity(string[] message, int position)
         {
@@ -591,6 +528,7 @@ namespace Project_1
 
             return position;
         }
+
 
         // DATA ITEM I021/150 [Air Speed]----------------------DONE
         public int Air_Speed(string[] message, int position)
@@ -610,6 +548,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/151 [True Air Speed]---------------------DONE
         public int True_Air_Speed(string[] message, int position)
         {
@@ -628,6 +567,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/080 [Target Adress]---------------------------DONE
         public int Target_Address(string[] message, int position)
         {
@@ -636,6 +576,7 @@ namespace Project_1
 
             return position;
         }
+
 
         // DATA ITEM I021/073 [Time of Message Reception of Position]---------------------DONE
         public int Time_of_Message_Reception_of_Position(string[] message, int position)
@@ -648,6 +589,7 @@ namespace Project_1
 
             return position;
         }
+
 
         // DATA ITEM I021/074 [Time of Message Reception of Position High Precision]---------------------DONE
         public int Time_of_Message_Reception_of_Position_HighPrecision(string[] message, int position)
@@ -672,6 +614,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/075 [Time of Message reception of Velocity]----------------------DONE
         public int Time_of_Message_Reception_of_Velocity(string[] message, int position)
         {
@@ -682,6 +625,7 @@ namespace Project_1
             position = position + 3;
             return position;
         }
+
 
         // DATA ITEM I021/076 [Time of Message reception of Velocity High Precission]----------------------DONE
         public int Time_of_Message_Reception_of_Velocity_HighPrecision(string[] message, int position)
@@ -706,6 +650,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/140 [Geometric Height]----------------------DONE
         public int Geometric_Height(string[] message, int position)
         {
@@ -716,9 +661,8 @@ namespace Project_1
             return position;
         }
 
-        // DATA ITEM I021/140 [Quality Indicators]-------------------------DONE
-        
 
+        // DATA ITEM I021/140 [Quality Indicators]-------------------------DONE
         public int Quality_Indicators(string[] message, int position)
         {
             NUCr_NACv = Convert.ToString(Convert.ToInt32(message[position].Substring(0, 3), 2));
@@ -759,10 +703,23 @@ namespace Project_1
                         if (PIC == "14") { ICB = "< 0.004 NM"; NUCp = "9"; NIC = "11"; }
                         position = position + 1;
                     }
+                    else
+                    {
+                        position = position + 1;
+                    }
                 }
+                else
+                {
+                    position = position + 1;
+                }
+            }
+            else
+            {
+                position = position + 1;
             }
             return position;
         }
+
 
         // DATA ITEM I021/090 [MOPS Version]--------------------------DONE
         public int MOPS_Version(string[] message, int position)
@@ -791,6 +748,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/070 [Mode 3A Code in Octal Representation]-----------------DONE
         public int Mode_3A_Code(string[] message, int position)
         {
@@ -801,6 +759,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/230 [Roll Angle]------------------------DONE
         public int Roll_Angle(string[] message, int position)
         {
@@ -809,6 +768,7 @@ namespace Project_1
 
             return position;
         }
+
 
         // DATA ITEM I021/145 [Flight Level}-----------------------DONE
         public int Flight_Level(string[] message, int position)
@@ -820,6 +780,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/152 [Magnetic Heading]------------------------DONE
         public int Magnetic_Heading(string[] message, int position)
         {
@@ -830,7 +791,8 @@ namespace Project_1
             return position;
         }
 
-        // DATA ITEM I021/200
+
+        // DATA ITEM I021/200 [Target Status]------------------------DONE
         public int Target_Status(string[] message, int position)
         {
             this.ICF = message[position].Substring(0, 1);
@@ -861,6 +823,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/155 [Barometric Vertical Rate]------------------DONE
         public int Barometric_Vertical_Rate(string[] message, int position)
         {
@@ -879,6 +842,7 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/155 [Geometric Vertical Rate]---------------DONE
         public int Geometric_Vertical_Rate(string[] message, int position)
         {
@@ -896,6 +860,7 @@ namespace Project_1
 
             return position;
         }
+
 
         // DATA ITEM I021/160 [Airbone Ground Vector]------------------DONE
         public int Airborne_Ground_Vector(string[] message, int position)
@@ -922,15 +887,17 @@ namespace Project_1
             return position;
         }
 
+
         // DATA ITEM I021/165 [Track Angle Rate]-------------------------DONE
         public int Track_Angle_Rate(string[] message, int position)
         {
-            string fullmessage = string.Concat(message[position], message[position] + 1);
+            string fullmessage = string.Concat(message[position], message[position + 1]);
             this.TAR = Convert.ToString(Convert.ToInt32(fullmessage.Substring(6, 10),2));
-            position = position + 1;
+            position = position + 2;
 
             return position;
         }
+
 
         // DATA ITEM I021/077 [Time Of Report Transmission]------------------------DONE
         public int Time_of_Report_Transmission(string[] message, int position)
@@ -943,6 +910,7 @@ namespace Project_1
 
             return position;
         }
+
 
         // DATA ITEM I021/170 [Target Identification]--------------------------DONE
         public int Target_Identification(string[] message, int position)
@@ -1144,95 +1112,98 @@ namespace Project_1
             return position;
         }
 
-        // DATA ITEM I021/020
+
+        // DATA ITEM I021/020 [Emitte Category]------------------DONE
         public int Emitter_Category(string[] message, int position)
         {
-            this.ECAT = message[position];
-            if (this.ECAT == "00000001") { this.ECAT = "No ADS-B Emitter Category InformationNo ADS-B Emitter Category Information"; }
-            if (this.ECAT == "00000010") { this.ECAT = "light aircraft <= 15500 lbs"; }
-            if (this.ECAT == "00000011") { this.ECAT = "15500 lbs < small aircraft <75000 lbs"; }
-            if (this.ECAT == "00000100") { this.ECAT = "75000 lbs < medium a/c < 300000 lbs"; }
-            if (this.ECAT == "00000101") { this.ECAT = "High Vortex Large"; }
-            if (this.ECAT == "00000110") { this.ECAT = "300000 lbs <= heavy aircraft"; }
-            if (this.ECAT == "00000111") { this.ECAT = "highly manoeuvrable (5g acceleration capability) and high speed (>400 knots cruise)"; }
-            if (this.ECAT == "00001000") { this.ECAT = "reserved"; }
-            if (this.ECAT == "00001001") { this.ECAT = "reserved"; }
-            if (this.ECAT == "00001010") { this.ECAT = "reserved"; }
-            if (this.ECAT == "00001011") { this.ECAT = "rotocraft"; }
-            if (this.ECAT == "00001100") { this.ECAT = "glider / sailplane"; }
-            if (this.ECAT == "00001101") { this.ECAT = "lighter-than-air"; }
-            if (this.ECAT == "00001110") { this.ECAT = "unmanned aerial vehicle"; }
-            if (this.ECAT == "00001111") { this.ECAT = "space / transatmospheric vehicle"; }
-            if (this.ECAT == "00010000") { this.ECAT = "ultralight / handglider / paraglider"; }
-            if (this.ECAT == "00010001") { this.ECAT = "parachutist / skydiver"; }
-            if (this.ECAT == "00010010") { this.ECAT = "reserved"; }
-            if (this.ECAT == "00010011") { this.ECAT = "reserved"; }
-            if (this.ECAT == "00010100") { this.ECAT = "reserved"; }
-            if (this.ECAT == "00010101") { this.ECAT = "surface emergency vehicle"; }
-            if (this.ECAT == "00010110") { this.ECAT = "surface service vehicle"; }
-            if (this.ECAT == "00010111") { this.ECAT = "fixed ground or tethered obstruction"; }
-            if (this.ECAT == "00011000") { this.ECAT = "cluster obstacle"; }
-            if (this.ECAT == "00011001") { this.ECAT = "line obstacle"; }
+            this.ECAT = Convert.ToString(Convert.ToInt32(message[position],2));
+            if (this.Target_ID == "7777XBEG") { this.ECAT = "No ADS-B Emitter Category Information"; }
+            else
+            {
+                if (this.ECAT == "0") { this.ECAT = "No ADS-B Emitter Category InformationNo ADS-B Emitter Category Information"; }
+                if (this.ECAT == "1") { this.ECAT = "light aircraft <= 15500 lbs"; }
+                if (this.ECAT == "2") { this.ECAT = "15500 lbs < small aircraft <75000 lbs"; }
+                if (this.ECAT == "3") { this.ECAT = "75000 lbs < medium a/c < 300000 lbs"; }
+                if (this.ECAT == "4") { this.ECAT = "High Vortex Large"; }
+                if (this.ECAT == "5") { this.ECAT = "300000 lbs <= heavy aircraft"; }
+                if (this.ECAT == "6") { this.ECAT = "highly manoeuvrable (5g acceleration capability) and high speed (>400 knots cruise)"; }
+                if (this.ECAT == "7") { this.ECAT = "reserved"; }
+                if (this.ECAT == "8") { this.ECAT = "reserved"; }
+                if (this.ECAT == "9") { this.ECAT = "reserved"; }
+                if (this.ECAT == "10") { this.ECAT = "rotocraft"; }
+                if (this.ECAT == "11") { this.ECAT = "glider / sailplane"; }
+                if (this.ECAT == "12") { this.ECAT = "lighter-than-air"; }
+                if (this.ECAT == "13") { this.ECAT = "unmanned aerial vehicle"; }
+                if (this.ECAT == "14") { this.ECAT = "space / transatmospheric vehicle"; }
+                if (this.ECAT == "15") { this.ECAT = "ultralight / handglider / paraglider"; }
+                if (this.ECAT == "16") { this.ECAT = "parachutist / skydiver"; }
+                if (this.ECAT == "17") { this.ECAT = "reserved"; }
+                if (this.ECAT == "18") { this.ECAT = "reserved"; }
+                if (this.ECAT == "19") { this.ECAT = "reserved"; }
+                if (this.ECAT == "20") { this.ECAT = "surface emergency vehicle"; }
+                if (this.ECAT == "21") { this.ECAT = "surface service vehicle"; }
+                if (this.ECAT == "22") { this.ECAT = "fixed ground or tethered obstruction"; }
+                if (this.ECAT == "23") { this.ECAT = "cluster obstacle"; }
+                if (this.ECAT == "24") { this.ECAT = "line obstacle"; }
+            }
+            
 
             position = position + 1;
             return position;
         }
 
-        // DATA ITEM I021/220
+
+        // DATA ITEM I021/220 [Met Information]---------------------------DONE
         public int Met_Information(string[] message, int position)
         {
             this.WS = message[position].Substring(0, 1);
             if (this.WS == "0") { this.WS = "Absence of Subfield #1"; }
             
-
             this.WD = message[position].Substring(1, 1);
             if (this.WD == "0") { this.WD = "Absence of Subfield #2"; }
             
-
             this.TMP = message[position].Substring(2, 1);
             if (this.TMP == "0") { this.TMP = "Absence of Subfield #3"; }
             
-
             this.TRB = message[position].Substring(3, 1);
             if (this.TRB == "0") { this.TRB = "Absence of Subfield #3"; }
 
-            this.FX = message[position].Substring(7, 1);
-            if (this.FX == "0") { this.FX = "no extension"; }
-            if (this.FX == "1") 
+            if (message[position].Substring(7, 1) == "1") 
             { 
                 position = position + 1;
-                this.FX = "extension";
                 if (this.WS == "1") 
                 { 
                     this.WS = "Presence of Subfield #1: " + Convert.ToString(Convert.ToInt32(string.Concat(message[position], message[position] + 1))); 
                     position = position + 2;
                 }
-
                 if (this.WD == "1") 
                 { 
                     this.WD = "Presence of Subfield #2: " + Convert.ToString(Convert.ToInt32(string.Concat(message[position], message[position] + 1)));
                     position = position + 2;
                 }
-
                 if (this.TMP == "1") 
                 { 
                     this.TMP = "Presence of Subfield #3: " + Convert.ToString(Convert.ToInt32(string.Concat(message[position], message[position] + 1)) * 0.25);
                     position = position + 2;
                 }
-
                 if (this.TRB == "1") 
                 { 
                     this.TRB = "Presence of Subfield #3: " + Convert.ToString(Convert.ToInt32(message[position])); 
                     position = position + 1;
                 }
             }
+            else
+            {
+                position = position + 1;
+            }
             return position;
         }
 
-        // DATA ITEM I021/146
+
+        // DATA ITEM I021/146 [Selected Altitude]-----------------DONE
         public int Selected_Altitude(string[] message, int position)
         {
-            string fullmessage = string.Concat(message[position], message[position] + 1);
+            string fullmessage = string.Concat(message[position], message[position+1]);
             this.SAS = fullmessage.Substring(0,1);
             if (this.SAS == "0") { this.SAS = "No source information provided"; }
             if (this.SAS == "1") { this.SAS = "Source Information provided"; }
@@ -1243,16 +1214,17 @@ namespace Project_1
             if (this.Source == "10") { this.Source = "MCP/FCU Selected Altitude"; }
             if (this.Source == "11") { this.Source = "FMS Selected Altitude"; }
 
-            this.Altitude = Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage.Substring(3,13))));
-
+            this.Altitude = Convert.ToString((convertor.TWO_Complement(fullmessage.Substring(3,13))*25))+ " ft";
             position = position + 2;
+
             return position;
         }
 
-        // DATA ITEM I021/148
+
+        // DATA ITEM I021/148 [Final State Selected Altitude]---------------DONE
         public int Final_State_Selected_Altitude(string[] message, int position)
         {
-            string fullmessage = string.Concat(message[position], message[position] + 1);
+            string fullmessage = string.Concat(message[position], message[position+1]);
             this.MV = fullmessage.Substring(0, 1);
             if (this.MV == "0") { this.MV = "Not active or unknown"; }
             if (this.MV == "1") { this.MV = "Active"; }
@@ -1265,125 +1237,168 @@ namespace Project_1
             if (this.AM == "0") { this.AM = "Not active or unknown"; }
             if (this.AM == "1") { this.AM = "Active"; }
 
-            this.AltitudeF = Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage.Substring(3, 13))*25)) + " ft";
-
+            this.AltitudeF = Convert.ToString(convertor.TWO_Complement(fullmessage.Substring(3, 13))*25) + " ft";
             position = position + 2; 
+
             return position;
         }
 
-        // DATA ITEM I021/110
+
+        // DATA ITEM I021/110 [Trajectory Intent]-----------------DONE
         public int Trajectory_Intent(string[] message, int position)
         {
+            this.TrajectoryIntent = "Data Avaiable";
             this.TIS = message[position].Substring(0, 1);
             if (this.TIS == "0") { this.WS = "Absence of Subfield #1"; }
 
             this.TID = message[position].Substring(1, 1);
             if (this.TID == "0") { this.WD = "Absence of Subfield #2"; }
 
-            this.FX = message[position].Substring(7, 1);
-            if (this.FX == "0") { this.FX = "no extension"; }
-            if (this.FX == "1")
+
+            if (this.TIS == "1")
             {
                 position = position + 1;
-                this.FX = "extension";
-                if (this.TIS == "1")
+                this.NAV = message[position].Substring(1, 1);
+                if (this.NAV == "0") { this.NAV = "Trajectory Intent Data is available for this aircraft"; }
+                if (this.NAV == "1") { this.NAV = "Trajectory Intent Data is not available for this aircraft"; }
+
+                this.NVB = message[position].Substring(2, 1);
+                if (this.NVB == "0") { this.NVB = "Trajectory Intent Data is valid"; }
+                if (this.NVB == "1") { this.NVB = "Trajectory Intent Data is not valid"; }
+
+
+            }
+            if (this.TID == "1")
+            {
+                position = position + 1;
+                this.REP1 = Convert.ToInt32(message[position]);
+                TCA = new string[REP];
+                NC = new string[REP];
+                TCPNumber = new int[REP];
+                AltitudeTID = new string[REP];
+                LATITUDE = new string[REP];
+                LONGITUDE = new string[REP];
+                Point_Type = new string[REP];
+                TD = new string[REP];
+                TRA = new string[REP];
+                TOA = new string[REP];
+                TOV = new string[REP];
+                TTR = new string[REP];
+                position = position + 1; ;
+
+                for (int i = 0; i < REP; i++)
                 {
-                    this.NAV = message[position].Substring(1, 1);
-                    if (this.NAV == "0") { this.NAV = "Trajectory Intent Data is available for this aircraft"; }
-                    if (this.NAV == "1") { this.NAV = "Trajectory Intent Data is not available for this aircraft"; }
+                    this.TCA[i] = message[position].Substring(0, 1);
+                    if (this.TCA[i] == "0") { this.TCA[i] = "TCP number available"; }
+                    if (this.TCA[i] == "1") { this.TCA[i] = "TCP number not available"; }
 
-                    this.NVB = message[position].Substring(2, 1);
-                    if (this.NVB == "0") { this.NVB = "Trajectory Intent Data is valid"; }
-                    if (this.NVB == "1") { this.NVB = "Trajectory Intent Data is not valid"; }
+                    this.NC[i] = message[position].Substring(1, 1);
+                    if (this.NC[i] == "0") { this.NC[i] = "TCP compliance"; }
+                    if (this.NC[i] == "1") { this.NC[i] = "TCP non-compliance"; }
 
-                    this.FX = message[position].Substring(7, 1);
-                    if (this.FX == "0") { this.FX = "no extension"; }
-                    if (this.FX == "1") { this.FX = "extension"; }
-                    
-                }
-                if (this.TID == "1")
-                {
-                    position = position + 1;
-                    this.REP1 = Convert.ToString(Convert.ToInt32(message[position]));
-
-                    this.TCA = message[position].Substring(0, 1);
-                    if (this.TCA == "0") { this.TCA = "TCP number available"; }
-                    if (this.TCA == "1") { this.TCA = "TCP number not available"; }
-
-                    this.NC = message[position].Substring(1, 1);
-                    if (this.NC == "0") { this.NC = "TCP compliance"; }
-                    if (this.NC == "1") { this.NC = "TCP non-compliance"; }
-
-                    this.TCPNumber = Convert.ToString(Convert.ToInt32(message[position].Substring(2, 5)));
+                    this.TCPNumber[i] = Convert.ToInt32(message[position].Substring(2, 5));
 
                     position = position + 1;
 
                     string fullmessage = string.Concat(message[position], message[position] + 1);
-                    this.AltitudeTID = Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage)) * 10);
+                    this.AltitudeTID[i] = Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage)) * 10);
                     position = position + 2;
 
                     string fullmessage1 = string.Concat(message[position], message[position] + 1, message[position] + 2);
-                    this.LATITUDE = Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage1)) * 180 * 2E-23);
+                    this.LATITUDE[i] = Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage1)) * 180 * 2E-23);
                     position = position + 3;
 
                     string fullmessage2 = string.Concat(message[position], message[position] + 1, message[position] + 2);
-                    this.LONGITUDE = Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage1)) * 180 * 2E-23);
+                    this.LONGITUDE[i] = Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage1)) * 180 * 2E-23);
                     position = position + 3;
 
-                    this.PT = message[position].Substring(0, 4);
-                    if (this.PT == "0000") { this.PT = "Unknown"; }
-                    if (this.PT == "0001") { this.PT = "Fly by waypoint (LT)"; }
-                    if (this.PT == "0010") { this.PT = "Fly over waypoint (LT)"; }
-                    if (this.PT == "0011") { this.PT = "Hold pattern (LT)"; }
-                    if (this.PT == "0100") { this.PT = "Procedure hold (LT)"; }
-                    if (this.PT == "0101") { this.PT = "Procedure turn (LT)"; }
-                    if (this.PT == "0110") { this.PT = "RF leg (LT)"; }
-                    if (this.PT == "0111") { this.PT = "Top of climb (VT)"; }
-                    if (this.PT == "1000") { this.PT = "Top of descent (VT)"; }
-                    if (this.PT == "1001") { this.PT = "Start of level (VT)"; }
-                    if (this.PT == "1010") { this.PT = "Cross-over altitude (VT)"; }
-                    if (this.PT == "1011") { this.PT = "Transition altitude (VT)"; }
+                    this.PT[i] = message[position].Substring(0, 4);
+                    if (this.PT[i] == "0000") { this.PT[i] = "Unknown"; }
+                    if (this.PT[i] == "0001") { this.PT[i] = "Fly by waypoint (LT)"; }
+                    if (this.PT[i] == "0010") { this.PT[i] = "Fly over waypoint (LT)"; }
+                    if (this.PT[i] == "0011") { this.PT[i] = "Hold pattern (LT)"; }
+                    if (this.PT[i] == "0100") { this.PT[i] = "Procedure hold (LT)"; }
+                    if (this.PT[i] == "0101") { this.PT[i] = "Procedure turn (LT)"; }
+                    if (this.PT[i] == "0110") { this.PT[i] = "RF leg (LT)"; }
+                    if (this.PT[i] == "0111") { this.PT[i] = "Top of climb (VT)"; }
+                    if (this.PT[i] == "1000") { this.PT[i] = "Top of descent (VT)"; }
+                    if (this.PT[i] == "1001") { this.PT[i] = "Start of level (VT)"; }
+                    if (this.PT[i] == "1010") { this.PT[i] = "Cross-over altitude (VT)"; }
+                    if (this.PT[i] == "1011") { this.PT[i] = "Transition altitude (VT)"; }
 
-                    this.TD = message[position].Substring(4, 2);
-                    if (this.PT == "00") { this.PT = "N/A"; }
-                    if (this.PT == "01") { this.PT = "Turn right"; }
-                    if (this.PT == "10") { this.PT = "Turn left"; }
-                    if (this.PT == "11") { this.PT = "No turn"; }
+                    this.TD[i] = message[position].Substring(4, 2);
+                    if (this.TD[i] == "00") { this.TD[i] = "N/A"; }
+                    if (this.TD[i] == "01") { this.TD[i] = "Turn right"; }
+                    if (this.TD[i] == "10") { this.TD[i] = "Turn left"; }
+                    if (this.TD[i] == "11") { this.TD[i] = "No turn"; }
 
-                    this.TRA = message[position].Substring(6, 1);
-                    if (this.TRA == "0") { this.TRA = "TTR not available"; }
-                    if (this.TRA == "1") { this.TRA = "TTR available"; }
+                    this.TRA[i] = message[position].Substring(6, 1);
+                    if (this.TRA[i] == "0") { this.TRA[i] = "TTR not available"; }
+                    if (this.TRA[i] == "1") { this.TRA[i] = "TTR available"; }
                     position = position + 1;
 
-                    this.TOV = Convert.ToString(Convert.ToInt32(string.Concat(message[position], message[position] + 1, message[position] + 2))) + "s";
+                    this.TOV[i] = Convert.ToString(Convert.ToInt32(string.Concat(message[position], message[position] + 1, message[position] + 2))) + "s";
                     position = position + 3;
 
-                    this.TTR = Convert.ToString(Convert.ToInt32(string.Concat(message[position], message[position] + 1)) * 0.01) + "Nm";
+                    this.TTR[i] = Convert.ToString(Convert.ToInt32(string.Concat(message[position], message[position] + 1)) * 0.01) + "Nm";
                     position = position + 1;
                 }
-                
             }
-            position = position + 1;
+
             return position;
         }
 
-        // DATA ITEM I021/016
+
+        // DATA ITEM I021/016 [Service Managment]-------------------DONE
         public int Service_Managment(string[] message, int position)
         {
-            this.RP = Convert.ToString(Convert.ToInt32(message[position]) * 0.5) + " s";
-
+            this.RP = Convert.ToString(Convert.ToInt32(message[position],2) * 0.5) + " s";
             position = position + 1;
+
             return position;
         }
 
-        // DATA ITEM I021/008
+
+        // DATA ITEM I021/008 [Aircraft Operational Status]------------------------DONE
         public int Aircraft_operational_Status(string[] message, int position)
         {
+            this.RA_Status = message[position].Substring(0, 1);
+            if (this.RA_Status == "0") { this.RA_Status = "TCAS II or ACAS RA not active"; }
+            if (this.RA_Status == "1") { this.RA_Status = "TCAS RA active "; }
+
+            this.TC_Status = message[position].Substring(1, 2);
+            if (this.TC_Status == "00") { this.TC_Status = "no capability for Trajectory Change Reports"; }
+            if (this.TC_Status == "01") { this.TC_Status = "support for TC+0 reports only"; }
+            if (this.TC_Status == "10") { this.TC_Status = "support for multiple TC reports"; }
+            if (this.TC_Status == "11") { this.TC_Status = "reserved"; }
+
+            this.TS_Status = message[position].Substring(3, 1);
+            if (this.TS_Status == "0") { this.TS_Status = "no capability to support Target State Reports"; }
+            if (this.TS_Status == "1") { this.TS_Status = "capable of supporting target State Reports"; }
+
+            this.ARV_Status = message[position].Substring(4, 1);
+            if (this.ARV_Status == "0") { this.ARV_Status = "no capability to generate ARV-reports"; }
+            if (this.ARV_Status == "1") { this.ARV_Status = "capable of generate ARV-reports"; }
+
+            this.CDTI_A_Status = message[position].Substring(5, 1);
+            if (this.CDTI_A_Status == "0") { this.CDTI_A_Status = "CDTI not operational"; }
+            if (this.CDTI_A_Status == "1") { this.CDTI_A_Status = "CDTI operational"; }
+
+            this.not_TCAS_Status = message[position].Substring(6, 1);
+            if (this.not_TCAS_Status == "0") { this.not_TCAS_Status = "TCAS operational"; }
+            if (this.not_TCAS_Status == "1") { this.not_TCAS_Status = "TCAS not operational "; }
+
+            this.SA_Status = message[position].Substring(6, 1);
+            if (this.SA_Status == "0") { this.SA_Status = "Antenna Diversity"; }
+            if (this.SA_Status == "1") { this.SA_Status = "Single Antenna only"; }
+
             position = position + 1;
+
             return position;
         }
 
-        // DATA ITEM I021/271
+
+        // DATA ITEM I021/271 [Surface Capabilities and Characteristics]----------------------DONE
         public int Surface_Capabilities_and_Characteristics(string[] message, int position)
         {
             this.POA = message[position].Substring(2, 1);
@@ -1406,9 +1421,7 @@ namespace Project_1
             if (this.IDENT == "0") { this.IDENT = "IDENT switch not active"; }
             if (this.IDENT == "1") { this.IDENT = "IDENT switch active"; }
 
-            this.FX = message[position].Substring(7, 1);
-            if (this.FX == "0") { this.FX = "no extension"; }
-            if (this.FX == "1") 
+            if (message[position].Substring(7, 1) == "1") 
             { 
                 position = position + 1;
                 this.LW = message[position].Substring(4, 4);
@@ -1434,41 +1447,212 @@ namespace Project_1
             return position;
         }
 
-        // DATA ITEM I021/132
+
+        // DATA ITEM I021/132 [Message Amplitude]-----------------DONE
         public int Message_Amplitude(string[] message, int position)
         {
-            this.MAM = Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(message[position])));
-
+            this.MAM = Convert.ToString(convertor.TWO_Complement(message[position])) + " dBm"; ;
             position = position + 1;
+
             return position;
         }
 
-        // DATA ITEM I021/250
+
+        // DATA ITEM I021/250 [ModeS MB Data]---------------DONE
         public int ModeS_MB_Data(string[] message, int position)
         {
-            position = position + 9;
+            this.ModeSMBData = convertor.Binary_Octet_To_Hexadecimal(message[position]);
+            if (Convert.ToInt32(this.ModeSMBData) < 0)
+            {
+                this.MB_Data_ModeS = new string[Convert.ToInt32(this.ModeSMBData)];
+                this.BDS1_ModeS = new string[Convert.ToInt32(this.ModeSMBData)];
+                this.BDS2_ModeS = new string[Convert.ToInt32(this.ModeSMBData)];
+            }
+            position = position + 1;
+            int i = 0;
+
+            while (i < Convert.ToInt32(this.ModeSMBData))
+            {
+                this.MB_Data_ModeS[i] = String.Concat(message[position], message[position + 1], message[position + 2], message[position + 3], message[position + 4], message[position + 5], message[position + 6]);
+                this.BDS1_ModeS[1] = message[position + 7].Substring(0, 4);
+                this.BDS2_ModeS[1] = message[position + 7].Substring(4, 4);
+                position = position + 8;
+                i = i + 1;
+            }
+
             return position;
         }
 
-        // DATA ITEM I021/260
+
+        // DATA ITEM I021/260 [ACAS Resolution Advisory Report]-----------------------DONE
         public int ACAS_Resolution_Advisory_Report(string[] message, int position)
         {
+            string messg = string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3], message[position + 4], message[position + 5], message[position + 6]);
+            TYP = messg.Substring(0, 5);
+            STYP = messg.Substring(5, 3);
+            ARA = messg.Substring(8, 14);
+            RAC = messg.Substring(22, 4);
+            RAT = messg.Substring(26, 1);
+            MTE = messg.Substring(27, 1);
+            TTI = messg.Substring(28, 2);
+            TID = messg.Substring(30, 26);
             position = position + 7;
+
             return position;
         }
 
-        // DATA ITEM I021/400
+
+        // DATA ITEM I021/400 [Reciver ID]----------------------------DONE
         public int Reciever_ID(string[] message, int position)
         {
-            this.RID = Convert.ToString(Convert.ToInt32(message[position]));
-
+            this.RID = Convert.ToString(Convert.ToInt32(message[position],2));
             position = position + 1;
+
             return position;
         }
 
+        // DATA ITEM I021/295 [Data Ages]----------------------DONE
         public int Data_Ages(string[] message, int position)
         {
-            
+            int x = position;
+            if (message[position].Substring(7, 1) == "1")
+            {
+                position = position +1;
+                if (message[position].Substring(7, 1) == "1")
+                {
+                    position = position + 1;
+                    if (message[position].Substring(7, 1) == "1")
+                    {
+                        position = position + 1;
+                    }
+                }
+            }
+            position = position + 1;
+            if (message[x].Substring(0, 1) == "1")
+            { 
+                this.AOS = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                position = position + 1;
+            }
+            if (message[x].Substring(1, 1) == "1")
+            {
+                this.TRD = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                position = position + 1;
+            }
+            if (message[x].Substring(2, 1) == "1")
+            {
+                this.M3A = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                position = position + 1;
+            }
+            if (message[x].Substring(3, 1) == "1")
+            {
+                this.QI = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                position = position + 1;
+            }
+            if (message[x].Substring(4, 1) == "1")
+            {
+                this.TI = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                position = position + 1;
+            }
+            if (message[x].Substring(5, 1) == "1")
+            {
+                this.MAM_ages = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                position = position + 1;
+            }
+            if (message[x].Substring(6, 1) == "1")
+            {
+                this.GH = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                position = position + 1;
+            }
+            if (message[x].Substring(7, 1) == "1")
+            {
+                if (message[x + 1].Substring(0, 1) == "1") 
+                { 
+                    this.FL_ages = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 1].Substring(1, 1) == "1")
+                {
+                    this.ISA = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 1].Substring(2, 1) == "1")
+                {
+                    this.FSA = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 1].Substring(3, 1) == "1")
+                {
+                    this.AS = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 1].Substring(4, 1) == "1")
+                {
+                    this.TAS = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 1].Substring(5, 1) == "1")
+                {
+                    this.MH = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 1].Substring(6, 1) == "1")
+                {
+                    this.BVR = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+            }
+            if (message[x + 1].Substring(7, 1) == "1")
+            {
+                if (message[x + 2].Substring(0, 1) == "1") 
+                { 
+                    this.GVR = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 2].Substring(1, 1) == "1")
+                {
+                    this.GV = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 2].Substring(2, 1) == "1")
+                {
+                    this.TAR_ages = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 2].Substring(3, 1) == "1")
+                {
+                    this.TI_ages = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 2].Substring(4, 1) == "1")
+                {
+                    this.TS_ages = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 2].Substring(5, 1) == "1")
+                {
+                    this.MET = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 2].Substring(6, 1) == "1")
+                {
+                    this.ROA = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+            }
+            if (message[x + 2].Substring(7, 1) == "1")
+            {
+                if (message[x + 3].Substring(0, 1) == "1") 
+                { 
+                    this.ARA_ages = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+                if (message[x + 3].Substring(1, 1) == "1") 
+                { 
+                    this.SCC = Convert.ToString(Convert.ToInt32(message[position], 2) * 0.1) + " s";
+                    position = position + 1;
+                }
+            }
+
             return position;
         }
     }

@@ -6,7 +6,9 @@ using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Forms;
+using static iTextSharp.text.pdf.qrcode.Version;
 
 namespace Project_1
 {
@@ -44,6 +46,11 @@ namespace Project_1
         public string TST;                     // DATA ITEM I021/040
         public string SAA;                     // DATA ITEM I021/040
         public string CL;                      // DATA ITEM I021/040
+        public string IPC;                     // Data Item I021/040
+        public string NOGO;                    // Data Item I021/040
+        public string CRP;                     // Data Item I021/040
+        public string LDPJ;                    // Data Item I021/040
+        public string RCF;                     // Data Item I021/040
         public string CA;                      // DATA ITEM I021/040
         public string Track_number;            // DATA ITEM I010/060
         public string Service_identification;  // DATA ITEM I010/060
@@ -53,6 +60,21 @@ namespace Project_1
         public string VNS;                     // DATA ITEM I010/091
         public string VN;                      // DATA ITEM I010/131
         public string LTT;                     // DATA ITEM I010/140
+
+        public string NUCr_NACv;               // DATA ITEM I021/140
+        public string NUCp_NIC;                // DATA ITEM I021/140
+        public string NICbaro;                 // DATA ITEM I021/140
+        public string SIL;                     // DATA ITEM I021/140
+        public string NACp;                    // DATA ITEM I021/140
+        public string SIL2;                    // DATA ITEM I021/140
+        public string SDA;                     // DATA ITEM I021/140
+        public string GVA;                     // DATA ITEM I021/140
+        public string PIC;                     // DATA ITEM I021/140
+        public string ICB;                     // DATA ITEM I021/140
+        public string NUCp;                    // DATA ITEM I021/140
+        public string NIC;                     // DATA ITEM I021/140
+
+
         public int Time_of_day_in_seconds;     // DATA ITEM I010/140
         public string OctalA;                  // DATA ITEM I010/161
         public string OctalB;                  // DATA ITEM I010/170
@@ -118,6 +140,11 @@ namespace Project_1
         public string LW;
         public string MAM;
         public string RID;
+
+
+
+
+
 
 
         // Falta definir
@@ -368,7 +395,7 @@ namespace Project_1
             return position;
         }
 
-        // Data Item I021/010
+        // Data Item I021/010 [Data Source Identifier]--------------------DONE
         public int Data_Source_Identifier(string[] message, int position)
         {
             this.SAC = Convert.ToString(Convert.ToInt32(message[position], 2));
@@ -378,7 +405,7 @@ namespace Project_1
             return position;
         }
 
-        // Data Item I021/040
+        // Data Item I021/040 [Target Report Descriptor]-----------------DONE
         public int Target_Report_Descriptor(string[] message, int position)
         {
             this.ATP = message[position].Substring(0, 3);
@@ -405,11 +432,9 @@ namespace Project_1
             if (this.RAB == "0") { this.RAB = "Report from target transponder"; }
             if (this.RAB == "1") { this.RAB = "Report from field monitor (fixed transponder)"; }
 
-            this.FX = message[position].Substring(7, 1);
-            if (this.FX == "0") { this.FX = "Report from target transponder"; }
-            if (this.FX == "1") 
+
+            if (message[position].Substring(7, 1) == "1") 
             { 
-                this.FX = "Extension into first extension"; 
                 position++;
 
                 this.DCR = message[position].Substring(0, 1);
@@ -432,81 +457,142 @@ namespace Project_1
                 if (this.SAA == "0") { this.SAA = "Equipment capable to provide Selected Altitude"; }
                 if (this.SAA == "1") { this.SAA = "Equipment not capable to provide Selected Altitude"; }
 
-                this.CA = message[position].Substring(5, 2);
-                if (this.CA == "00") { this.CA = "Report valid"; }
-                if (this.CA == "01") { this.CA = "Report suspect"; }
-                if (this.CA == "10") { this.CA = "No information"; }
-                if (this.CA == "11") { this.CA = "Reserved for future use"; }
+                this.CL = message[position].Substring(5, 2);
+                if (this.CL == "00") { this.CL = "Report valid"; }
+                if (this.CL == "01") { this.CL = "Report suspect"; }
+                if (this.CL == "10") { this.CL = "No information"; }
+                if (this.CL == "11") { this.CL = "Reserved for future use"; }
 
                 this.FX = message[position].Substring(7, 1);
                 if (this.FX == "0") { this.FX = "End of item"; }
                 if (this.FX == "1") { this.FX = "Extension into second extension"; }
 
-                position++;
+                if (message[position].Substring(7, 1) == "1")
+                {
+                    // Extension into next extent
+                    position = position + 1;
+                    this.IPC = message[position].Substring(0, 1);
+                    if (this.IPC == "0") { this.IPC = "Default"; }
+                    if (this.IPC == "1") { this.IPC = "Failed"; }
 
+                    this.NOGO = message[position].Substring(1, 1);
+                    if (this.NOGO == "0") { this.NOGO = "Bit not set "; }
+                    if (this.NOGO == "1") { this.NOGO = "Bit set"; }
+
+                    this.CRP = message[position].Substring(0, 1);
+                    if (this.CRP == "0") { this.CRP = "Validation correct"; }
+                    if (this.CRP == "1") { this.CRP = "Validation failed"; }
+
+                    this.LDPJ = message[position].Substring(1, 1);
+                    if (this.LDPJ == "0") { this.LDPJ = "Not detected"; }
+                    if (this.LDPJ == "1") { this.LDPJ = "Detected"; }
+
+                    this.RCF = message[position].Substring(0, 1);
+                    if (this.RCF == "0") { this.RCF = "Default"; }
+                    if (this.RCF == "1") { this.RCF = "Range Check failed "; }
+                    position = position + 1;
+                }
+                else
+                {
+                    // End of the Data Item
+                    position = position + 1;
+                }
+
+            }
+            else
+            {
+                position++;
             }
             return position;
         }
 
-        // Data Item I021/161
+        // Data Item I021/161 [Track Number]---------------------------DONE
         public int Track_Number(string[] message, int position)
         {
             
-            //string fullmessage = String.Concat(message[position], message[position + 1]);
-            //this.Track_number = Convert.ToString(Convert.ToInt32(fullmessage));
+            string fullmessage = String.Concat(message[position], message[position + 1]);
+            this.Track_number = Convert.ToString(Convert.ToInt32(fullmessage,2));
             position = position + 2;
 
             return position;
         }
 
-        // DATA ITEM I021/015
+        // DATA ITEM I021/015 [Service Identification]-------------------DONE
         public int Service_Identification(string[] message, int position)
         {
-            this.Service_identification = "Service Identification: " + Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(message[position])));
+            this.Service_identification = Convert.ToString(Convert.ToInt32(message[position],2));
             position= position + 1;
 
             return position;
         }
 
-        // DATA ITEM I021/071
+        // DATA ITEM I021/071 [Time of Aplicability for Position]-----------------DONE
         public int Time_of_Aplicability_for_Position(string[] message, int position)
         {
-            //string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2]);
-            //this.ToAfP = Convert.ToString(Convert.ToInt32((fullmessage)) * 1/128) + "s";
+            int binaryValue = Convert.ToInt32(string.Concat(message[position], message[position + 1], message[position + 2]), 2);
+            double seconds = binaryValue / 128.0;
+            TimeSpan time = TimeSpan.FromSeconds(seconds);
+            this.ToAfP = time.ToString(@"hh\:mm\:ss\:fff");
             position = position + 3;
 
             return position;
         }
 
-        // DATA ITEM I021/130
+        // DATA ITEM I021/130 [Position on WGS84 Coordinates]--------------------DONE
         public int Position_in_WGS84_Coordinates(string[] message, int position)
         {
-
-            position = position + 6;
+            double Latitude = convertor.TWO_Complement(string.Concat(message[position], message[position + 1], message[position + 2])) * (180.0 / Math.Pow(2, 23));
+            position += 3;
+            double Longitude = convertor.TWO_Complement(string.Concat(message[position], message[position + 1], message[position + 2])) * (180.0 / Math.Pow(2, 23));
+            position += 3;
+            int Latdegres = (int)Math.Truncate(Latitude);
+            double Latmin = (Latitude - Latdegres) * 60.0;
+            double Latsec = Math.Round((Latmin - Math.Truncate(Latmin)) * 60.0, 5);
+            Latmin = Math.Truncate(Latmin);
+            int Londegres = (int)Math.Truncate(Longitude);
+            double Lonmin = (Longitude - Londegres) * 60.0;
+            double Lonsec = Math.Round((Lonmin - Math.Truncate(Lonmin)) * 60.0, 5);
+            Lonmin = Math.Truncate(Lonmin);
+            this.Latitude_WGS84 = $"{Latdegres}º {Latmin}' {Latsec}''";
+            this.Longitude_WGS84 = $"{Londegres}º {Lonmin}' {Lonsec}''";
 
             return position;
         }
 
-        // DATA ITEM I021/131
+        // DATA ITEM I021/131 [Position in WGS84 Coordinates High Resoultion]------------------DONE
         public int Position_in_WGS84_Coordinates_Highres(string[] message, int position)
         {
-
-            position = position + 8;
+            double Latitude = convertor.TWO_Complement(string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3])) * (180.0 / Math.Pow(2, 30));
+            position += 4;
+            double Longitude = convertor.TWO_Complement(string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3])) * (180.0 / Math.Pow(2, 30));
+            position += 4;
+            int Latdegres = (int)Math.Truncate(Latitude);
+            double Latmin = (Latitude - Latdegres) * 60.0;
+            double Latsec = Math.Round((Latmin - Math.Truncate(Latmin)) * 60.0, 5);
+            Latmin = Math.Truncate(Latmin);
+            int Londegres = (int)Math.Truncate(Longitude);
+            double Lonmin = (Longitude - Londegres) * 60.0;
+            double Lonsec = Math.Round((Lonmin - Math.Truncate(Lonmin)) * 60.0, 5);
+            Lonmin = Math.Truncate(Lonmin);
+            this.Latitude_WGS84_HI_RES = $"{Latdegres}º {Latmin}' {Latsec}''";
+            this.Longitude_WGS84_HI_RES = $"{Londegres}º {Lonmin}' {Lonsec}''";
 
             return position;
         }
 
-        // DATA ITEM I021/072
+        // DATA ITEM I021/072 [Time of Aplicability fro Velocity]-------------------DONE
         public int Time_of_Aplicability_for_Velocity(string[] message, int position)
         {
-            string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2]);
-            this.ToAfV = Convert.ToString(Convert.ToInt32((fullmessage)) * 1 / 128) + "s";
+            int binaryValue = Convert.ToInt32(string.Concat(message[position], message[position + 1], message[position + 2]), 2);
+            double seconds = binaryValue / 128.0;
+            TimeSpan time = TimeSpan.FromSeconds(seconds);
+            this.ToAfV = time.ToString(@"hh\:mm\:ss\:fff");
             position = position + 3;
 
             return position;
         }
 
-        // DATA ITEM I021/150
+        // DATA ITEM I021/150 [Air Speed]----------------------DONE
         public int Air_Speed(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position] + 1);
@@ -517,21 +603,21 @@ namespace Project_1
             }
             if (this.IM == "1")
             {
-                this.IM = "Mach Number: " + Convert.ToString(Convert.ToInt32(fullmessage.Substring(1, 15)) * 0.001);
+                this.IM = "Mach Number: " + Convert.ToString(Convert.ToInt32(fullmessage.Substring(1, 15),2) * 0.001);
             }
             position = position + 2;
 
             return position;
         }
 
-        // DATA ITEM I021/151
+        // DATA ITEM I021/151 [True Air Speed]---------------------DONE
         public int True_Air_Speed(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position] + 1);
             this.RE = fullmessage.Substring(0, 1);
             if (this.RE == "0")
             {
-                this.RE = "Value in defined range: " + Convert.ToString(Convert.ToInt32((fullmessage.Substring(1, 15))) + "Knots");
+                this.RE = "Value in defined range: " + Convert.ToString(Convert.ToInt32((fullmessage.Substring(1, 15)),2) + "Knots");
             }
             if (this.RE == "1")
             {
@@ -542,68 +628,143 @@ namespace Project_1
             return position;
         }
 
-        // DATA ITEM I021/080
+        // DATA ITEM I021/080 [Target Adress]---------------------------DONE
         public int Target_Address(string[] message, int position)
         {
-
+            this.TargetAddress = String.Concat(convertor.Binary_Octet_To_Hexadecimal(message[position]), convertor.Binary_Octet_To_Hexadecimal(message[position + 1]), convertor.Binary_Octet_To_Hexadecimal(message[position + 2]));
             position = position + 3;
 
             return position;
         }
 
-        // DATA ITEM I021/073
+        // DATA ITEM I021/073 [Time of Message Reception of Position]---------------------DONE
         public int Time_of_Message_Reception_of_Position(string[] message, int position)
         {
-            //string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2]);
-            //this.ToMRfP = Convert.ToString(Convert.ToInt32((fullmessage)) * 1 / 128) + "s";
+            int binaryValue = Convert.ToInt32(string.Concat(message[position], message[position + 1], message[position + 2]), 2);
+            double seconds = binaryValue / 128.0;
+            TimeSpan time = TimeSpan.FromSeconds(seconds);
+            this.ToMRfP = time.ToString(@"hh\:mm\:ss\:fff");
             position = position + 3;
 
             return position;
         }
 
-        // DATA ITEM I021/074
+        // DATA ITEM I021/074 [Time of Message Reception of Position High Precision]---------------------DONE
         public int Time_of_Message_Reception_of_Position_HighPrecision(string[] message, int position)
         {
+            string fullmessage = string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3]);
+            string FSI = fullmessage.Substring(0, 2);
+            string time = fullmessage.Substring(2, 30);
+            int str = Convert.ToInt32(time, 2);
+            double seconds = (Convert.ToDouble(str)) * Math.Pow(2, -30);
+            if (FSI == "10")
+            {
+                seconds = seconds - 1;
+            }
+            if (FSI == "01")
+            {
+                seconds = seconds + 1;
+            }
+            TimeSpan time2 = TimeSpan.FromSeconds(seconds);
+            this.ToMRfP_HI_RES = time2.ToString(@"hh\:mm\:ss\:fff");
             position = position +4;
+
             return position;
         }
 
-        // DATA ITEM I021/075
+        // DATA ITEM I021/075 [Time of Message reception of Velocity]----------------------DONE
         public int Time_of_Message_Reception_of_Velocity(string[] message, int position)
         {
-            //string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2]);
-            //this.ToMRfV = Convert.ToString(Convert.ToInt32((fullmessage)) * 1 / 128) + "s";
+            int binaryValue = Convert.ToInt32(string.Concat(message[position], message[position + 1], message[position + 2]), 2);
+            double seconds = binaryValue / 128.0;
+            TimeSpan time = TimeSpan.FromSeconds(seconds);
+            this.ToMRfV = time.ToString(@"hh\:mm\:ss\:fff");
             position = position + 3;
             return position;
         }
 
-        // DATA ITEM I021/076
+        // DATA ITEM I021/076 [Time of Message reception of Velocity High Precission]----------------------DONE
         public int Time_of_Message_Reception_of_Velocity_HighPrecision(string[] message, int position)
         {
-            position = position +4;
+            string fullmessage = string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3]);
+            string FSI = fullmessage.Substring(0, 2);
+            string time = fullmessage.Substring(2, 30);
+            int str = Convert.ToInt32(time, 2);
+            double seconds = (Convert.ToDouble(str)) * Math.Pow(2, -30);
+            if (FSI == "10")
+            {
+                seconds = seconds - 1;
+            }
+            if (FSI == "01")
+            {
+                seconds = seconds + 1;
+            }
+            TimeSpan time2 = TimeSpan.FromSeconds(seconds);
+            this.ToMRfV_HI_RES = time2.ToString(@"hh\:mm\:ss\:fff");
+            position = position + 4;
 
             return position;
         }
 
-        // DATA ITEM I021/140
+        // DATA ITEM I021/140 [Geometric Height]----------------------DONE
         public int Geometric_Height(string[] message, int position)
         {
-            //string fullmessage = String.Concat(message[position], message[position + 1]);
-            //this.GeometricHeight = Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(fullmessage) )* 6.25 + "ft");
+            string fullmessage = String.Concat(message[position], message[position + 1]);
+            this.GeometricHeight = Convert.ToString(Convert.ToInt32(fullmessage,2) * 6.25 + " ft");
             position = position + 2;
 
             return position;
         }
 
-        // DATA ITEM I021/140
+        // DATA ITEM I021/140 [Quality Indicators]-------------------------DONE
+        
+
         public int Quality_Indicators(string[] message, int position)
         {
-            position = position + 1;
-            
+            NUCr_NACv = Convert.ToString(Convert.ToInt32(message[position].Substring(0, 3), 2));
+            NUCp_NIC = Convert.ToString(Convert.ToInt32(message[position].Substring(3, 4), 2));
+            if (message[position].Substring(7, 1) == "1")
+            {
+                position = position + 1;
+                NICbaro = Convert.ToString(Convert.ToInt32(message[position].Substring(0, 1), 2));
+                SIL = Convert.ToString(Convert.ToInt32(message[position].Substring(1, 2), 2));
+                NACp = Convert.ToString(Convert.ToInt32(message[position].Substring(3, 4), 2));
+
+                if (message[position].Substring(7, 1) == "1")
+                {
+                    position = position + 1;
+                    if (message[position].Substring(2, 1) == "0") { SIL2 = "Measured per flight-Hour"; }
+                    else { SIL2 = "Measured per sample"; }
+                    SDA = Convert.ToString(Convert.ToInt32(message[position].Substring(3, 2), 2));
+                    GVA = Convert.ToString(Convert.ToInt32(message[position].Substring(5, 2), 2));
+
+                    if (message[position].Substring(7, 1) == "1")
+                    {
+                        position = position + 1;
+                        PIC = Convert.ToString(Convert.ToInt32(message[position].Substring(0, 4), 2));
+                        if (PIC == "0") { ICB = "No integrity(or > 20.0 NM)"; NUCp = "0"; NIC = "0"; }
+                        if (PIC == "1") { ICB = "< 20.0 NM"; NUCp = "1"; NIC = "1"; }
+                        if (PIC == "2") { ICB = "< 10.0 NM"; NUCp = "2"; NIC = "-"; }
+                        if (PIC == "3") { ICB = "< 8.0 NM"; NUCp = "-"; NIC = "2"; }
+                        if (PIC == "4") { ICB = "< 4.0 NM"; NUCp = "-"; NIC = "3"; }
+                        if (PIC == "5") { ICB = "< 2.0 NM"; NUCp = "3"; NIC = "4"; }
+                        if (PIC == "6") { ICB = "< 1.0 NM"; NUCp = "4"; NIC = "5"; }
+                        if (PIC == "7") { ICB = "< 0.6 NM"; NUCp = "-"; NIC = "6 (+ 1/1)"; }
+                        if (PIC == "8") { ICB = "< 0.5 NM"; NUCp = "5"; NIC = "6 (+ 0/0)"; }
+                        if (PIC == "9") { ICB = "< 0.3 NM"; NUCp = "-"; NIC = "6 (+ 0/1)"; }
+                        if (PIC == "10") { ICB = "< 0.2 NM"; NUCp = "6"; NIC = "7"; }
+                        if (PIC == "11") { ICB = "< 0.1 NM"; NUCp = "7"; NIC = "8"; }
+                        if (PIC == "12") { ICB = "< 0.04 NM"; NUCp = ""; NIC = "9"; }
+                        if (PIC == "13") { ICB = "< 0.013 NM"; NUCp = "8"; NIC = "10"; }
+                        if (PIC == "14") { ICB = "< 0.004 NM"; NUCp = "9"; NIC = "11"; }
+                        position = position + 1;
+                    }
+                }
+            }
             return position;
         }
 
-        // DATA ITEM I021/090
+        // DATA ITEM I021/090 [MOPS Version]--------------------------DONE
         public int MOPS_Version(string[] message, int position)
         {
             this.VNS = message[position].Substring(1,1);
@@ -630,45 +791,40 @@ namespace Project_1
             return position;
         }
 
-        // DATA ITEM I021/070
+        // DATA ITEM I021/070 [Mode 3A Code in Octal Representation]-----------------DONE
         public int Mode_3A_Code(string[] message, int position)
         {
             string fullmessage = String.Concat(message[position], message[position + 1]);
-            this.OctalA = Convert.ToString(Convert.ToInt32((fullmessage.Substring(4, 3))));
-            this.OctalB = Convert.ToString(Convert.ToInt32((fullmessage.Substring(7, 3))));
-            this.OctalC = Convert.ToString(Convert.ToInt32((fullmessage.Substring(10, 3))));
-            this.OctalD = Convert.ToString(Convert.ToInt32((fullmessage.Substring(13, 3))));
-            this.M3AC = "Mode 3/A Code" + this.OctalA + this.OctalB + this.OctalC + this.OctalD;
-            
+            this.M3AC = Convert.ToString(Convert.ToInt32(fullmessage.Substring(4, 12), 2), 8).PadLeft(4, '0');            
             position = position + 2;
 
             return position;
         }
 
-        // DATA ITEM I021/230
+        // DATA ITEM I021/230 [Roll Angle]------------------------DONE
         public int Roll_Angle(string[] message, int position)
         {
+            this.RollAngle = Convert.ToString(convertor.TWO_Complement(string.Concat(message[position], message[position + 1])) * 0.01) + "º";
             position = position + 2;
 
             return position;
         }
 
-        // DATA ITEM I021/145
+        // DATA ITEM I021/145 [Flight Level}-----------------------DONE
         public int Flight_Level(string[] message, int position)
         {
-            //string fullmessage = String.Concat(message[position], message[position + 1]);
-            //this.FlightLevel = "Flight Level: " + Convert.ToString(Convert.ToInt32(convertor.Twos_Complement(fullmessage)));
-
+            string fullmessage = String.Concat(message[position], message[position + 1]);
+            this.FlightLevel = Convert.ToString(convertor.TWO_Complement(fullmessage) * (0.25));
             position = position + 2;
 
             return position;
         }
 
-        // DATA ITEM I021/152
+        // DATA ITEM I021/152 [Magnetic Heading]------------------------DONE
         public int Magnetic_Heading(string[] message, int position)
         {
             string fullmessage = String.Concat(message[position], message[position + 1]);
-            this.MagneticHeading = Convert.ToString(Convert.ToInt32((fullmessage) )* 360*2E-16 + "deg");
+            this.MagneticHeading = Convert.ToString(Convert.ToInt32((fullmessage),2) * (360 / (Math.Pow(2, 16))) + "º");
             position = position + 2;
 
             return position;
@@ -705,32 +861,32 @@ namespace Project_1
             return position;
         }
 
-        // DATA ITEM I021/155
+        // DATA ITEM I021/155 [Barometric Vertical Rate]------------------DONE
         public int Barometric_Vertical_Rate(string[] message, int position)
         {
-            //string fullmessage = string.Concat(message[position], message[position] + 1);
-            //this.BarometricVerticalRate = fullmessage.Substring(0, 1);
-            //if (this.BarometricVerticalRate == "0")
-            //{
-            //    this.BarometricVerticalRate = "Value in defined range: " + Convert.ToString(Convert.ToInt32((fullmessage.Substring(1, 15)))*6.25 + "feet/minute");
-            //}
-            //if (this.BarometricVerticalRate == "1")
-            //{
-            //    this.BarometricVerticalRate = "Value exceeds defined range";
-            //}
+            string fullmessage = string.Concat(message[position], message[position+1]);
+            this.BarometricVerticalRate = fullmessage.Substring(0, 1);
+            if (this.BarometricVerticalRate == "0")
+            {
+                this.BarometricVerticalRate = Convert.ToString(convertor.TWO_Complement(fullmessage.Substring(1, 15)) * 6.25) + "ft/min";
+            }
+            if (this.BarometricVerticalRate == "1")
+            {
+                this.BarometricVerticalRate = "Value exceeds defined range";
+            }
             position = position + 2;
 
             return position;
         }
 
-        // DATA ITEM I021/155
+        // DATA ITEM I021/155 [Geometric Vertical Rate]---------------DONE
         public int Geometric_Vertical_Rate(string[] message, int position)
         {
-            string fullmessage = string.Concat(message[position], message[position] + 1);
+            string fullmessage = string.Concat(message[position], message[position + 1]);
             this.GeometricVerticalRate = fullmessage.Substring(0, 1);
             if (this.GeometricVerticalRate == "0")
             {
-                this.GeometricVerticalRate = "Value in defined range: " + Convert.ToString(Convert.ToInt32(convertor.TWO_Complement(fullmessage.Substring(1, 15)) * 6.25) + "feet/minute");
+                this.GeometricVerticalRate = Convert.ToString(convertor.TWO_Complement(fullmessage.Substring(1, 15)) * 6.25) + "ft/min";
             }
             if (this.GeometricVerticalRate == "1")
             {
@@ -741,53 +897,250 @@ namespace Project_1
             return position;
         }
 
-        // DATA ITEM I021/160
+        // DATA ITEM I021/160 [Airbone Ground Vector]------------------DONE
         public int Airborne_Ground_Vector(string[] message, int position)
         {
-            //string fullmessage = string.Concat(message[position], message[position] + 1);
-            //string fullmessage2 = string.Concat(message[position] + 2, message[position] + 3);
-            //this.RE = fullmessage.Substring(0, 1);
-            //if (this.RE == "0")
-            //{
-            //    this.Ground_Speed = "Value in defined range: " + Convert.ToString(Convert.ToInt32((fullmessage.Substring(1, 15)) )* 2E-14 + "NM/s");
-            //    this.Track_Angle = "Value in defined range: " + Convert.ToString(Convert.ToInt32((fullmessage2.Substring(1, 15)) )* 360 * 2E-16 + "deg");
+            string fullmessage = string.Concat(message[position], message[position + 1]);
+            string fullmessage2 = string.Concat(message[position + 2], message[position + 3]);
+            this.RE = fullmessage.Substring(0, 1);
+            if (this.RE == "0")
+            {
+                double Ground_Speed_with_no_format = Convert.ToInt32(fullmessage.Substring(1, 15),2) * (Math.Pow(2, -14) * 3600);
+                double Track_Angle_with_no_format = Convert.ToInt32(fullmessage2.Substring(0, 16),2) * (360 / (Math.Pow(2, 16)));
+                this.Ground_Speed = String.Format("{0:0.00}", Ground_Speed_with_no_format) + " kt";
+                this.Track_Angle = String.Format("{0:0.00}", Track_Angle_with_no_format) + "º";
+               
 
-            //}
-            //if (this.RE == "1")
-            //{
-            //    this.Ground_Speed = "Value exceeds defined range";
-            //    this.Track_Angle = "Value exceeds defined range";
-            //}
+            }
+            if (this.RE == "1")
+            {
+                this.Ground_Speed = "Value exceeds defined range";
+                this.Track_Angle = "Value exceeds defined range";
+            }
             position = position + 4;
 
             return position;
         }
 
-        // DATA ITEM I021/165
+        // DATA ITEM I021/165 [Track Angle Rate]-------------------------DONE
         public int Track_Angle_Rate(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position] + 1);
-            this.TAR = Convert.ToString(Convert.ToInt32(fullmessage.Substring(6, 10)));
-
+            this.TAR = Convert.ToString(Convert.ToInt32(fullmessage.Substring(6, 10),2));
             position = position + 1;
+
             return position;
         }
 
-        // DATA ITEM I021/077
+        // DATA ITEM I021/077 [Time Of Report Transmission]------------------------DONE
         public int Time_of_Report_Transmission(string[] message, int position)
         {
-            //string fullmessage = string.Concat(message[position], message[position] + 1, message[position] + 2);
-            //this.Tort = Convert.ToString(Convert.ToInt32(fullmessage) * 1 / 128);
+            int binaryValue = Convert.ToInt32(string.Concat(message[position], message[position + 1], message[position + 2]), 2);
+            double seconds = binaryValue / 128.0;
+            TimeSpan time = TimeSpan.FromSeconds(seconds);
+            this.Tort = time.ToString(@"hh\:mm\:ss\:fff");
             position = position + 3;
+
             return position;
         }
 
-        // DATA ITEM I021/170
+        // DATA ITEM I021/170 [Target Identification]--------------------------DONE
         public int Target_Identification(string[] message, int position)
         {
-            
+            string charecter;
+            string fullmessage = String.Concat(message[position], message[position + 1], message[position + 2], message[position + 3], message[position + 4], message[position + 5]);
+            this.Target_ID = "";
+            int i = 2;
+            while (i < fullmessage.Length)
+            {
+                string reversedStr = fullmessage.Substring(i, 4);
+                charecter = fullmessage.Substring(i-2, 4);
+                //char[] stringArray = charecter.ToCharArray();
+                //Array.Reverse(stringArray);
+                //string reversedStr = new string(stringArray);
+                if (reversedStr == "0000")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "0001")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "A";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "Q";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "1";
+                }
+                if (reversedStr == "0010")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "B";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "R";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "2";
+                }
+                if (reversedStr == "0011")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "C";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "S";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "3";
+                }
+                if (reversedStr == "0100")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "D";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "T";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "4";
+                }
+                if (reversedStr == "0101")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "E";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "U";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "5";
+                }
+                if (reversedStr == "0110")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "F";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "V";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "6";
+                }
+                if (reversedStr == "0111")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "G";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "W";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "7";
+                }
+                if (reversedStr == "1000")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "H";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "X";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "8";
+                }
+                if (reversedStr == "1001")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "I";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "Y";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "9";
+                }
+                if (reversedStr == "1010")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "J";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "Z";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "1011")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "K";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "1100")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "L";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "1101")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "M";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "1110")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "N";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
+                if (reversedStr == "1111")
+                {
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "O";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "0")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "0" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                    if (charecter.Substring(1, 1) == "1" && charecter.Substring(0, 1) == "1")
+                        this.Target_ID = this.Target_ID + "";
+                }
 
-            position = position + 8;
+
+
+                i = i + 6;
+            }
+            position = position + 6;
+
             return position;
         }
 

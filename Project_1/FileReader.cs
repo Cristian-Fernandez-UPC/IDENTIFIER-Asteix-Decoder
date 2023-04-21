@@ -87,8 +87,9 @@ namespace Project_1
             }
 
             // Here we will work with this hexadecimal list (which are octets in binary) to pass the messages to Categories Classes to be decoded
-            for (int q = 0; q < hexadecimallist.Count; q++)
+            for (int q = 0; q < 50; q++)
             {
+                //hexadecimallist.Count
                 //  EN VEZ DE 3 hexadecimallist.Count
                 string[] arraystring = hexadecimallist[q];
                 int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
@@ -316,7 +317,12 @@ namespace Project_1
             if (newrow.SIM == null) { newrow.SIM = "No Data"; }
             if (newrow.TST == null) { newrow.TST = "No Data"; }
             if (newrow.SAA == null) { newrow.SAA = "No Data"; }
-            if (newrow.CA == null) { newrow.CA = "No Data"; }
+            if (newrow.CL == null) { newrow.CL = "No Data"; }
+            if (newrow.IPC == null) { newrow.IPC = "No Data"; }
+            if (newrow.NOGO == null) { newrow.NOGO = "No Data"; }
+            if (newrow.CRP == null) { newrow.CRP = "No Data"; }
+            if (newrow.LDPJ == null) { newrow.LDPJ = "No Data"; }
+            if (newrow.RCF == null) { newrow.RCF = "No Data"; }
             if (newrow.Track_number == null) { newrow.Track_number = "No Data"; }
             if (newrow.Service_identification == null) { newrow.Service_identification = "No Data"; }
             if (newrow.ToAfP == null) { newrow.ToAfP = "No Data"; }
@@ -333,7 +339,18 @@ namespace Project_1
             if (newrow.ToMRfV == null) { newrow.ToMRfV = "No Data"; }
             if (newrow.ToMRfV_HI_RES == null) { newrow.ToMRfV_HI_RES = "No Data"; }
             if (newrow.GeometricHeight == null) { newrow.GeometricHeight = "No Data"; }
-            if (newrow.QualityIndicators == null) { newrow.QualityIndicators = "No Data"; }
+            if (newrow.NUCr_NACv == null) { newrow.NUCr_NACv = "No Data"; }
+            if (newrow.NUCp_NIC == null) { newrow.NUCp_NIC = "No Data"; }
+            if (newrow.NICbaro == null) { newrow.NICbaro = "No Data"; }
+            if (newrow.SIL == null) { newrow.SIL = "No Data"; }
+            if (newrow.NACp == null) { newrow.NACp = "No Data"; }
+            if (newrow.SIL2 == null) { newrow.SIL2 = "No Data"; }
+            if (newrow.SDA == null) { newrow.SDA = "No Data"; }
+            if (newrow.GVA == null) { newrow.GVA = "No Data"; }
+            if (newrow.PIC == null) { newrow.PIC = "No Data"; }
+            if (newrow.ICB == null) { newrow.ICB = "No Data"; }
+            if (newrow.NUCp == null) { newrow.NUCp = "No Data"; }
+            if (newrow.NIC == null) { newrow.NIC = "No Data"; }
             if (newrow.VNS == null) { newrow.VNS = "No Data"; }
             if (newrow.VN == null) { newrow.VN = "No Data"; }
             if (newrow.LTT == null) { newrow.LTT = "No Data"; }
@@ -437,7 +454,7 @@ namespace Project_1
             row[0] = newrow.CAT;
             row[1] = newrow.SAC;
             row[2] = newrow.SIC;
-            row[3] = "ATP: " + newrow.ATP + nl + "ARC: " + newrow.ARC + nl + "RC: " + newrow.RC + nl + "RAB: " + newrow.RAB + nl + "DCR: " + newrow.DCR + nl + "GBS: " + newrow.GBS + nl + "SIM: " + newrow.SIM + nl + "TST: " + newrow.TST + nl + "SAA: " + newrow.SAA + nl + "CA: " + newrow.CA;
+            row[3] = "ATP: " + newrow.ATP + nl + "ARC: " + newrow.ARC + nl + "RC: " + newrow.RC + nl + "RAB: " + newrow.RAB + nl + "DCR: " + newrow.DCR + nl + "GBS: " + newrow.GBS + nl + "SIM: " + newrow.SIM + nl + "TST: " + newrow.TST + nl + "SAA: " + newrow.SAA + nl + "CL: " + newrow.CL + nl + "IPC: " + newrow.IPC + nl + "NOGO: " + newrow.NOGO + nl + "CRP: " + newrow.CRP + nl + "LDPJ: " + newrow.LDPJ + nl + "RCF: " + newrow.RCF;
             row[4] = newrow.Track_number;
             row[5] = newrow.Service_identification;
             row[6] = newrow.ToAfP;
@@ -452,7 +469,7 @@ namespace Project_1
             row[15] = newrow.ToMRfV;
             row[16] = newrow.ToMRfV_HI_RES;
             row[17] = newrow.GeometricHeight;
-            row[18] = newrow.QualityIndicators;
+            row[18] = "NUCr or NACv: " + newrow.NUCr_NACv + nl + "NUCp or NIC: " + newrow.NUCp_NIC + nl + "NICbaro: " + newrow.NICbaro + nl + "SIL: " + newrow.SIL + nl + "NACp: " + newrow.NACp + nl + "SIL2: " + newrow.SIL2 + nl + "SDA: " + newrow.SDA + nl + "GVA: " + newrow.GVA + nl + "PIC: " + newrow.PIC + nl + "ICB: " + newrow.ICB + nl + "NUCp: " + newrow.NUCp + nl + "NIC: " + newrow.NIC;
             row[19] = "VNS: " + newrow.VNS + nl + "VN: " + newrow.VN + nl + "LTT: " + newrow.LTT;
             row[20] = newrow.M3AC;
             row[21] = newrow.RollAngle;

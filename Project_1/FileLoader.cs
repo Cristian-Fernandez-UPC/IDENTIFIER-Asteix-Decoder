@@ -27,6 +27,8 @@ namespace Project_1
 {
     public partial class FileLoader : Form
     {
+        public DataTable MapCAT10 = new DataTable();
+        public DataTable MapCAT21 = new DataTable();
         public static Color color1 = Color.FromArgb(52, 192, 215);
         public const string AstFileFilter = "Archivos AST (*.ast)|*.ast";
         FileReader read = new FileReader();
@@ -126,8 +128,12 @@ namespace Project_1
 
                     loadingscreen.Close();
 
+                    // We Load the BASIC DATA to run the Map Form
+                    MapCAT10 = read.getTableCAT10().DefaultView.ToTable(false, "Category", "SAC", "SIC", "Target_ID", "Target_Address", "Track Number", "Mode_3A_Code", "Flight Level", "Position in Cartesian Co-ordinates");
+                    //this.dataGridView1.DataSource = MapCAT10;
+                    MapCAT21 = read.getTableCAT21().DefaultView.ToTable(false, "Category", "SAC", "SIC", "Target_ID", "Target_Address", "Track Number", "Mode_3A_Code", "Flight Level", "Position in WGS-84 Co-ordinates Hi-Res");
+                    //this.dataGridView1.DataSource = MapCAT21;
 
-                    //this.Data_Inspector.Load_Data_Grid_View(this.dataGridView1);
 
                 }
             }

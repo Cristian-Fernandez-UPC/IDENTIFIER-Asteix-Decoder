@@ -43,7 +43,7 @@ namespace Project_1
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             if (currentChildForm != null) 
-                currentChildForm.Close();
+                currentChildForm.Hide();
             Reset();
         }
 

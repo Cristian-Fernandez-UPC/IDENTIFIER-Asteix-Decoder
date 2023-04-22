@@ -34,7 +34,12 @@ namespace Project_1
         public string FILE_PATH;
         int previous_case = 0;
         int previous_case2 = 0;
+        int previous_case3 = 0;
         int file_loaded = 0;
+        public bool CAT10;
+        public bool CAT21;
+        public int filterparameter = 0;
+        public bool dockstatus = false;
 
 
         private void RoundPanelCorners(Panel panel, int radius)
@@ -60,6 +65,9 @@ namespace Project_1
             openFileDialog1.Filter = AstFileFilter;
             RoundPanelCorners(panel3, 20);
             textBox1.Text = "Enter an ID";
+            toggleButton6.CheckedChanged -= toggleButton6_CheckedChanged;
+            toggleButton6.Checked = true;
+            toggleButton6.CheckedChanged += toggleButton6_CheckedChanged;
         }
 
 
@@ -83,64 +91,167 @@ namespace Project_1
 
         private void iconPictureBox1_Click(object sender, EventArgs e)
         {
-            LoadingScreen loadingscreen = new LoadingScreen();
-            var openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            openFileDialog.Filter = AstFileFilter;
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (this.dockstatus == false)
             {
-                var filePath = openFileDialog.FileName;
-                label2.Text = Path.GetFileName(filePath);
-                this.FILE_PATH = filePath;
-                //loadingscreen.TopMost = true;
-                
-                loadingscreen.Show();
-                loadingscreen.BringToFront();
+                LoadingScreen loadingscreen = new LoadingScreen();
+                var openFileDialog = new System.Windows.Forms.OpenFileDialog();
+                openFileDialog.Filter = AstFileFilter;
 
-                int i = 0;
-                while (i == 0)
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    loadingscreen.Refresh();
-                    read.ReadFile(filePath); // Leemos el fichero
-                    label4.Text = "Loaded Successfully";
-                    this.file_loaded = 1;
-                    i = 1;
+                    var filePath = openFileDialog.FileName;
+                    label2.Text = Path.GetFileName(filePath);
+                    this.FILE_PATH = filePath;
+                    //loadingscreen.TopMost = true;
+
+                    loadingscreen.Show();
+                    loadingscreen.BringToFront();
+
+                    int i = 0;
+                    while (i == 0)
+                    {
+                        loadingscreen.Refresh();
+                        read.ReadFile(filePath); // Leemos el fichero
+                        label4.Text = "Loaded Successfully";
+                        this.file_loaded = 1;
+                        i = 1;
+                    }
+
+
+                    this.dataGridView1.DataSource = read.getTableCAT10();
+                    this.dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                    this.dataGridView1.Columns.Cast<DataGridViewColumn>().ToList().ForEach(f => f.SortMode = DataGridViewColumnSortMode.NotSortable);
+                    toggleButton1.Checked = true;
+                    toggleButton2.Checked = true;
+
+                    loadingscreen.Close();
+
+
+                    //this.Data_Inspector.Load_Data_Grid_View(this.dataGridView1);
+
                 }
-
-
-                this.dataGridView1.DataSource = read.getTableCAT10();
-                this.dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-                
-                toggleButton1.Checked = true;
-                toggleButton2.Checked = true;
-
-                loadingscreen.Close();
-
-
-                //this.Data_Inspector.Load_Data_Grid_View(this.dataGridView1);
-
-
             }
+            else
+            {
+                MessageBox.Show("Please unlock the table!");
+            }
+            
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            DataView dataView = new DataView(read.getTableCAT10());
             if (e.KeyCode == Keys.Enter)
             {
                 if(this.file_loaded == 1)
                 {
-                    try
+                    if (this.dockstatus == false)
                     {
-                        dataView.RowFilter = $"Target_ID LIKE '%{textBox1.Text}%'";
-                        dataGridView1.DataSource = dataView;
-                        togglesrestart();
+                        if (toggleButton6.Checked == false && toggleButton7.Checked == false && toggleButton8.Checked == false)
+                        {
+                            MessageBox.Show("Pleas select an option for the searching section!");
+                        }
+                        else
+                        {
+                            if (this.toggleButton1.Checked == true || this.toggleButton2.Checked == true) { this.CAT10 = true; }
+                            if (this.toggleButton3.Checked == true) { this.CAT21 = true; }
+                            if (this.CAT10 == true)
+                            {
+                                DataView dataView = new DataView(read.getTableCAT10());
+                                if (this.filterparameter == 0)
+                                {
 
+                                    try
+                                    {
+                                        dataView.RowFilter = $"Target_ID LIKE '%{textBox1.Text}%'";
+                                        dataGridView1.DataSource = dataView;
+                                        togglesrestart();
+
+                                    }
+                                    catch
+                                    {
+                                        textBox1.Text = "No Valid ID";
+                                    }
+                                }
+                                if (this.filterparameter == 1)
+                                {
+                                    try
+                                    {
+                                        dataView.RowFilter = $"Target_Address LIKE '%{textBox1.Text}%'";
+                                        dataGridView1.DataSource = dataView;
+
+                                    }
+                                    catch
+                                    {
+                                        textBox1.Text = "No Valid ID";
+                                    }
+                                }
+                                if (this.filterparameter == 2)
+                                {
+                                    try
+                                    {
+                                        dataView.RowFilter = $"Mode_3A_Code LIKE '%{textBox1.Text}%'";
+                                        dataGridView1.DataSource = dataView;
+
+                                    }
+                                    catch
+                                    {
+                                        textBox1.Text = "No Valid ID";
+                                    }
+                                }
+                            }
+                            if (this.CAT21 == true)
+                            {
+                                DataView dataView = new DataView(read.getTableCAT21());
+                                if (this.filterparameter == 0)
+                                {
+
+                                    try
+                                    {
+                                        dataView.RowFilter = $"Target_ID LIKE '%{textBox1.Text}%'";
+                                        dataGridView1.DataSource = dataView;
+                                        togglesrestart();
+
+                                    }
+                                    catch
+                                    {
+                                        textBox1.Text = "No Valid ID";
+                                    }
+                                }
+                                if (this.filterparameter == 1)
+                                {
+                                    try
+                                    {
+                                        dataView.RowFilter = $"Target_Address LIKE '%{textBox1.Text}%'";
+                                        dataGridView1.DataSource = dataView;
+
+                                    }
+                                    catch
+                                    {
+                                        textBox1.Text = "No Valid ID";
+                                    }
+                                }
+                                if (this.filterparameter == 2)
+                                {
+                                    try
+                                    {
+                                        dataView.RowFilter = $"Mode_3A_Code LIKE '%{textBox1.Text}%'";
+                                        dataGridView1.DataSource = dataView;
+
+                                    }
+                                    catch
+                                    {
+                                        textBox1.Text = "No Valid ID";
+                                    }
+                                }
+                            }
+                        }
                     }
-                    catch
+                    else
                     {
-                        textBox1.Text = "No Valid ID";
+                        MessageBox.Show("Please unlock the table!");
+                        textBox1.Text = "Enter an ID";
                     }
+                    
                 }
                 else
                 {
@@ -155,34 +266,44 @@ namespace Project_1
         {
             if (this.file_loaded == 1)
             {
-                textBox1.Text = "Enter an ID";
-                DataView dataView = new DataView(read.getTableCAT10());
-                if (this.previous_case == 0)
+                if (this.dockstatus == false)
                 {
-                    if (toggleButton2.Checked==false)
+                    if (this.previous_case3 == 1)
                     {
-                        dataView.RowFilter = $"SIC = '{7}'";
-                        dataGridView1.DataSource = dataView;
+                        toggleButton3.CheckedChanged -= toggleButton3_CheckedChanged_1;
+                        toggleButton3.Checked = false;
+                        toggleButton3.CheckedChanged += toggleButton3_CheckedChanged_1;
+                        this.previous_case3 = 0;
                     }
-                    if (toggleButton2.Checked == true)
+                    textBox1.Text = "Enter an ID";
+                    DataView dataView = new DataView(read.getTableCAT10());
+                    if (this.previous_case == 0)
                     {
-                        dataView.RowFilter = $"SIC = '{7}' OR SIC = '{107}'";
-                        dataGridView1.DataSource = dataView;
+                        if (toggleButton2.Checked == false)
+                        {
+                            dataView.RowFilter = $"SIC = '{7}'";
+                            dataGridView1.DataSource = dataView;
+                        }
+                        if (toggleButton2.Checked == true)
+                        {
+                            dataView.RowFilter = $"SIC = '{7}' OR SIC = '{107}'";
+                            dataGridView1.DataSource = dataView;
+                        }
+                        this.previous_case = 1;
                     }
-                    this.previous_case = 1;
-                }
-                else
-                {
-                    if(toggleButton2.Checked == false)
+                    else
                     {
-                        dataGridView1.DataSource = read.getTableCAT10();
+                        if (toggleButton2.Checked == false)
+                        {
+                            dataGridView1.DataSource = read.getTableCAT10();
+                        }
+                        if (toggleButton2.Checked == true)
+                        {
+                            dataView.RowFilter = $"SIC = '{107}'";
+                            dataGridView1.DataSource = dataView;
+                        }
+                        this.previous_case = 0;
                     }
-                    if (toggleButton2.Checked == true)
-                    {
-                        dataView.RowFilter = $"SIC = '{107}'";
-                        dataGridView1.DataSource = dataView;
-                    }
-                    this.previous_case = 0;
                 }
             }
             else
@@ -198,34 +319,44 @@ namespace Project_1
         {
             if (this.file_loaded == 1)
             {
-                textBox1.Text = "Enter an ID";
-                DataView dataView = new DataView(read.getTableCAT10());
-                if (this.previous_case2 == 0)
+                if (this.dockstatus == false)
                 {
-                    if (toggleButton1.Checked == false)
+                    if (this.previous_case3 == 1)
                     {
-                        dataView.RowFilter = $"SIC = '{107}'";
-                        dataGridView1.DataSource = dataView;
+                        toggleButton3.CheckedChanged -= toggleButton3_CheckedChanged_1;
+                        toggleButton3.Checked = false;
+                        toggleButton3.CheckedChanged += toggleButton3_CheckedChanged_1;
+                        this.previous_case3 = 0;
                     }
-                    if (toggleButton1.Checked == true)
+                    textBox1.Text = "Enter an ID";
+                    DataView dataView = new DataView(read.getTableCAT10());
+                    if (this.previous_case2 == 0)
                     {
-                        dataView.RowFilter = $"SIC = '{7}' OR SIC = '{107}'";
-                        dataGridView1.DataSource = dataView;
+                        if (toggleButton1.Checked == false)
+                        {
+                            dataView.RowFilter = $"SIC = '{107}'";
+                            dataGridView1.DataSource = dataView;
+                        }
+                        if (toggleButton1.Checked == true)
+                        {
+                            dataView.RowFilter = $"SIC = '{7}' OR SIC = '{107}'";
+                            dataGridView1.DataSource = dataView;
+                        }
+                        this.previous_case2 = 1;
                     }
-                    this.previous_case2 = 1;
-                }
-                else
-                {
-                    if (toggleButton1.Checked == false)
+                    else
                     {
-                        dataGridView1.DataSource = read.getTableCAT10();
+                        if (toggleButton1.Checked == false)
+                        {
+                            dataGridView1.DataSource = read.getTableCAT10();
+                        }
+                        if (toggleButton1.Checked == true)
+                        {
+                            dataView.RowFilter = $"SIC = '{7}'";
+                            dataGridView1.DataSource = dataView;
+                        }
+                        this.previous_case2 = 0;
                     }
-                    if (toggleButton1.Checked == true)
-                    {
-                        dataView.RowFilter = $"SIC = '{7}'";
-                        dataGridView1.DataSource = dataView;
-                    }
-                    this.previous_case2 = 0;
                 }
             }
             else
@@ -240,11 +371,38 @@ namespace Project_1
 
         private void toggleButton3_CheckedChanged_1(object sender, EventArgs e)
         {
-            toggleButton1.Checked = false;
-            toggleButton2.Checked = false;
-            this.dataGridView1.DataSource = read.getTableCAT21();
-            this.dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-        }
+            if (this.file_loaded == 1)
+            {
+                if (this.dockstatus==false)
+                {
+                    if (toggleButton1.Checked == true || toggleButton2.Checked == true)
+                    {
+                        toggleButton1.Checked = false;
+                        toggleButton2.Checked = false;
+                        this.dataGridView1.DataSource = read.getTableCAT21();
+                        this.dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                        this.previous_case3 = 1;
+                    }
+                    else if (toggleButton1.Checked == false && toggleButton2.Checked == false)
+                    {
+                        if (this.previous_case3 == 1)
+                        {
+                            toggleButton1.Checked = true;
+                            toggleButton2.Checked = true;
+                            this.previous_case3 = 0;
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                toggleButton3.CheckedChanged -= toggleButton3_CheckedChanged_1;
+                toggleButton3.Checked = false;
+                exception.ShowDialog();
+                toggleButton3.CheckedChanged += toggleButton3_CheckedChanged_1;
+            }
+         }
 
 
 
@@ -383,12 +541,18 @@ namespace Project_1
 
         private void iconPictureBox6_MouseLeave(object sender, EventArgs e)
         {
-            iconPictureBox6.IconColor = Color.White;
+            if (this.dockstatus==false)
+            {
+                iconPictureBox6.IconColor = Color.White;
+            }
         }
 
         private void iconPictureBox6_MouseEnter(object sender, EventArgs e)
         {
-            iconPictureBox6.IconColor = color1;
+            if (this.dockstatus == false)
+            {
+                iconPictureBox6.IconColor = color1;
+            }
         }
 
         private void iconPictureBox5_MouseLeave(object sender, EventArgs e)
@@ -405,11 +569,17 @@ namespace Project_1
         {
             if (this.file_loaded == 1)
             {
-                dataGridView1.DataSource = read.getTableCAT10();
-                togglesrestart();
-                toggleButton1.Checked = true;
-                toggleButton2.Checked = true;
-
+                if (this.dockstatus == false)
+                {
+                    dataGridView1.DataSource = read.getTableCAT10();
+                    togglesrestart();
+                    toggleButton1.Checked = true;
+                    toggleButton2.Checked = true;
+                }
+                else
+                {
+                    MessageBox.Show("Please unlock the table!");
+                }
             }
             else
             {
@@ -437,7 +607,14 @@ namespace Project_1
             DataView dataView = new DataView();
             if (this.file_loaded == 1)
             {
-                dataGridView1.DataSource = dataView;
+                if (this.dockstatus == false)
+                {
+                    dataGridView1.DataSource = dataView;
+                }
+                else
+                {
+                    MessageBox.Show("Please unlock the table!");
+                }
 
             }
             else
@@ -450,6 +627,16 @@ namespace Project_1
         {
             if (this.file_loaded == 1)
             {
+                if (this.dockstatus == false)
+                {
+                    this.dockstatus = true;
+                    iconPictureBox6.IconColor = color1;
+                }
+                else
+                {
+                    this.dockstatus = false;
+                    iconPictureBox6.IconColor = Color.White;
+                }
                 
             }
             else
@@ -464,6 +651,188 @@ namespace Project_1
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void toggleButton6_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.dockstatus == false)
+            {
+                if (this.filterparameter != 0)
+                {
+                    toggleButton7.CheckedChanged -= toggleButton7_CheckedChanged;
+                    toggleButton7.Checked = false;
+                    toggleButton7.CheckedChanged += toggleButton7_CheckedChanged;
+                    toggleButton8.CheckedChanged -= toggleButton8_CheckedChanged;
+                    toggleButton8.Checked = false;
+                    toggleButton8.CheckedChanged += toggleButton8_CheckedChanged;
+                    this.filterparameter = 0;
+                }
+            }
+        }
+
+        private void toggleButton7_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.dockstatus == false)
+            {
+                if (this.filterparameter != 1)
+                {
+                    toggleButton6.CheckedChanged -= toggleButton6_CheckedChanged;
+                    toggleButton6.Checked = false;
+                    toggleButton6.CheckedChanged += toggleButton6_CheckedChanged;
+                    toggleButton8.CheckedChanged -= toggleButton8_CheckedChanged;
+                    toggleButton8.Checked = false;
+                    toggleButton8.CheckedChanged += toggleButton8_CheckedChanged;
+                    this.filterparameter = 1;
+                }
+            }
+        }
+
+        private void toggleButton8_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.dockstatus == false)
+            {
+                if (this.filterparameter != 2)
+                {
+                    toggleButton7.CheckedChanged -= toggleButton7_CheckedChanged;
+                    toggleButton7.Checked = false;
+                    toggleButton7.CheckedChanged += toggleButton7_CheckedChanged;
+                    toggleButton6.CheckedChanged -= toggleButton6_CheckedChanged;
+                    toggleButton6.Checked = false;
+                    toggleButton6.CheckedChanged += toggleButton6_CheckedChanged;
+                    this.filterparameter = 2;
+                }
+            }
+        }
+        public bool togglechecker1;
+        public bool togglechecker2;
+        public bool togglechecker3;
+        public bool togglechecker6;
+        public bool togglechecker7;
+        public bool togglechecker8;
+        private void toggleButton1_Click(object sender, EventArgs e)
+        {
+            if (this.dockstatus == true)
+            {
+                MessageBox.Show("Please unlock the table!");
+                this.togglechecker1 = toggleButton1.Checked;
+                if(this.togglechecker1 == true)
+                {
+                    toggleButton1.CheckedChanged -= toggleButton1_CheckedChanged;
+                    toggleButton1.Checked = false;
+                    toggleButton1.CheckedChanged += toggleButton1_CheckedChanged;
+                }
+                else
+                {
+                    toggleButton1.CheckedChanged -= toggleButton1_CheckedChanged;
+                    toggleButton1.Checked = true;
+                    toggleButton1.CheckedChanged += toggleButton1_CheckedChanged;
+                }
+            }
+        }
+
+        private void toggleButton2_Click(object sender, EventArgs e)
+        {
+            if (this.dockstatus == true)
+            {
+                MessageBox.Show("Please unlock the table!");
+                this.togglechecker2 = toggleButton2.Checked;
+                if (this.togglechecker2 == true)
+                {
+                    toggleButton2.CheckedChanged -= toggleButton2_CheckedChanged;
+                    toggleButton2.Checked = false;
+                    toggleButton2.CheckedChanged += toggleButton2_CheckedChanged;
+                }
+                else
+                {
+                    toggleButton2.CheckedChanged -= toggleButton2_CheckedChanged;
+                    toggleButton2.Checked = true;
+                    toggleButton2.CheckedChanged += toggleButton2_CheckedChanged;
+                }
+            }
+        }
+
+        private void toggleButton3_Click(object sender, EventArgs e)
+        {
+            if (this.dockstatus == true)
+            {
+                MessageBox.Show("Please unlock the table!");
+                this.togglechecker3 = toggleButton3.Checked;
+                if (this.togglechecker3 == true)
+                {
+                    toggleButton3.CheckedChanged -= toggleButton3_CheckedChanged_1;
+                    toggleButton3.Checked = false;
+                    toggleButton3.CheckedChanged += toggleButton3_CheckedChanged_1;
+                }
+                else
+                {
+                    toggleButton3.CheckedChanged -= toggleButton3_CheckedChanged_1;
+                    toggleButton3.Checked = true;
+                    toggleButton3.CheckedChanged += toggleButton3_CheckedChanged_1;
+                }
+            }
+        }
+
+        private void toggleButton6_Click(object sender, EventArgs e)
+        {
+            if (this.dockstatus == true)
+            {
+                MessageBox.Show("Please unlock the table!");
+                this.togglechecker6 = toggleButton6.Checked;
+                if (this.togglechecker6 == true)
+                {
+                    toggleButton6.CheckedChanged -= toggleButton6_CheckedChanged;
+                    toggleButton6.Checked = false;
+                    toggleButton6.CheckedChanged += toggleButton6_CheckedChanged;
+                }
+                else
+                {
+                    toggleButton6.CheckedChanged -= toggleButton6_CheckedChanged;
+                    toggleButton6.Checked = true;
+                    toggleButton6.CheckedChanged += toggleButton6_CheckedChanged;
+                }
+            }
+        }
+
+        private void toggleButton7_Click(object sender, EventArgs e)
+        {
+            if (this.dockstatus == true)
+            {
+                MessageBox.Show("Please unlock the table!");
+                this.togglechecker7 = toggleButton7.Checked;
+                if (this.togglechecker7 == true)
+                {
+                    toggleButton7.CheckedChanged -= toggleButton7_CheckedChanged;
+                    toggleButton7.Checked = false;
+                    toggleButton7.CheckedChanged += toggleButton7_CheckedChanged;
+                }
+                else
+                {
+                    toggleButton7.CheckedChanged -= toggleButton7_CheckedChanged;
+                    toggleButton7.Checked = true;
+                    toggleButton7.CheckedChanged += toggleButton7_CheckedChanged;
+                }
+            }
+        }
+
+        private void toggleButton8_Click(object sender, EventArgs e)
+        {
+            if (this.dockstatus == true)
+            {
+                MessageBox.Show("Please unlock the table!");
+                this.togglechecker8 = toggleButton8.Checked;
+                if (this.togglechecker8 == true)
+                {
+                    toggleButton8.CheckedChanged -= toggleButton8_CheckedChanged;
+                    toggleButton8.Checked = false;
+                    toggleButton8.CheckedChanged += toggleButton8_CheckedChanged;
+                }
+                else
+                {
+                    toggleButton8.CheckedChanged -= toggleButton8_CheckedChanged;
+                    toggleButton8.Checked = true;
+                    toggleButton8.CheckedChanged += toggleButton8_CheckedChanged;
+                }
+            }
         }
     }
 }

@@ -129,12 +129,12 @@ namespace Project_1
             CAT10_table.Columns.Add("Track Velocity in Polar Coordinates");
             CAT10_table.Columns.Add("Track Velocity in Cartesian Coordinates");
             CAT10_table.Columns.Add("Target Size & Orientation");
-            CAT10_table.Columns.Add("Target Address");
+            CAT10_table.Columns.Add("Target_Address");
             CAT10_table.Columns.Add("System Status");
             CAT10_table.Columns.Add("Vehicle Fleet Identification");
             CAT10_table.Columns.Add("Pre-programmed Message");
             CAT10_table.Columns.Add("Measured Height");
-            CAT10_table.Columns.Add("Mode-3A Code");
+            CAT10_table.Columns.Add("Mode_3A_Code");
             CAT10_table.Columns.Add("Mode S MB Data");
             CAT10_table.Columns.Add("Standard Deviation of Position");
             CAT10_table.Columns.Add("Presence");
@@ -156,7 +156,7 @@ namespace Project_1
             CAT21_table.Columns.Add("Time of Applicability for Velocity ");
             CAT21_table.Columns.Add("Air Speed");
             CAT21_table.Columns.Add("True Air Speed");
-            CAT21_table.Columns.Add("Target Address");
+            CAT21_table.Columns.Add("Target_Address");
             CAT21_table.Columns.Add("Time of Message Reception of Position");
             CAT21_table.Columns.Add("Time of Message Reception of Position (High Precision)");
             CAT21_table.Columns.Add("Time of Message Reception of Velocity ");
@@ -164,7 +164,7 @@ namespace Project_1
             CAT21_table.Columns.Add("Geometric Height");
             CAT21_table.Columns.Add("Quality Indicators");
             CAT21_table.Columns.Add("MOPS Version");
-            CAT21_table.Columns.Add("Mode 3/A Code");
+            CAT21_table.Columns.Add("Mode_3A_Code");
             CAT21_table.Columns.Add("Roll Angle");
             CAT21_table.Columns.Add("Flight Level");
             CAT21_table.Columns.Add("Magnetic Heading");
@@ -283,7 +283,7 @@ namespace Project_1
             row[18] = newrow.Vehicle_Fleet_ID;
             row[19] = "TRB:" + newrow.TRB + nl + "MSG:" + newrow.MSG;
             row[20] = newrow.MHeight;
-            row[21] = newrow.V_Mode3A + nl + newrow.G_Mode3A + nl + newrow.L_Mode3A + nl + newrow.Mode3A_reply;
+            row[21] = newrow.Mode3A_reply;
             if (newrow.MB_Data_ModeS != null)
                 row[22] = newrow.MB_Data_ModeS;
             else

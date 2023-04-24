@@ -42,6 +42,7 @@ namespace Project_1
         public bool CAT21;
         public int filterparameter = 0;
         public bool dockstatus = false;
+        public bool fileloaded = false;
 
 
         private void RoundPanelCorners(Panel panel, int radius)
@@ -134,6 +135,8 @@ namespace Project_1
                     MapCAT21 = read.getTableCAT21().DefaultView.ToTable(false, "Category", "SAC", "SIC", "Target_ID", "Target_Address", "Track Number", "Mode_3A_Code", "Flight Level", "Position in WGS-84 Co-ordinates Hi-Res");
                     //this.dataGridView1.DataSource = MapCAT21;
 
+                    
+
 
                 }
             }
@@ -143,6 +146,30 @@ namespace Project_1
             }
             
         }
+
+        public DataTable getMapPointsCAT10()
+        {
+            return MapCAT10;
+        }
+        public DataTable getMapPointsCAT21()
+        {
+            return MapCAT21;
+        }
+
+
+
+
+        public bool IsFileLoaded()
+        {
+            if (this.file_loaded == 1)
+            {
+                this.fileloaded = true;
+            }
+
+
+            return fileloaded;
+        }
+        
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {

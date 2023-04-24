@@ -105,22 +105,30 @@ namespace Project_1
             }
         }
 
+        public bool fileloaded = false;
+
         private void iconButton1_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color1);
             OpenChildForm(File_Loader);
-            
         }
 
         private void iconButton2_Click(object sender, EventArgs e)
         {
+            this.fileloaded = File_Loader.IsFileLoaded();
             ActivateButton(sender, RGBColors.color1);
             OpenChildForm(Data_Inspector);
             //filereaded.ReadFile(File_Loader.GetFilePath());
             //dataGridView1.DataSource= filereaded.getTableCAT10();
+            if (this.fileloaded == true)
+            {
+                Data_Inspector.getMapPointsCAT10(File_Loader.getMapPointsCAT10());
+                Data_Inspector.getMapPointsCAT21(File_Loader.getMapPointsCAT21());
+            }
+            
 
 
- 
+
         }
 
 
@@ -200,6 +208,11 @@ namespace Project_1
         private void iconPictureBox4_MouseLeave(object sender, EventArgs e)
         {
             iconPictureBox4.IconColor = Color.White;
+        }
+
+        private void MainPage_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

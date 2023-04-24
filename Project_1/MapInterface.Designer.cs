@@ -114,6 +114,7 @@
             this.iconPictureBox1.Size = new System.Drawing.Size(47, 57);
             this.iconPictureBox1.TabIndex = 4;
             this.iconPictureBox1.TabStop = false;
+            this.iconPictureBox1.Click += new System.EventHandler(this.iconPictureBox1_Click);
             this.iconPictureBox1.MouseEnter += new System.EventHandler(this.iconPictureBox1_MouseEnter);
             this.iconPictureBox1.MouseLeave += new System.EventHandler(this.iconPictureBox1_MouseLeave);
             // 

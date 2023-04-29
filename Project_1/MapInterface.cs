@@ -57,7 +57,7 @@ namespace Project_1
         public MapInterface()
         {
             InitializeComponent();
-            //this.AutoScaleMode = AutoScaleMode.Dpi;
+            this.AutoScaleMode = AutoScaleMode.Dpi;
 
 
 

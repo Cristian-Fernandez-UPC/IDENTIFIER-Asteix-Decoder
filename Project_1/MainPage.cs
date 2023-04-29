@@ -30,6 +30,7 @@ namespace Project_1
         public MainPage()
         {
             InitializeComponent();
+            this.AutoScaleMode = AutoScaleMode.Dpi;
             leftBorderBtn = new Panel();
             leftBorderBtn.Size = new Size(7, 149);
             panel1.Controls.Add(leftBorderBtn);

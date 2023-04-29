@@ -65,6 +65,7 @@ namespace Project_1
         public FileLoader()
         {
             InitializeComponent();
+            this.AutoScaleMode = AutoScaleMode.Dpi;
             openFileDialog1.Filter = AstFileFilter;
             RoundPanelCorners(panel3, 20);
             textBox1.Text = "Enter an ID";

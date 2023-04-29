@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +37,13 @@ namespace Project_1
         int filaselecionada = 0;
         double LatInicial = 41.2985227506962;
         double LngInicial = 2.083493712899025;
-        Bitmap bmpMarker = new Bitmap(@"C:\Users\HP\Desktop\UPC-EETAC\4. QUART CURS\4B\Projecte en Gestió del Trànsit Aeri\Project_1\Project_1\Images\BlackMarker.png");
+
+        // We find the directory where the application is running to know the path to the icons that we will use
+        static string directory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+        string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BlackMarker.png");
+        Bitmap bmpMarker = (Bitmap)System.Drawing.Image.FromFile(System.IO.Path.Combine(directory, "Images", "BlackMarker.png"));
+        //Bitmap bmpMarker = new Bitmap(@"C:\Users\HP\Desktop\UPC-EETAC\4. QUART CURS\4B\Projecte en Gestió del Trànsit Aeri\Project_1\Project_1\Images\BlackMarker.png");
 
         public void Load_Data_Grid_View(DataTable newtable)
         {
@@ -48,7 +57,8 @@ namespace Project_1
         public MapInterface()
         {
             InitializeComponent();
-            
+            //this.AutoScaleMode = AutoScaleMode.Dpi;
+
 
 
         }
@@ -79,6 +89,7 @@ namespace Project_1
             //marker = new GMarkerGoogle(new PointLatLng(41.286941, 2.007218), GMarkerGoogleType.red);
             //markerOverlay.Markers.Add(marker);
             //gMapControl1.Overlays.Add(markerOverlay);
+            gMapControl1.OnMarkerClick += new MarkerClick(gMapControl1_OnMarkerClick);
 
 
 
@@ -135,6 +146,8 @@ namespace Project_1
                 this.latitude21 = convertor.DMSToDD_Latitude(firstLine.Substring("Latitude= ".Length).Trim());
                 this.longitude21 = convertor.DMSToDD_Longitude(secondLine.Substring("Longitude= ".Length).Trim());
                 marker = new GMarkerGoogle(new PointLatLng(this.latitude21, this.longitude21), bmpMarker);
+                marker.ToolTipText = $"Target ID: {this.MapCAT21.Rows[i]["Target_ID"]}, \nTarget Address: {this.MapCAT21.Rows[i]["Target_Address"]}, \nTrack Number: {this.MapCAT21.Rows[i]["Track Number"]}, \nMode 3/A Code: {this.MapCAT21.Rows[i]["Mode_3A_Code"]}, \nFlight Level: {this.MapCAT21.Rows[i]["Flight Level"]}, \nLatitude: {this.latitude21}, \nLongitude: {this.longitude21}";
+                
                 markerOverlay.Markers.Add(marker);
 
                 i = i + 1;
@@ -142,6 +155,15 @@ namespace Project_1
 
             
             gMapControl1.Overlays.Add(markerOverlay);
+        }
+
+        private void gMapControl1_OnMarkerClick(GMapMarker item, MouseEventArgs e)
+        {
+            if (item == marker)
+            {
+                // Change the text of your label
+                label2.Text = "Marker clicked!";
+            }
         }
     }
 }

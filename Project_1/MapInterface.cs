@@ -18,6 +18,7 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using iTextSharp.text;
+using MultiCAT6.Utils;
 using Org.BouncyCastle.Crypto.Macs;
 
 
@@ -37,14 +38,15 @@ namespace Project_1
         int filaselecionada = 0;
         double LatInicial = 41.2985227506962;
         double LngInicial = 2.083493712899025;
+        CoordinatesWGS84 AirportGeodesic = new CoordinatesWGS84(41.29561833 * (Math.PI / 180), 2.095114167 * (Math.PI / 180));
 
         // We find the directory where the application is running to know the path to the icons that we will use
         static string directory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BlackMarker.png");
         Bitmap bmpMarker = (Bitmap)System.Drawing.Image.FromFile(System.IO.Path.Combine(directory, "Images", "BlackMarker.png"));
+        Bitmap bmpMarker2 = (Bitmap)System.Drawing.Image.FromFile(System.IO.Path.Combine(directory, "Images", "RedMarker.png"));
         //Bitmap bmpMarker = new Bitmap(@"C:\Users\HP\Desktop\UPC-EETAC\4. QUART CURS\4B\Projecte en Gestió del Trànsit Aeri\Project_1\Project_1\Images\BlackMarker.png");
-
         public void Load_Data_Grid_View(DataTable newtable)
         {
             //dataGridView1.DataSource = newtable;
@@ -139,7 +141,7 @@ namespace Project_1
             markerOverlay = new GMapOverlay("Marker");
             while (i < this.MapCAT21.Rows.Count)
             {
-                string description = this.MapCAT21.Rows[i]["Position in WGS-84 Co-ordinates Hi-Res"].ToString();
+                string description = this.MapCAT21.Rows[i]["Position in WGS-84 Co-ordinates"].ToString();
                 string[] lines = description.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 string firstLine = lines[0];
                 string secondLine = lines[1];
@@ -147,13 +149,36 @@ namespace Project_1
                 this.longitude21 = convertor.DMSToDD_Longitude(secondLine.Substring("Longitude= ".Length).Trim());
                 marker = new GMarkerGoogle(new PointLatLng(this.latitude21, this.longitude21), bmpMarker);
                 marker.ToolTipText = $"Target ID: {this.MapCAT21.Rows[i]["Target_ID"]}, \nTarget Address: {this.MapCAT21.Rows[i]["Target_Address"]}, \nTrack Number: {this.MapCAT21.Rows[i]["Track Number"]}, \nMode 3/A Code: {this.MapCAT21.Rows[i]["Mode_3A_Code"]}, \nFlight Level: {this.MapCAT21.Rows[i]["Flight Level"]}, \nLatitude: {this.latitude21}, \nLongitude: {this.longitude21}";
-                
+
                 markerOverlay.Markers.Add(marker);
 
                 i = i + 1;
             }
 
-            
+            int x = 0;
+            while (x < this.MapCAT10.Rows.Count)
+            {
+                string description2 = this.MapCAT10.Rows[x]["Position in Cartesian Co-ordinates"].ToString();
+                string[] lines2 = description2.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                string firstLine2 = lines2[0];
+                string secondLine2 = lines2[1];
+                string latitude10 = firstLine2.Substring("X= ".Length).Trim();
+                string longitude10 = secondLine2.Substring("Y= ".Length).Trim();
+                try
+                {
+                    CoordinatesXYZ ObjectCartesian = new CoordinatesXYZ(Convert.ToDouble(latitude10.Substring(0, latitude10.Length - 1)), Convert.ToDouble(longitude10.Substring(0, longitude10.Length - 1)), 0);
+                    PointLatLng pos = convertor.Cartesian_2_WGS84(ObjectCartesian, AirportGeodesic);
+                    CoordinatesWGS84 ObjectWGS84 = new CoordinatesWGS84(pos.Lat, pos.Lng, 0);
+                    marker2 = new GMarkerGoogle(new PointLatLng(ObjectWGS84.Lat, ObjectWGS84.Lon), bmpMarker2);
+                    marker2.ToolTipText = $"Target ID: {this.MapCAT10.Rows[x]["Target_ID"]}, \nTarget Address: {this.MapCAT10.Rows[x]["Target_Address"]}, \nTrack Number: {this.MapCAT10.Rows[x]["Track Number"]}, \nMode 3/A Code: {this.MapCAT10.Rows[x]["Mode_3A_Code"]}, \nFlight Level: {this.MapCAT10.Rows[x]["Flight Level"]}, \nLatitude: {ObjectWGS84.Lat}, \nLongitude: {ObjectWGS84.Lon}";
+                    markerOverlay.Markers.Add(marker2);
+                }
+                catch { }
+                x = x + 1;
+            }
+
+
+
             gMapControl1.Overlays.Add(markerOverlay);
         }
 

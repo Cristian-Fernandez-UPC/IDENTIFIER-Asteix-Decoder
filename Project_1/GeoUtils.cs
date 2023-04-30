@@ -475,6 +475,15 @@ namespace MultiCAT6.Utils
                                                     R3.GetElement(2, 0));
             return res;
         }
+
+        public CoordinatesWGS84 change_system_cartesian2geodesic(CoordinatesXYZ Objectcartesian, CoordinatesWGS84 Radargeodesic)
+        {
+            this.setCenterProjection(Radargeodesic);
+            CoordinatesXYZ Objectgeocentric = change_system_cartesian2geocentric(Objectcartesian);
+            CoordinatesWGS84 Objectgeodesic = change_geocentric2geodesic(Objectgeocentric);
+            return Objectgeodesic;
+        }
+
         /// <summary>
         /// helper function that transforms H into Z
         /// </summary>

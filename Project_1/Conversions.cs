@@ -175,24 +175,16 @@ namespace Project_1
         }
 
 
-
-        //public PointLatLng ComputeWGS_84_from_Cartesian(Point p, string SIC)
-        //{
-        //    PointLatLng pos = new PointLatLng();
-        //    //PointLatLng ARPBarcelona = new PointLatLng(41.2970767, 2.07846278);
-        //    double X = p.X;
-        //    double Y = p.Y;
-        //    CoordinatesXYZ ObjectCartesian = new CoordinatesXYZ(X, Y, 0); //We pass from Point to CoordinatesXYZ to be able to work with the GeoUtils library
-        //    PointLatLng AirportPoint = GetCoordenatesSMRMALT(Convert.ToInt32(SIC)); //We get the Radar coordinates from its SIC
-        //    CoordinatesWGS84 AirportGeodesic = new CoordinatesWGS84(AirportPoint.Lat * (Math.PI / 180), AirportPoint.Lng * (Math.PI / 180)); //We went from PointLatLng to Coordinates WGS84 to be able to work with GeoUtils. Coordinates must be passed from degrees to radians
-        //    GeoUtils geoUtils = new GeoUtils();
-        //    CoordinatesWGS84 MarkerGeodesic = geoUtils.change_system_cartesian2geodesic(ObjectCartesian, AirportGeodesic); //We apply the change from CoordiantesXYZ to Coordinate GS83
-        //    geoUtils = null;
-        //    double LatitudeWGS_84_map = MarkerGeodesic.Lat * (180 / Math.PI);
-        //    double LongitudeWGS_84_map = MarkerGeodesic.Lon * (180 / Math.PI);
-        //    pos.Lat = LatitudeWGS_84_map;
-        //    pos.Lng = LongitudeWGS_84_map;
-        //    return pos;
-        //}
+        public PointLatLng Cartesian_2_WGS84(CoordinatesXYZ Objectcartesian, CoordinatesWGS84 Airportgeodesic)
+        {
+            PointLatLng pos = new PointLatLng();
+            GeoUtils geoUtils = new GeoUtils();
+            CoordinatesWGS84 MarkerGeodesic = geoUtils.change_system_cartesian2geodesic(Objectcartesian, Airportgeodesic);
+            double LatitudeWGS_84_map = MarkerGeodesic.Lat * (180 / Math.PI);
+            double LongitudeWGS_84_map = MarkerGeodesic.Lon * (180 / Math.PI);
+            pos.Lat = LatitudeWGS_84_map;
+            pos.Lng = LongitudeWGS_84_map;
+            return pos;
+        }
     }
 }

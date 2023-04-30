@@ -140,8 +140,9 @@ namespace Project_1
             }
         }
 
-        public double DMSToDD_Latitude(string Latitude)
+        public double DMSToDD_Latitude(string Latitude,int pos)
         {
+            string a = Convert.ToString(pos);
             int degreeIndex = Latitude.IndexOf("º");
             int minuteIndex = Latitude.IndexOf("'");
             int secondIndex = Latitude.LastIndexOf("''");

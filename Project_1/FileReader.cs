@@ -121,7 +121,7 @@ namespace Project_1
             CAT10_table.Columns.Add("Target Report Descriptor");
             CAT10_table.Columns.Add("Message Type");
             CAT10_table.Columns.Add("Flight Level");
-            CAT10_table.Columns.Add("Time of Day");
+            CAT10_table.Columns.Add("Time_of_Day");
             CAT10_table.Columns.Add("Track Status");
             CAT10_table.Columns.Add("Position in WGS-84 Co-ordinates");
             CAT10_table.Columns.Add("Position in Cartesian Co-ordinates");
@@ -173,7 +173,7 @@ namespace Project_1
             CAT21_table.Columns.Add("Geometric Vertical Rate");
             CAT21_table.Columns.Add("Airborne Ground Vector");
             CAT21_table.Columns.Add("Track Angle Rate");
-            CAT21_table.Columns.Add("Time of Report Transmission");
+            CAT21_table.Columns.Add("Time_of_Report_Transmission");
             CAT21_table.Columns.Add("Target_ID");
             CAT21_table.Columns.Add("Emitter Category");
             CAT21_table.Columns.Add("Met Information");

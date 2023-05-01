@@ -131,9 +131,9 @@ namespace Project_1
                     loadingscreen.Close();
 
                     // We Load the BASIC DATA to run the Map Form
-                    MapCAT10 = read.getTableCAT10().DefaultView.ToTable(false, "Category", "SAC", "SIC", "Target_ID", "Target_Address", "Track Number", "Mode_3A_Code", "Flight Level", "Position in Cartesian Co-ordinates");
+                    MapCAT10 = read.getTableCAT10().DefaultView.ToTable(false, "Category", "SAC", "SIC", "Target_ID", "Target_Address", "Track Number", "Mode_3A_Code", "Flight Level", "Position in Cartesian Co-ordinates", "Time_of_Day");
                     //this.dataGridView1.DataSource = MapCAT10;
-                    MapCAT21 = read.getTableCAT21().DefaultView.ToTable(false, "Category", "SAC", "SIC", "Target_ID", "Target_Address", "Track Number", "Mode_3A_Code", "Flight Level", "Position in WGS-84 Co-ordinates");
+                    MapCAT21 = read.getTableCAT21().DefaultView.ToTable(false, "Category", "SAC", "SIC", "Target_ID", "Target_Address", "Track Number", "Mode_3A_Code", "Flight Level", "Position in WGS-84 Co-ordinates", "Time_of_Report_Transmission");
                     //this.dataGridView1.DataSource = MapCAT21;
 
                     

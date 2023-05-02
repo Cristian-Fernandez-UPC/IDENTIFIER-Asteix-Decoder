@@ -120,6 +120,7 @@ namespace Project_1
             OpenChildForm(Data_Inspector);
             //filereaded.ReadFile(File_Loader.GetFilePath());
             //dataGridView1.DataSource= filereaded.getTableCAT10();
+            Data_Inspector.getfileloaded(this.fileloaded);
             if (this.fileloaded == true)
             {
                 Data_Inspector.getMapPointsCAT10(File_Loader.getMapPointsCAT10());

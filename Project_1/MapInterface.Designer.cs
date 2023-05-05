@@ -79,6 +79,8 @@
             this.toggleButton3 = new Project_1.ToggleButton();
             this.toggleButton2 = new Project_1.ToggleButton();
             this.toggleButton1 = new Project_1.ToggleButton();
+            this.iconPictureBox7 = new FontAwesome.Sharp.IconPictureBox();
+            this.label30 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox2)).BeginInit();
             this.panel8.SuspendLayout();
@@ -86,6 +88,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox7)).BeginInit();
             this.SuspendLayout();
             // 
             // gMapControl1
@@ -503,11 +506,11 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Calibri Light", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Font = new System.Drawing.Font("Calibri Light", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label25.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label25.Location = new System.Drawing.Point(577, 71);
+            this.label25.Location = new System.Drawing.Point(358, 101);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(115, 37);
+            this.label25.Size = new System.Drawing.Size(248, 81);
             this.label25.TabIndex = 59;
             this.label25.Text = "No Data";
             // 
@@ -516,7 +519,7 @@
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label26.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label26.Location = new System.Drawing.Point(356, 71);
+            this.label26.Location = new System.Drawing.Point(365, 82);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(226, 37);
             this.label26.TabIndex = 58;
@@ -662,11 +665,40 @@
             this.toggleButton1.UseVisualStyleBackColor = true;
             this.toggleButton1.CheckedChanged += new System.EventHandler(this.toggleButton1_CheckedChanged);
             // 
+            // iconPictureBox7
+            // 
+            this.iconPictureBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.iconPictureBox7.IconChar = FontAwesome.Sharp.IconChar.FileDownload;
+            this.iconPictureBox7.IconColor = System.Drawing.Color.White;
+            this.iconPictureBox7.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.iconPictureBox7.IconSize = 94;
+            this.iconPictureBox7.Location = new System.Drawing.Point(3071, 77);
+            this.iconPictureBox7.Name = "iconPictureBox7";
+            this.iconPictureBox7.Size = new System.Drawing.Size(94, 95);
+            this.iconPictureBox7.TabIndex = 67;
+            this.iconPictureBox7.TabStop = false;
+            this.iconPictureBox7.Click += new System.EventHandler(this.iconPictureBox7_Click);
+            this.iconPictureBox7.MouseEnter += new System.EventHandler(this.iconPictureBox7_MouseEnter);
+            this.iconPictureBox7.MouseLeave += new System.EventHandler(this.iconPictureBox7_MouseLeave);
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Calibri Light", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label30.Location = new System.Drawing.Point(3064, 19);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(383, 37);
+            this.label30.TabIndex = 68;
+            this.label30.Text = "E X P O R T I N G   S E C T I O N";
+            // 
             // MapInterface
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.ClientSize = new System.Drawing.Size(3338, 1061);
+            this.Controls.Add(this.label30);
+            this.Controls.Add(this.iconPictureBox7);
             this.Controls.Add(this.iconPictureBox6);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.iconPictureBox5);
@@ -674,7 +706,6 @@
             this.Controls.Add(this.iconPictureBox4);
             this.Controls.Add(this.label27);
             this.Controls.Add(this.iconPictureBox3);
-            this.Controls.Add(this.label25);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel11);
@@ -714,6 +745,7 @@
             this.Controls.Add(this.iconPictureBox2);
             this.Controls.Add(this.iconPictureBox1);
             this.Controls.Add(this.gMapControl1);
+            this.Controls.Add(this.label25);
             this.Name = "MapInterface";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Map Interface";
@@ -726,6 +758,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox7)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -782,5 +815,7 @@
         private System.Windows.Forms.Label label29;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox5;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox6;
+        private FontAwesome.Sharp.IconPictureBox iconPictureBox7;
+        private System.Windows.Forms.Label label30;
     }
 }

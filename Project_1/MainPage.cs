@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
@@ -22,14 +23,16 @@ namespace Project_1
         private Form currentChildForm;
 
         public FileLoader File_Loader = new FileLoader();
-
+        public InformationPage Information_Page = new InformationPage();
         public MapInterface Data_Inspector = new MapInterface();
+        public Performance Performance_Page = new Performance();
 
 
         // Constructor
         public MainPage()
         {
             InitializeComponent();
+            timer1.Start();
             leftBorderBtn = new Panel();
             leftBorderBtn.Size = new Size(7, 149);
             panel1.Controls.Add(leftBorderBtn);
@@ -153,6 +156,7 @@ namespace Project_1
                 //open only form
                 currentChildForm.Hide();
             }
+            
             currentChildForm = childForm;
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
@@ -160,6 +164,10 @@ namespace Project_1
             panelDesktop.Controls.Add(childForm);
             panelDesktop.Tag = childForm;
             childForm.Show();
+            
+            label3.SendToBack();
+            label4.SendToBack();
+            label2.SendToBack();
             label1.Text = childForm.Text;
         }
 
@@ -214,6 +222,24 @@ namespace Project_1
         private void MainPage_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            label2.Text = DateTime.Now.ToLongTimeString();
+            label4.Text = DateTime.Now.ToString("D", new CultureInfo("en-US"));
+        }
+
+        private void iconButton3_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender, RGBColors.color1);
+            OpenChildForm(Information_Page);
+        }
+
+        private void iconButton4_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender, RGBColors.color1);
+            OpenChildForm(Performance_Page);
         }
     }
 }

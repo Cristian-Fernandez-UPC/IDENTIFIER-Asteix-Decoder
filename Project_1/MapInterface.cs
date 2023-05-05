@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Xml;
 using FontAwesome.Sharp;
 using GMap.NET;
 using GMap.NET.MapProviders;
@@ -135,12 +136,12 @@ namespace Project_1
 
         private void iconPictureBox6_MouseEnter(object sender, EventArgs e)
         {
-            iconPictureBox6.IconColor = Color.DarkOrange;
+            if (this.restartsimulation == false) { iconPictureBox6.IconColor = Color.DarkOrange; }
         }
 
         private void iconPictureBox6_MouseLeave(object sender, EventArgs e)
         {
-            iconPictureBox6.IconColor = Color.White;
+            if ( this.restartsimulation == false) { iconPictureBox6.IconColor = Color.White; }
         }
 
 
@@ -148,6 +149,8 @@ namespace Project_1
         {
             if (this.fileloaded == true)
             {
+                iconPictureBox6.IconColor = Color.White;
+                this.restartsimulation = false;
                 if (this.playbuttonselected == 0)
                 {
                     iconPictureBox1.IconColor = Color.Red;
@@ -417,7 +420,7 @@ namespace Project_1
 
                     iconPictureBox3.IconFont = IconFont.Regular;
                     iconPictureBox5.IconFont = IconFont.Regular;
-                    timer1.Interval = 500;
+                    timer1.Interval = 100;
                 }
             }
             else
@@ -436,7 +439,7 @@ namespace Project_1
 
                     iconPictureBox3.IconFont = IconFont.Regular;
                     iconPictureBox4.IconFont = IconFont.Regular;
-                    timer1.Interval = 100;
+                    timer1.Interval = 10;
                 }
             }
             else
@@ -511,12 +514,100 @@ namespace Project_1
                 toggleButton3.CheckedChanged += toggleButton3_CheckedChanged;
             } 
         }
-
+        public bool restartsimulation = false;
         private void iconPictureBox6_Click(object sender, EventArgs e)
         {
             if (this.fileloaded == true)
             {
-                //FALTA ACABAR
+                iconPictureBox1.IconColor = Color.White;
+                timer1.Stop();
+                this.x = 0;
+                this.restartsimulation = true;
+                this.playbuttonselected = 0;
+                label25.Text = this.first_time;
+            }
+            else
+            {
+                exception.ShowDialog();
+            }
+        }
+        public string targetId;
+        private void iconPictureBox7_Click(object sender, EventArgs e)
+        {
+            if (this.fileloaded == true)
+            {
+                // Create an XmlDocument object to store the KML file
+                XmlDocument kmlDoc = new XmlDocument();
+
+                // Create the KML file
+                XmlElement kml = kmlDoc.CreateElement("kml", "http://www.opengis.net/kml/2.2");
+                kml.SetAttribute("xmlns", "http://www.opengis.net/kml/2.2");
+                kmlDoc.AppendChild(kml);
+
+                XmlElement document = kmlDoc.CreateElement("Document");
+                kml.AppendChild(document);
+
+                XmlElement name = kmlDoc.CreateElement("name");
+                name.InnerText = "My Map";
+                document.AppendChild(name);
+
+                // Get all the markers on the map and add them to the KML file
+                foreach (GMapOverlay overlay in gMapControl1.Overlays)
+                {
+                    foreach (GMap.NET.WindowsForms.GMapMarker marker in overlay.Markers)
+                    {
+                        // Add a marker to the KML file
+                        XmlElement placemark = kmlDoc.CreateElement("Placemark");
+                        document.AppendChild(placemark);
+
+                        XmlElement placemarkName = kmlDoc.CreateElement("name");
+                        string input = marker.ToolTipText.ToString();
+
+                        // Find the position of the "Target ID" field
+                        int targetIdIndex = input.IndexOf("Target ID: ");
+                        if (targetIdIndex == -1)
+                        {
+                            // The "Target ID" field was not found in the string
+                            // Handle the error here
+                        }
+                        else
+                        {
+                            // Extract the value of the "Target ID" field
+                            int valueStartIndex = targetIdIndex + "Target ID: ".Length;
+                            int valueEndIndex = input.IndexOf(" ", valueStartIndex);
+                            if (valueEndIndex == -1)
+                            {
+                                // The value extends to the end of the string
+                                valueEndIndex = input.Length;
+                            }
+                            this.targetId = input.Substring(valueStartIndex, valueEndIndex - valueStartIndex);
+                        }
+
+                        
+                        placemarkName.InnerText = this.targetId;
+                        placemark.AppendChild(placemarkName);
+
+                        XmlElement description = kmlDoc.CreateElement("description");
+                        description.InnerText = marker.ToolTipText;
+                        placemark.AppendChild(description);
+
+                        XmlElement point = kmlDoc.CreateElement("Point");
+                        placemark.AppendChild(point);
+
+                        XmlElement coordinates = kmlDoc.CreateElement("coordinates");
+                        coordinates.InnerText = string.Format("{0},{1}", marker.Position.Lng.ToString().Replace(",", "."), marker.Position.Lat.ToString().Replace(",", "."));
+                        point.AppendChild(coordinates);
+                    }
+                }
+
+                // Save the KML file to disk
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "KML files (*.kml)|*.kml|All files (*.*)|*.*";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    kmlDoc.Save(saveFileDialog.FileName);
+                    MessageBox.Show("Current Map Successfully Exported to KML");
+                }
             }
             else
             {
@@ -524,6 +615,14 @@ namespace Project_1
             }
         }
 
-        
+        private void iconPictureBox7_MouseEnter(object sender, EventArgs e)
+        {
+            iconPictureBox7.IconColor = color1;
+        }
+
+        private void iconPictureBox7_MouseLeave(object sender, EventArgs e)
+        {
+            iconPictureBox7.IconColor = Color.White;
+        }
     }
 }

@@ -125,6 +125,9 @@ namespace Project_1
                     this.dataGridView1.DataSource = read.getTableCAT10();
                     this.dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
                     this.dataGridView1.Columns.Cast<DataGridViewColumn>().ToList().ForEach(f => f.SortMode = DataGridViewColumnSortMode.NotSortable);
+
+
+
                     toggleButton1.Checked = true;
                     toggleButton2.Checked = true;
 
@@ -867,6 +870,51 @@ namespace Project_1
                     toggleButton8.CheckedChanged += toggleButton8_CheckedChanged;
                 }
             }
+        }
+
+
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView1.Rows[e.RowIndex].Height < dataGridView1.Rows[e.RowIndex].MinimumHeight)
+            {
+                dataGridView1.Rows[e.RowIndex].Height = dataGridView1.Rows[e.RowIndex].MinimumHeight;
+            }
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Track Status")
+            {
+                string content = e.Value.ToString();
+                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
+                {
+                    e.Value = "Click to expand";
+                    e.FormattingApplied = true;
+                }
+            }
+        }
+        public int cellclick = 0;
+        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (cellclick == 0)
+            {
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "Track Status")
+                {
+                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    if (content != "Click to expand")
+                    {
+                        // Show the full content of the cell in a message box or a dialog box
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
+                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
+                        dataGridView1.Refresh();
+
+                    }
+                }
+                this.cellclick = 1;
+            }
+            else
+            {
+                dataGridView1.CellFormatting += dataGridView1_CellFormatting;
+                dataGridView1.Refresh();
+                this.cellclick = 0;
+            }
+            
         }
     }
 }

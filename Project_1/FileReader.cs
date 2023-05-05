@@ -10,6 +10,9 @@ using System.Windows.Forms;
 using System.Windows.Shapes;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
+
+
+
 namespace Project_1
 {
     public class FileReader

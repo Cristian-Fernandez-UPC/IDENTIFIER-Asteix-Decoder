@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,9 @@ using MultiCAT6.Utils;
 using Org.BouncyCastle.Asn1.Cms;
 using Org.BouncyCastle.Crypto.Macs;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Panel = System.Windows.Forms.Panel;
+
+
 
 
 namespace Project_1
@@ -69,6 +73,9 @@ namespace Project_1
         {
             InitializeComponent();
             this.AutoScaleMode = AutoScaleMode.Dpi;
+            RoundPanelCorners(panel6, 20);
+            textBox1.Text = "hh:mm:ss";
+
         }
 
         private void MapInterface_Load(object sender, EventArgs e)
@@ -97,6 +104,52 @@ namespace Project_1
             toggleButton3.CheckedChanged -= toggleButton3_CheckedChanged;
             toggleButton3.Checked = true;
             toggleButton3.CheckedChanged += toggleButton3_CheckedChanged;
+
+
+
+
+
+
+            GMapOverlay polygonOverlay = new GMapOverlay("polygonOverlay");
+
+            // RUNWAYS
+            List<PointLatLng> polygonPoints1 = new List<PointLatLng>();
+            polygonPoints1.Add(new PointLatLng(41.309552, 2.094485));
+            polygonPoints1.Add(new PointLatLng(41.287886, 2.084615));
+            polygonPoints1.Add(new PointLatLng(41.287757, 2.085087));
+            polygonPoints1.Add(new PointLatLng(41.307505, 2.094078));
+            polygonPoints1.Add(new PointLatLng(41.309310, 2.095022));
+
+            List<PointLatLng> polygonPoints2 = new List<PointLatLng>();
+            polygonPoints2.Add(new PointLatLng(41.293061, 2.065539));
+            polygonPoints2.Add(new PointLatLng(41.292513, 2.065882));
+            polygonPoints2.Add(new PointLatLng(41.305957, 2.105236));
+            polygonPoints2.Add(new PointLatLng(41.306505, 2.104892));
+            polygonPoints2.Add(new PointLatLng(41.293442, 2.066485));
+
+            List<PointLatLng> polygonPoints3 = new List<PointLatLng>();
+            polygonPoints3.Add(new PointLatLng(41.282349, 2.073480));
+            polygonPoints3.Add(new PointLatLng(41.281833, 2.073824));
+            polygonPoints3.Add(new PointLatLng(41.292249, 2.104251));
+            polygonPoints3.Add(new PointLatLng(41.292829, 2.103736));
+            polygonPoints3.Add(new PointLatLng(41.282704, 2.074553));
+
+
+
+
+
+
+            // Create a new polygon and add it to the overlay
+            GMap.NET.WindowsForms.GMapPolygon polygon1 = new GMap.NET.WindowsForms.GMapPolygon(polygonPoints1, "My Polygon");
+            polygonOverlay.Polygons.Add(polygon1);
+            GMap.NET.WindowsForms.GMapPolygon polygon2 = new GMap.NET.WindowsForms.GMapPolygon(polygonPoints2, "My Polygon");
+            polygonOverlay.Polygons.Add(polygon2);
+            GMap.NET.WindowsForms.GMapPolygon polygon3 = new GMap.NET.WindowsForms.GMapPolygon(polygonPoints3, "My Polygon");
+            polygonOverlay.Polygons.Add(polygon3);
+
+            // Add the overlay to the map control
+            gMapControl1.Overlays.Add(polygonOverlay);
+            gMapControl1.Refresh();
         }
         
         public void getMapPointsCAT10(DataTable MAP)
@@ -338,8 +391,8 @@ namespace Project_1
                 label4.Text = secondElement.Replace("Track Number: ", "");
                 label9.Text = thirdElement.Replace("Mode 3/A Code: ", "");
                 label17.Text = fouthElement.Replace("Flight Level: ", "");
-                label13.Text = fifthElement.Replace("Latitude: ", "");
-                label11.Text = sixthElement.Replace("Longitude: ", "");
+                //label13.Text = fifthElement.Replace("Latitude: ", "");
+                //label11.Text = sixthElement.Replace("Longitude: ", "");
                 if (lastElement.Replace("SIC: ", "") == "7")
                 {
                     label6.Text = "SMR";
@@ -362,8 +415,8 @@ namespace Project_1
             label4.Text = "No Data";
             label9.Text = "No Data";
             label17.Text = "No Data";
-            label13.Text = "No Data";
-            label11.Text = "No Data";
+            //label13.Text = "No Data";
+            //label11.Text = "No Data";
             label6.Text = "No Data";
         }
 
@@ -623,6 +676,69 @@ namespace Project_1
         private void iconPictureBox7_MouseLeave(object sender, EventArgs e)
         {
             iconPictureBox7.IconColor = Color.White;
+        }
+
+        private void RoundPanelCorners(Panel panel, int radius)
+        {
+            GraphicsPath panelPath = new GraphicsPath();
+            panelPath.StartFigure();
+            panelPath.AddArc(new System.Drawing.Rectangle(0, 0, radius, radius), 180, 90);
+            panelPath.AddLine(radius, 0, panel.Width - radius, 0);
+            panelPath.AddArc(new System.Drawing.Rectangle(panel.Width - radius, 0, radius, radius), -90, 90);
+            panelPath.AddLine(panel.Width, radius, panel.Width, panel.Height - radius);
+            panelPath.AddArc(new System.Drawing.Rectangle(panel.Width - radius, panel.Height - radius, radius, radius), 0, 90);
+            panelPath.AddLine(panel.Width - radius, panel.Height, radius, panel.Height);
+            panelPath.AddArc(new System.Drawing.Rectangle(0, panel.Height - radius, radius, radius), 90, 90);
+            panelPath.CloseFigure();
+
+            panel.Region = new Region(panelPath);
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (this.fileloaded == true)
+                {
+                    if (e.KeyCode == Keys.Enter)
+                    {
+                        if (this.fileloaded == true)
+                        {
+                            string textBoxValue = textBox1.Text;
+                            DateTime textBoxTime = DateTime.ParseExact(textBoxValue, "HH:mm:ss", CultureInfo.InvariantCulture);
+                            DateTime startTime = DateTime.ParseExact(this.first_time, "HH:mm:ss", CultureInfo.InvariantCulture);
+                            DateTime endTime = DateTime.ParseExact(this.last_time, "HH:mm:ss", CultureInfo.InvariantCulture);
+
+                            // Compare the TextBox value with the start and end times
+                            if (textBoxTime >= startTime && textBoxTime <= endTime)
+                            {
+                                textBox1.Text = "hh:mm:ss";
+                                iconPictureBox1.IconColor = Color.White;
+                                timer1.Stop();
+                                this.x = this.timeIntervalList.IndexOf(textBoxValue); ;
+                                this.restartsimulation = true;
+                                this.playbuttonselected = 0;
+                                label25.Text = textBoxValue;
+                            }
+                            else
+                            {
+                                MessageBox.Show(string.Format("Please enter a valid time between {0} and {1}", this.first_time, this.last_time));
+                            }
+
+                        }
+                        else
+                        {
+                            textBox1.Text = "hh:mm:ss";
+                            exception.ShowDialog();
+                        }
+                    }
+                }
+                else
+                {
+                    textBox1.Text = "hh:mm:ss";
+                    exception.ShowDialog();
+                }
+            }
         }
     }
 }

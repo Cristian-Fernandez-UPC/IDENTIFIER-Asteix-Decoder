@@ -22,6 +22,7 @@ using Panel = System.Windows.Forms.Panel;
 using System.ComponentModel;
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 using PrintDialog = System.Windows.Forms.PrintDialog;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Project_1
 {
@@ -43,6 +44,7 @@ namespace Project_1
         public int filterparameter = 0;
         public bool dockstatus = false;
         public bool fileloaded = false;
+        public int cellclick = 0;
 
 
         private void RoundPanelCorners(Panel panel, int radius)
@@ -888,8 +890,65 @@ namespace Project_1
                     e.FormattingApplied = true;
                 }
             }
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Target Report Descriptor")
+            {
+                string content = e.Value.ToString();
+                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
+                {
+                    e.Value = "Click to expand";
+                    e.FormattingApplied = true;
+                }
+            }
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Quality Indicators")
+            {
+                string content = e.Value.ToString();
+                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
+                {
+                    e.Value = "Click to expand";
+                    e.FormattingApplied = true;
+                }
+            }
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "MOPS Version")
+            {
+                string content = e.Value.ToString();
+                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
+                {
+                    e.Value = "Click to expand";
+                    e.FormattingApplied = true;
+                }
+            }
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Target Status")
+            {
+                string content = e.Value.ToString();
+                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
+                {
+                    e.Value = "Click to expand";
+                    e.FormattingApplied = true;
+                }
+            }
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Aircraft Operational Status")
+            {
+                string content = e.Value.ToString();
+                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
+                {
+                    e.Value = "Click to expand";
+                    e.FormattingApplied = true;
+                }
+            }
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Data Ages")
+            {
+                string content = e.Value.ToString();
+                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
+                {
+                    e.Value = "Click to expand";
+                    e.FormattingApplied = true;
+                }
+            }
+
+
         }
-        public int cellclick = 0;
+
+        
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (cellclick == 0)
@@ -903,10 +962,95 @@ namespace Project_1
                         dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
                         dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
                         dataGridView1.Refresh();
+                    }
+                    this.cellclick = 1;
+                }
+
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "Target Report Descriptor")
+                {
+                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    if (content != "Click to expand")
+                    {
+                        // Show the full content of the cell in a message box or a dialog box
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
+                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
+                        dataGridView1.Refresh();
 
                     }
+                    this.cellclick = 1;
                 }
-                this.cellclick = 1;
+
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "Quality Indicators")
+                {
+                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    if (content != "Click to expand")
+                    {
+                        // Show the full content of the cell in a message box or a dialog box
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
+                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
+                        dataGridView1.Refresh();
+
+                    }
+                    this.cellclick = 1;
+                }
+
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "MOPS Version")
+                {
+                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    if (content != "Click to expand")
+                    {
+                        // Show the full content of the cell in a message box or a dialog box
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
+                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
+                        dataGridView1.Refresh();
+
+                    }
+                    this.cellclick = 1;
+                }
+
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "Target Status")
+                {
+                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    if (content != "Click to expand")
+                    {
+                        // Show the full content of the cell in a message box or a dialog box
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
+                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
+                        dataGridView1.Refresh();
+
+                    }
+                    this.cellclick = 1;
+                }
+
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "Aircraft Operational Status")
+                {
+                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    if (content != "Click to expand")
+                    {
+                        // Show the full content of the cell in a message box or a dialog box
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
+                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
+                        dataGridView1.Refresh();
+
+                    }
+                    this.cellclick = 1;
+                }
+
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "Data Ages")
+                {
+                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    if (content != "Click to expand")
+                    {
+                        // Show the full content of the cell in a message box or a dialog box
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
+                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
+                        dataGridView1.Refresh();
+
+                    }
+                    this.cellclick = 1;
+                }
+
+
             }
             else
             {

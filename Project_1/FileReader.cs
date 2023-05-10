@@ -90,7 +90,7 @@ namespace Project_1
             }
 
             // Here we will work with this hexadecimal list (which are octets in binary) to pass the messages to Categories Classes to be decoded
-            for (int q = 0; q < 20000; q++)
+            for (int q = 0; q < hexadecimallist.Count; q++)
             {
                 //hexadecimallist.Count
                 //  EN VEZ DE 3 hexadecimallist.Count

@@ -55,7 +55,6 @@ namespace Project_1
         int x = 0;
         int playbuttonselected = 0;
         int pausebuttonselected = 0;
-        // We find the directory where the application is running to know the path to the icons that we will use
         static string directory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BlackMarker.png");
         Bitmap bmpMarker = (Bitmap)System.Drawing.Image.FromFile(System.IO.Path.Combine(directory, "Images", "BlackMarker.png"));
@@ -67,7 +66,18 @@ namespace Project_1
         bool ADSBmarkers;
         string first_time;
         string last_time;
-
+        public DataView dataView = new DataView();
+        public DataView dataView2 = new DataView();
+        int a = 0;
+        public DataView Test = new DataView();
+        public DataView Test2 = new DataView();
+        public int rows;
+        public int counter10;
+        public int counter21;
+        public DataTable Table1 = new DataTable();
+        public DataTable Table2 = new DataTable();
+        public DateTime startTime;
+        public DateTime endTime;
 
         public MapInterface()
         {
@@ -75,7 +85,6 @@ namespace Project_1
             this.AutoScaleMode = AutoScaleMode.Dpi;
             RoundPanelCorners(panel6, 20);
             textBox1.Text = "hh:mm:ss";
-
         }
 
         private void MapInterface_Load(object sender, EventArgs e)
@@ -106,50 +115,94 @@ namespace Project_1
             toggleButton3.CheckedChanged += toggleButton3_CheckedChanged;
 
 
+            if (this.fileloaded == true)
+            {
+                this.rows = MapCAT10.Rows.Count;
+
+                HashSet<string> timeIntervals = new HashSet<string>();
+
+                // Iterate through each row of the DataTable and add the time intervals to the HashSet
+                foreach (DataRow row in MapCAT10.Rows)
+                {
+                    string timeValue = row["Time_of_Day"].ToString();
+                    DateTime dateTime = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                    string timeInterval = string.Format("{0:HH:mm:ss}", dateTime);
+                    timeIntervals.Add(timeInterval);
+                }
+
+                this.timeIntervalList = timeIntervals.ToList();
+
+                this.Test = new DataView(this.MapCAT10);
+                this.Test2 = new DataView(this.MapCAT21);
+
+                this.startTime = DateTime.ParseExact("08:00:00:000", "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                this.endTime = startTime.AddMinutes(5);
+
+                this.Test2.RowFilter = string.Format("Time_of_Report_Transmission >= '{0}' AND Time_of_Report_Transmission < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
+
+
+                if (this.SMRmarkers == true && this.MLATmarkers == false)
+                {
+                    this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 7);
+                }
+                if (this.SMRmarkers == false && this.MLATmarkers == true)
+                {
+                    this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 107);
+                }
+                if (this.SMRmarkers == true && this.MLATmarkers == true)
+                {
+                    this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
+                }
+
+                this.Table1 = this.Test.ToTable();
+                this.Table2 = this.Test2.ToTable();
+                this.dataView = new DataView(this.Table1);
+                this.dataView2 = new DataView(this.Table2);
+                this.Test = null;
+                this.Test2 = null;
+            }
+            else
+            {
+                exception.ShowDialog();
+            }
 
 
 
+            //GMapOverlay polygonOverlay = new GMapOverlay("polygonOverlay");
 
-            GMapOverlay polygonOverlay = new GMapOverlay("polygonOverlay");
+            //// RUNWAYS
+            //List<PointLatLng> polygonPoints1 = new List<PointLatLng>();
+            //polygonPoints1.Add(new PointLatLng(41.309552, 2.094485));
+            //polygonPoints1.Add(new PointLatLng(41.287886, 2.084615));
+            //polygonPoints1.Add(new PointLatLng(41.287757, 2.085087));
+            //polygonPoints1.Add(new PointLatLng(41.307505, 2.094078));
+            //polygonPoints1.Add(new PointLatLng(41.309310, 2.095022));
 
-            // RUNWAYS
-            List<PointLatLng> polygonPoints1 = new List<PointLatLng>();
-            polygonPoints1.Add(new PointLatLng(41.309552, 2.094485));
-            polygonPoints1.Add(new PointLatLng(41.287886, 2.084615));
-            polygonPoints1.Add(new PointLatLng(41.287757, 2.085087));
-            polygonPoints1.Add(new PointLatLng(41.307505, 2.094078));
-            polygonPoints1.Add(new PointLatLng(41.309310, 2.095022));
+            //List<PointLatLng> polygonPoints2 = new List<PointLatLng>();
+            //polygonPoints2.Add(new PointLatLng(41.293061, 2.065539));
+            //polygonPoints2.Add(new PointLatLng(41.292513, 2.065882));
+            //polygonPoints2.Add(new PointLatLng(41.305957, 2.105236));
+            //polygonPoints2.Add(new PointLatLng(41.306505, 2.104892));
+            //polygonPoints2.Add(new PointLatLng(41.293442, 2.066485));
 
-            List<PointLatLng> polygonPoints2 = new List<PointLatLng>();
-            polygonPoints2.Add(new PointLatLng(41.293061, 2.065539));
-            polygonPoints2.Add(new PointLatLng(41.292513, 2.065882));
-            polygonPoints2.Add(new PointLatLng(41.305957, 2.105236));
-            polygonPoints2.Add(new PointLatLng(41.306505, 2.104892));
-            polygonPoints2.Add(new PointLatLng(41.293442, 2.066485));
+            //List<PointLatLng> polygonPoints3 = new List<PointLatLng>();
+            //polygonPoints3.Add(new PointLatLng(41.282349, 2.073480));
+            //polygonPoints3.Add(new PointLatLng(41.281833, 2.073824));
+            //polygonPoints3.Add(new PointLatLng(41.292249, 2.104251));
+            //polygonPoints3.Add(new PointLatLng(41.292829, 2.103736));
+            //polygonPoints3.Add(new PointLatLng(41.282704, 2.074553));
 
-            List<PointLatLng> polygonPoints3 = new List<PointLatLng>();
-            polygonPoints3.Add(new PointLatLng(41.282349, 2.073480));
-            polygonPoints3.Add(new PointLatLng(41.281833, 2.073824));
-            polygonPoints3.Add(new PointLatLng(41.292249, 2.104251));
-            polygonPoints3.Add(new PointLatLng(41.292829, 2.103736));
-            polygonPoints3.Add(new PointLatLng(41.282704, 2.074553));
+            //// Create a new polygon and add it to the overlay
+            //GMap.NET.WindowsForms.GMapPolygon polygon1 = new GMap.NET.WindowsForms.GMapPolygon(polygonPoints1, "My Polygon");
+            //polygonOverlay.Polygons.Add(polygon1);
+            //GMap.NET.WindowsForms.GMapPolygon polygon2 = new GMap.NET.WindowsForms.GMapPolygon(polygonPoints2, "My Polygon");
+            //polygonOverlay.Polygons.Add(polygon2);
+            //GMap.NET.WindowsForms.GMapPolygon polygon3 = new GMap.NET.WindowsForms.GMapPolygon(polygonPoints3, "My Polygon");
+            //polygonOverlay.Polygons.Add(polygon3);
 
-
-
-
-
-
-            // Create a new polygon and add it to the overlay
-            GMap.NET.WindowsForms.GMapPolygon polygon1 = new GMap.NET.WindowsForms.GMapPolygon(polygonPoints1, "My Polygon");
-            polygonOverlay.Polygons.Add(polygon1);
-            GMap.NET.WindowsForms.GMapPolygon polygon2 = new GMap.NET.WindowsForms.GMapPolygon(polygonPoints2, "My Polygon");
-            polygonOverlay.Polygons.Add(polygon2);
-            GMap.NET.WindowsForms.GMapPolygon polygon3 = new GMap.NET.WindowsForms.GMapPolygon(polygonPoints3, "My Polygon");
-            polygonOverlay.Polygons.Add(polygon3);
-
-            // Add the overlay to the map control
-            gMapControl1.Overlays.Add(polygonOverlay);
-            gMapControl1.Refresh();
+            //// Add the overlay to the map control
+            //gMapControl1.Overlays.Add(polygonOverlay);
+            //gMapControl1.Refresh();
         }
         
         public void getMapPointsCAT10(DataTable MAP)
@@ -197,7 +250,7 @@ namespace Project_1
             if ( this.restartsimulation == false) { iconPictureBox6.IconColor = Color.White; }
         }
 
-
+        
         private void iconPictureBox1_Click(object sender, EventArgs e)
         {
             if (this.fileloaded == true)
@@ -211,22 +264,10 @@ namespace Project_1
                     this.playbuttonselected = 1;
                     this.pausebuttonselected = 0;
                 }
-
-
-                // Declare a HashSet to store the unique time intervals
-                HashSet<string> timeIntervals = new HashSet<string>();
-
-                // Iterate through each row of the DataTable and add the time intervals to the HashSet
-                foreach (DataRow row in MapCAT10.Rows)
-                {
-                    string timeValue = row["Time_of_Day"].ToString();
-                    DateTime dateTime = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
-                    string timeInterval = string.Format("{0:HH:mm:ss}", dateTime);
-                    timeIntervals.Add(timeInterval);
-                }
-
-                // Convert the HashSet to a List
-                this.timeIntervalList = timeIntervals.ToList();
+                this.first_time = timeIntervalList.First().ToString();
+                this.last_time = timeIntervalList.Last().ToString();
+                this.Table1 = null;
+                this.Table2 = null;
 
                 timer1.Start();
             }
@@ -242,24 +283,66 @@ namespace Project_1
         
         private void timer1_Tick(object sender, EventArgs e)
         {
-            // Retrieve the time value from the current row
-            string timeValue = timeIntervalList[x];
-            this.first_time = timeIntervalList.First().ToString();
-            this.last_time = timeIntervalList.Last().ToString();
-            // Update the label with the time value
-            label25.Text = timeValue;
-
-            // Move to the next row
-            x++;
-            if (x >= MapCAT10.Rows.Count)
+            if (label25.Text != this.timeIntervalList[this.timeIntervalList.Count-2].ToString())
             {
-                x = 0; // Restart from the first row
-                timer1.Stop();
+                string timeValue = timeIntervalList[x];
+                label25.Text = timeValue;
+
+
+                if (label25.Text == this.endTime.TimeOfDay.ToString())
+                {
+                    this.Test = new DataView(this.MapCAT10);
+                    this.Test2 = new DataView(this.MapCAT21);
+
+                    this.startTime = this.endTime;
+                    this.endTime = startTime.AddMinutes(5);
+
+                    this.Test2.RowFilter = string.Format("Time_of_Report_Transmission >= '{0}' AND Time_of_Report_Transmission < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
+
+                    if (this.SMRmarkers == true && this.MLATmarkers == false)
+                    {
+                        this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 7);
+                    }
+                    if (this.SMRmarkers == false && this.MLATmarkers == true)
+                    {
+                        this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 107);
+                    }
+                    if (this.SMRmarkers == true && this.MLATmarkers == true)
+                    {
+                        this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
+                    }
+
+                    this.Table1 = this.Test.ToTable();
+                    this.Table2 = this.Test2.ToTable();
+                    this.dataView = new DataView(this.Table1);
+                    this.dataView2 = new DataView(this.Table2);
+                    this.Test = null;
+                    this.Test2 = null;
+                }
+
+
+                x++;
+                if (x >= this.rows)
+                {
+                    x = 0;
+                    timer1.Stop();
+                }
+
+                SIMULATION();
             }
-            SIMULATION();
+            else
+            {
+                timer1.Stop();
+                MessageBox.Show("The simulation has finished!");
+                iconPictureBox1.IconColor = Color.White;
+                this.x = 0;
+                this.restartsimulation = true;
+                this.playbuttonselected = 0;
+                label25.Text = this.first_time;
+            }
         }
 
-        int a = 0;
+        
         private void SIMULATION()
         {
             if (this.SMRmarkers == true || this.MLATmarkers== true || this.ADSBmarkers == true)
@@ -267,7 +350,7 @@ namespace Project_1
                 gMapControl1.Overlays.Clear();
                 //label25.Text = "08:00:47";
 
-                DataView dataView2 = new DataView(this.MapCAT21);
+                
                 dataView2.RowFilter = $"Time_of_Report_Transmission LIKE '%{label25.Text.Substring(0, 8)}%'";
 
                 int i = 0;
@@ -297,7 +380,6 @@ namespace Project_1
                     i = i + 1;
                 }
 
-                DataView dataView = new DataView(this.MapCAT10);
 
                 if (this.SMRmarkers == true && this.MLATmarkers == false)
                 {
@@ -719,6 +801,34 @@ namespace Project_1
                                 this.restartsimulation = true;
                                 this.playbuttonselected = 0;
                                 label25.Text = textBoxValue;
+
+                                this.Test = new DataView(this.MapCAT10);
+                                this.Test2 = new DataView(this.MapCAT21);
+
+                                this.startTime = textBoxTime;
+                                this.endTime = startTime.AddMinutes(5);
+
+                                this.Test2.RowFilter = string.Format("Time_of_Report_Transmission >= '{0}' AND Time_of_Report_Transmission < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
+
+                                if (this.SMRmarkers == true && this.MLATmarkers == false)
+                                {
+                                    this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 7);
+                                }
+                                if (this.SMRmarkers == false && this.MLATmarkers == true)
+                                {
+                                    this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 107);
+                                }
+                                if (this.SMRmarkers == true && this.MLATmarkers == true)
+                                {
+                                    this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
+                                }
+
+                                this.Table1 = this.Test.ToTable();
+                                this.Table2 = this.Test2.ToTable();
+                                this.dataView = new DataView(this.Table1);
+                                this.dataView2 = new DataView(this.Table2);
+                                this.Test = null;
+                                this.Test2 = null;
                             }
                             else
                             {

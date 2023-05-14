@@ -124,7 +124,6 @@ namespace Project_1
             
             if (this.fileloaded == true)
             {
-                
                 Data_Inspector.getMapPointsCAT10(File_Loader.getMapPointsCAT10());
                 Data_Inspector.getMapPointsCAT21(File_Loader.getMapPointsCAT21());
             }
@@ -234,8 +233,17 @@ namespace Project_1
 
         private void iconButton4_Click(object sender, EventArgs e)
         {
+            this.fileloaded = File_Loader.IsFileLoaded();
             ActivateButton(sender, RGBColors.color1);
+            Performance_Page.getfileloaded(this.fileloaded);
+
+            if (this.fileloaded == true)
+            {
+                Performance_Page.getMapPointsCAT10(File_Loader.getMapPointsCAT10());
+                Performance_Page.getMapPointsCAT21(File_Loader.getMapPointsCAT21());
+            }
             OpenChildForm(Performance_Page);
+
         }
     }
 }

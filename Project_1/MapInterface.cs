@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Shapes;
 using System.Xml;
 using FontAwesome.Sharp;
 using GMap.NET;
@@ -56,7 +57,7 @@ namespace Project_1
         int playbuttonselected = 0;
         int pausebuttonselected = 0;
         static string directory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BlackMarker.png");
+        //string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BlackMarker.png");
         Bitmap bmpMarker = (Bitmap)System.Drawing.Image.FromFile(System.IO.Path.Combine(directory, "Images", "BlackMarker.png"));
         Bitmap bmpMarker2 = (Bitmap)System.Drawing.Image.FromFile(System.IO.Path.Combine(directory, "Images", "RedMarker.png"));
         Bitmap bmpMarker3 = (Bitmap)System.Drawing.Image.FromFile(System.IO.Path.Combine(directory, "Images", "BlueMarker.png"));
@@ -170,6 +171,47 @@ namespace Project_1
 
             //GMapOverlay polygonOverlay = new GMapOverlay("polygonOverlay");
 
+            //// STAND
+            //List<PointLatLng> polygonPoints14 = new List<PointLatLng>();
+            //polygonPoints14.Add(new PointLatLng(41.293244, 2.076281));
+            //polygonPoints14.Add(new PointLatLng(41.292003, 2.077032));
+            //polygonPoints14.Add(new PointLatLng(41.294002, 2.082976));
+            //polygonPoints14.Add(new PointLatLng(41.295292, 2.082225));
+
+            //List<PointLatLng> polygonPoints15 = new List<PointLatLng>();
+            //polygonPoints15.Add(new PointLatLng(41.288520, 2.078985));
+            //polygonPoints15.Add(new PointLatLng(41.287360, 2.079736));
+            //polygonPoints15.Add(new PointLatLng(41.288053, 2.081753));
+            //polygonPoints15.Add(new PointLatLng(41.289714, 2.082526));
+
+            //List<PointLatLng> polygonPoints16 = new List<PointLatLng>();
+            //polygonPoints16.Add(new PointLatLng(41.289101, 2.065510));
+            //polygonPoints16.Add(new PointLatLng(41.284828, 2.071561));
+            //polygonPoints16.Add(new PointLatLng(41.287231, 2.078685));
+            //polygonPoints16.Add(new PointLatLng(41.288891, 2.077741));
+            //polygonPoints16.Add(new PointLatLng(41.290681, 2.082976));
+            //polygonPoints16.Add(new PointLatLng(41.292309, 2.083706));
+            //polygonPoints16.Add(new PointLatLng(41.293309, 2.083041));
+            //polygonPoints16.Add(new PointLatLng(41.291100, 2.076432));
+            //polygonPoints16.Add(new PointLatLng(41.292551, 2.075595));
+
+            //List<PointLatLng> polygonPoints17 = new List<PointLatLng>();
+            //polygonPoints17.Add(new PointLatLng(41.294430, 2.059748));
+            //polygonPoints17.Add(new PointLatLng(41.298362, 2.071486));
+            //polygonPoints17.Add(new PointLatLng(41.298644, 2.071303));
+            //polygonPoints17.Add(new PointLatLng(41.304543, 2.088672));
+            //polygonPoints17.Add(new PointLatLng(41.305897, 2.087878));
+            //polygonPoints17.Add(new PointLatLng(41.306695, 2.090132));
+            //polygonPoints17.Add(new PointLatLng(41.309451, 2.091548));
+            //polygonPoints17.Add(new PointLatLng(41.307952, 2.087192));
+            //polygonPoints17.Add(new PointLatLng(41.307227, 2.087557));
+            //polygonPoints17.Add(new PointLatLng(41.305639, 2.083018));
+            //polygonPoints17.Add(new PointLatLng(41.300860, 2.068931));
+            //polygonPoints17.Add(new PointLatLng(41.300384, 2.069243));
+            //polygonPoints17.Add(new PointLatLng(41.296659, 2.058448));
+
+
+
             //// TAXI
             //List<PointLatLng> polygonPoints4 = new List<PointLatLng>();
             //polygonPoints4.Add(new PointLatLng(41.282317, 2.073395));
@@ -223,7 +265,7 @@ namespace Project_1
             //polygonPoints4.Add(new PointLatLng(41.293441, 2.103045));
             //polygonPoints4.Add(new PointLatLng(41.292684, 2.103517));
             //polygonPoints4.Add(new PointLatLng(41.282354, 2.073526));
-
+            
 
             //// RUNWAYS
             //List<PointLatLng> polygonPoints1 = new List<PointLatLng>();
@@ -323,6 +365,11 @@ namespace Project_1
 
             //// Create a new polygon and add it to the overlay
             //GMap.NET.WindowsForms.GMapPolygon polygon4 = new GMap.NET.WindowsForms.GMapPolygon(polygonPoints4, "My Polygon");
+            //Pen pen = new Pen(Color.Red, 2);
+            //polygon4.Stroke = pen;
+            //SolidBrush brush = new SolidBrush(Color.FromArgb(50, Color.Red));
+            //polygon4.Fill = brush;
+
             //polygonOverlay.Polygons.Add(polygon4);
             //GMap.NET.WindowsForms.GMapPolygon polygon1 = new GMap.NET.WindowsForms.GMapPolygon(polygonPoints1, "My Polygon");
             //polygonOverlay.Polygons.Add(polygon1);

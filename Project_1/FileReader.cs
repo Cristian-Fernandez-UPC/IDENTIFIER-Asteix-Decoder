@@ -90,7 +90,7 @@ namespace Project_1
             }
 
             // Here we will work with this hexadecimal list (which are octets in binary) to pass the messages to Categories Classes to be decoded
-            for (int q = 0; q < hexadecimallist.Count; q++)
+            for (int q = 0; q < 100000; q++)
             {
                 //hexadecimallist.Count
                 //  EN VEZ DE 3 hexadecimallist.Count
@@ -212,6 +212,12 @@ namespace Project_1
             if (newrow.CHN == null) { newrow.CHN = "No Data"; }
             if (newrow.GBS == null) { newrow.GBS = "No Data"; }
             if (newrow.CRT == null) { newrow.CRT = "No Data"; }
+            if (newrow.SIM == null) { newrow.SIM = "No Data"; }
+            if (newrow.TST == null) { newrow.TST = "No Data"; }
+            if (newrow.RAB == null) { newrow.RAB = "No Data"; }
+            if (newrow.LOP == null) { newrow.LOP = "No Data"; }
+            if (newrow.TOT == null) { newrow.TOT = "No Data"; }
+            if (newrow.SPI == null) { newrow.SPI = "No Data"; }
             if (newrow.MessageTYPE == null) { newrow.MessageTYPE = "No Data"; }
             if (newrow.FL == null) { newrow.FL = "No Data"; }
             if (newrow.Time_of_day_in_format == null) { newrow.Time_of_day_in_format = "No Data"; }
@@ -270,7 +276,7 @@ namespace Project_1
             row[2] = newrow.SIC;
             row[3] = newrow.Target_ID;
             row[4] = newrow.Track_number;
-            row[5] = "TYP: " + newrow.TYP + nl + "DCR: " + newrow.DCR + nl + "CHN: " + newrow.CHN + nl + "GBS: " + newrow.GBS + nl + "CRT: " + newrow.CRT;
+            row[5] = "TYP: " + newrow.TYP + nl + "DCR: " + newrow.DCR + nl + "CHN: " + newrow.CHN + nl + "GBS: " + newrow.GBS + nl + "CRT: " + newrow.CRT + nl + "SIM: " + newrow.SIM + nl + "TST: " + newrow.TST + nl + "RAB: " + newrow.RAB + nl + "LOP: " + newrow.LOP + nl + "TOT: " + newrow.TOT + nl + "SPI: " + newrow.SPI;
             row[6] = newrow.MessageTYPE;
             row[7] = newrow.FL;
             row[8] = newrow.Time_of_day_in_format;

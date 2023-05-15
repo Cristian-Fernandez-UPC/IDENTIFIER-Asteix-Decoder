@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
@@ -52,7 +52,6 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.iconPictureBox4 = new FontAwesome.Sharp.IconPictureBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.iconPictureBox3 = new FontAwesome.Sharp.IconPictureBox();
@@ -76,7 +75,6 @@
             this.toggleButton8 = new Project_1.ToggleButton();
             this.toggleButton7 = new Project_1.ToggleButton();
             this.toggleButton6 = new Project_1.ToggleButton();
-            this.toggleButton5 = new Project_1.ToggleButton();
             this.toggleButton4 = new Project_1.ToggleButton();
             this.toggleButton3 = new Project_1.ToggleButton();
             this.toggleButton2 = new Project_1.ToggleButton();
@@ -111,14 +109,14 @@
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.Location = new System.Drawing.Point(28, 227);
@@ -127,8 +125,8 @@
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 92;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SkyBlue;
-            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SkyBlue;
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView1.RowTemplate.Height = 37;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(3187, 639);
@@ -351,22 +349,11 @@
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label13.Location = new System.Drawing.Point(2564, 78);
+            this.label13.Location = new System.Drawing.Point(2564, 104);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(65, 37);
             this.label13.TabIndex = 31;
             this.label13.Text = "CSV";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label11.Location = new System.Drawing.Point(2564, 124);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(73, 37);
-            this.label11.TabIndex = 33;
-            this.label11.Text = "XML";
             // 
             // label12
             // 
@@ -631,24 +618,10 @@
             this.toggleButton6.CheckedChanged += new System.EventHandler(this.toggleButton6_CheckedChanged);
             this.toggleButton6.Click += new System.EventHandler(this.toggleButton6_Click);
             // 
-            // toggleButton5
-            // 
-            this.toggleButton5.AutoSize = true;
-            this.toggleButton5.Location = new System.Drawing.Point(2513, 129);
-            this.toggleButton5.MinimumSize = new System.Drawing.Size(45, 22);
-            this.toggleButton5.Name = "toggleButton5";
-            this.toggleButton5.OffBackColor = System.Drawing.Color.Gray;
-            this.toggleButton5.OffToggleColor = System.Drawing.Color.Crimson;
-            this.toggleButton5.OnBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(192)))), ((int)(((byte)(215)))));
-            this.toggleButton5.OnToggleColor = System.Drawing.Color.WhiteSmoke;
-            this.toggleButton5.Size = new System.Drawing.Size(45, 27);
-            this.toggleButton5.TabIndex = 32;
-            this.toggleButton5.UseVisualStyleBackColor = true;
-            // 
             // toggleButton4
             // 
             this.toggleButton4.AutoSize = true;
-            this.toggleButton4.Location = new System.Drawing.Point(2513, 83);
+            this.toggleButton4.Location = new System.Drawing.Point(2513, 109);
             this.toggleButton4.MinimumSize = new System.Drawing.Size(45, 22);
             this.toggleButton4.Name = "toggleButton4";
             this.toggleButton4.OffBackColor = System.Drawing.Color.Gray;
@@ -735,8 +708,6 @@
             this.Controls.Add(this.iconPictureBox3);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.toggleButton5);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.toggleButton4);
             this.Controls.Add(this.iconPictureBox4);
@@ -806,8 +777,6 @@
         private FontAwesome.Sharp.IconPictureBox iconPictureBox4;
         private System.Windows.Forms.Label label13;
         private ToggleButton toggleButton4;
-        private System.Windows.Forms.Label label11;
-        private ToggleButton toggleButton5;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel6;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox3;

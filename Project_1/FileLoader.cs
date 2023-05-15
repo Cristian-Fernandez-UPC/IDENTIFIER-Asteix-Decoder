@@ -463,7 +463,7 @@ namespace Project_1
             {
                 //togglesrestart();
 
-                if (toggleButton4.Checked == true && toggleButton5.Checked == false)
+                if (toggleButton4.Checked == true)
                 {
                     SaveFileDialog sfd = new SaveFileDialog() { Filter = "Archivo CSV|*.csv" };
                     if (sfd.ShowDialog() == DialogResult.OK)
@@ -494,79 +494,81 @@ namespace Project_1
                         MessageBox.Show("CSV file saved successfully!");
                     }
                 }
-                if (toggleButton4.Checked == false && toggleButton5.Checked == true)
-                {
 
-                    // Create a PrintDialog and show it to the user
-                    PrintDialog printDialog = new PrintDialog();
-                    if (printDialog.ShowDialog() != DialogResult.OK)
-                        return;
+                // POSIBLE PDF EXPANSION
 
-                    // Create a PrintDocument and set its properties
-                    System.Drawing.Printing.PrintDocument printDocument = new System.Drawing.Printing.PrintDocument();
-                    printDocument.DocumentName = "DataGridView Print";
-                    printDocument.DefaultPageSettings.Landscape = true;
-                    printDocument.PrinterSettings = printDialog.PrinterSettings;
+                //if (toggleButton4.Checked == false && toggleButton5.Checked == true)
+                //{
+                //    //// Create a PrintDialog and show it to the user
+                //    //PrintDialog printDialog = new PrintDialog();
+                //    //if (printDialog.ShowDialog() != DialogResult.OK)
+                //    //    return;
 
-                    // Handle the PrintPage event of the PrintDocument
-                    printDocument.PrintPage += (s, pe) =>
-                    {
-                        // Define the margin and spacing for the header and footer
-                        int headerMargin = 50;
-                        int footerMargin = 30;
-                        int footerSpacing = 10;
+                //    //// Create a PrintDocument and set its properties
+                //    //System.Drawing.Printing.PrintDocument printDocument = new System.Drawing.Printing.PrintDocument();
+                //    //printDocument.DocumentName = "DataGridView Print";
+                //    //printDocument.DefaultPageSettings.Landscape = true;
+                //    //printDocument.PrinterSettings = printDialog.PrinterSettings;
 
-                        // Define the height of the header and footer
-                        int headerHeight = (int)headerFont.GetHeight();
-                        int footerHeight = (int)footerFont.GetHeight() + footerSpacing;
+                //    //// Handle the PrintPage event of the PrintDocument
+                //    //printDocument.PrintPage += (s, pe) =>
+                //    //{
+                //    //    // Define the margin and spacing for the header and footer
+                //    //    int headerMargin = 50;
+                //    //    int footerMargin = 30;
+                //    //    int footerSpacing = 10;
 
-                        // Define the rectangle for the header
-                        Rectangle headerRect = new Rectangle(pe.MarginBounds.Left, pe.MarginBounds.Top, pe.MarginBounds.Width, headerHeight);
+                //    //    // Define the height of the header and footer
+                //    //    int headerHeight = (int)headerFont.GetHeight();
+                //    //    int footerHeight = (int)footerFont.GetHeight() + footerSpacing;
 
-                        // Define the rectangle for the footer
-                        Rectangle footerRect = new Rectangle(pe.MarginBounds.Left, pe.MarginBounds.Bottom - footerHeight, pe.MarginBounds.Width, footerHeight);
+                //    //    // Define the rectangle for the header
+                //    //    Rectangle headerRect = new Rectangle(pe.MarginBounds.Left, pe.MarginBounds.Top, pe.MarginBounds.Width, headerHeight);
 
-                        // Draw the header text
-                        pe.Graphics.DrawString("Header Text", headerFont, Brushes.Black, headerRect);
+                //    //    // Define the rectangle for the footer
+                //    //    Rectangle footerRect = new Rectangle(pe.MarginBounds.Left, pe.MarginBounds.Bottom - footerHeight, pe.MarginBounds.Width, footerHeight);
 
-                        // Draw the footer text
-                        pe.Graphics.DrawString("Footer Text", footerFont, Brushes.Black, footerRect);
+                //    //    // Draw the header text
+                //    //    pe.Graphics.DrawString("Header Text", headerFont, Brushes.Black, headerRect);
 
-                        // Define the rectangle for the DataGridView
-                        Rectangle dgvRect = new Rectangle(pe.MarginBounds.Left, headerRect.Bottom + headerMargin, pe.MarginBounds.Width, footerRect.Top - headerRect.Bottom - headerMargin);
+                //    //    // Draw the footer text
+                //    //    pe.Graphics.DrawString("Footer Text", footerFont, Brushes.Black, footerRect);
 
-                        // Draw the DataGridView
-                        dataGridView1.DrawToBitmap(new Bitmap(dataGridView1.Width, dataGridView1.Height), dgvRect);
-                    };
+                //    //    // Define the rectangle for the DataGridView
+                //    //    Rectangle dgvRect = new Rectangle(pe.MarginBounds.Left, headerRect.Bottom + headerMargin, pe.MarginBounds.Width, footerRect.Top - headerRect.Bottom - headerMargin);
 
-                    // Show a SaveFileDialog to the user and save the document
-                    SaveFileDialog saveFileDialog = new SaveFileDialog();
-                    saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
-                    saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        printDocument.PrinterSettings.PrintToFile = true;
-                        printDocument.PrinterSettings.PrintFileName = saveFileDialog.FileName;
-                        printDocument.Print();
-                    }
-                }
-                if(toggleButton4.Checked == false && toggleButton5.Checked == false)
+                //    //    // Draw the DataGridView
+                //    //    dataGridView1.DrawToBitmap(new Bitmap(dataGridView1.Width, dataGridView1.Height), dgvRect);
+                //    //};
+
+                //    //// Show a SaveFileDialog to the user and save the document
+                //    //SaveFileDialog saveFileDialog = new SaveFileDialog();
+                //    //saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
+                //    //saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                //    //if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                //    //{
+                //    //    printDocument.PrinterSettings.PrintToFile = true;
+                //    //    printDocument.PrinterSettings.PrintFileName = saveFileDialog.FileName;
+                //    //    printDocument.Print();
+                //    //}
+                //}
+                if(toggleButton4.Checked == false)
                 {
                     MessageBox.Show("Please select the output format");
                 }
-                if(toggleButton4.Checked == true && toggleButton5.Checked == true)
-                {
-                    MessageBox.Show("Please select only one format (.csv or .xml)");
-                }
+                //if(toggleButton4.Checked == true && toggleButton5.Checked == true)
+                //{
+                //    MessageBox.Show("Please select only one format (.csv or .xml)");
+                //}
 
             }
             else
             {
                 toggleButton4.Checked = false;
-                toggleButton5.Checked = false;
                 exception.ShowDialog();
             }
         }
+
 
         private void iconPictureBox3_MouseEnter(object sender, EventArgs e)
         {

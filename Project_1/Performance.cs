@@ -17,11 +17,13 @@ using System.Reflection;
 using GMap.NET.MapProviders;
 using System.Globalization;
 using System.Windows.Documents;
+using System.Windows.Controls.Primitives;
 
 namespace Project_1
 {
     public partial class Performance : Form
     {
+        FilterException exception = new FilterException();
         Conversions convertor = new Conversions();
         public DataTable MapCAT10 = new DataTable();
         public DataTable MapCAT21 = new DataTable();
@@ -48,8 +50,6 @@ namespace Project_1
         List<PointLatLng> polygonlist_AIRBONE4 = new List<PointLatLng>();
         List<PointLatLng> polygonlist_AIRBONE5 = new List<PointLatLng>();
         List<PointLatLng> polygonlist_AIRBONE6 = new List<PointLatLng>();
-
-
         static string directory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         Bitmap bmpMarker3 = (Bitmap)System.Drawing.Image.FromFile(System.IO.Path.Combine(directory, "Images", "PerformanceMarker.png"));
         double LatInicial = 41.296857;
@@ -57,8 +57,13 @@ namespace Project_1
         DataTable inside_taxi_zone = new DataTable();
         DataTable inside_runway_zone = new DataTable();
         DataTable inside_apron_zone = new DataTable();
-        DataTable inside_airbone_zone = new DataTable();
         DataTable inside_stand_zone = new DataTable();
+        DataTable inside_airbone1_zone = new DataTable();
+        DataTable inside_airbone2_zone = new DataTable();
+        DataTable inside_airbone3_zone = new DataTable();
+        DataTable inside_airbone4_zone = new DataTable();
+        DataTable inside_airbone5_zone = new DataTable();
+        DataTable inside_airbone6_zone = new DataTable();
         double updateratelist_taxi;
         double updateratelist_runway;
         double updateratelist_apron;
@@ -91,11 +96,6 @@ namespace Project_1
             gMapControl1.MinZoom = 0;
             gMapControl1.MaxZoom = 24;
             gMapControl1.Zoom = 15;
-            circularProgressBar1.Value = 0;
-            circularProgressBar2.Value = 0;
-            circularProgressBar3.Value = 0;
-            circularProgressBar4.Value = 0;
-
 
             GMapOverlay polygonOverlay = new GMapOverlay("polygonOverlay");
 
@@ -412,24 +412,19 @@ namespace Project_1
             // Add the overlay to the map control
             gMapControl1.Overlays.Add(polygonOverlay);
             gMapControl1.Refresh();
+
         }
 
         private void Performance_Load(object sender, EventArgs e)
         {
-            
-
-
+            //circularProgressBar1.Value = 0;
+            //circularProgressBar2.Value = 0;
+            //circularProgressBar3.Value = 0;
+            //circularProgressBar4.Value = 0;
         }
         public void getMapPointsCAT10(DataTable MAP)
         {
            this.MapCAT10= MAP;
-        }
-
-        
-        
-        public void getMapPointsCAT21(DataTable MAP)
-        {
-            this.MapCAT21 = MAP;
         }
 
         public void getfileloaded(bool file)
@@ -473,218 +468,993 @@ namespace Project_1
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
-            DataTable MAP = this.MapCAT10;
-            markerOverlay = new GMapOverlay("Marker");
-            this.MapCAT10 = MAP.AsEnumerable().Where(row => row.Field<string>("Target Report Descriptor").Contains("TOT: Aircraft")).CopyToDataTable();
-            List<string> distinctIds = this.MapCAT10.AsEnumerable().Select(row => row.Field<string>("Target_ID")).Distinct().ToList();
-            int a = 0;
-            while (a < distinctIds.Count)
+            if (this.fileloaded == true)
             {
-                this.MapCAT10 = MAP.AsEnumerable().Where(row => row.Field<string>("Target_ID").Contains(distinctIds[a]) && row.Field<string>("Target Report Descriptor").Contains("TOT: Aircraft")).CopyToDataTable();
-                DataView dataView = new DataView(this.MapCAT10);
-                this.inside_taxi_zone = this.MapCAT10.Clone();
-                this.inside_taxi_zone.Clear();
-                this.inside_runway_zone = this.MapCAT10.Clone();
-                this.inside_runway_zone.Clear();
-                this.inside_apron_zone = this.MapCAT10.Clone();
-                this.inside_apron_zone.Clear();
-                this.inside_airbone_zone = this.MapCAT10.Clone();
-                this.inside_airbone_zone.Clear();
-                this.inside_stand_zone = this.MapCAT10.Clone();
-                this.inside_stand_zone.Clear();
-
-                int x = 0;
-                while (x < dataView.Count)
+                if (button_ur == false)
                 {
-                    DataTable actualflights2 = dataView.ToTable();
-                    string description2 = actualflights2.Rows[x]["Position in Cartesian Co-ordinates"].ToString();
-                    string[] lines2 = description2.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                    string firstLine2 = lines2[0];
-                    string secondLine2 = lines2[1];
-                    string latitude10 = firstLine2.Substring("X= ".Length).Trim();
-                    string longitude10 = secondLine2.Substring("Y= ".Length).Trim();
-
-                    this.AirportGeodesic = new CoordinatesWGS84(41.2970767 * (Math.PI / 180), 2.07846278 * (Math.PI / 180));
-                    this.markerCAT10 = bmpMarker3;
-
-                    try
+                    DataTable MAP = this.MapCAT10;
+                    markerOverlay = new GMapOverlay("Marker");
+                    this.MapCAT10 = MAP.AsEnumerable().Where(row => row.Field<string>("Target Report Descriptor").Contains("TOT: Aircraft")).CopyToDataTable();
+                    List<string> distinctIds = this.MapCAT10.AsEnumerable().Select(row => row.Field<string>("Target_Address")).Distinct().ToList();
+                    int a = 0;
+                    while (a < distinctIds.Count)
                     {
-                        CoordinatesXYZ ObjectCartesian = new CoordinatesXYZ(Convert.ToDouble(latitude10.Substring(0, latitude10.Length - 1)), Convert.ToDouble(longitude10.Substring(0, longitude10.Length - 1)), 0);
-                        PointLatLng pos = convertor.Cartesian_2_WGS84(ObjectCartesian, AirportGeodesic);
-                        CoordinatesWGS84 ObjectWGS84 = new CoordinatesWGS84(pos.Lat, pos.Lng, 0);
-                        marker2 = new GMarkerGoogle(new PointLatLng(ObjectWGS84.Lat, ObjectWGS84.Lon), markerCAT10);
-                        this.markerslist.Add(marker2);
-                        bool is_inside_taxi_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_TAXI);
-                        bool is_inside_runway1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_RUNWAY1);
-                        bool is_inside_runway2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_RUNWAY2);
-                        bool is_inside_runway3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_RUNWAY3);
-                        bool is_inside_apron1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_APRON1);
-                        bool is_inside_apron2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_APRON2);
-                        bool is_inside_apron3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_APRON3);
-                        bool is_inside_airbone1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE1);
-                        bool is_inside_airbone2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE2);
-                        bool is_inside_airbone3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE3);
-                        bool is_inside_airbone4_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE4);
-                        bool is_inside_airbone5_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE5);
-                        bool is_inside_airbone6_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE6);
-                        bool is_inside_stand1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND1);
-                        bool is_inside_stand2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND2);
-                        bool is_inside_stand3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND3);
-                        bool is_inside_stand4_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND4);
+                        this.MapCAT10 = MAP.AsEnumerable().Where(row => row.Field<string>("Target_Address").Contains(distinctIds[a]) && row.Field<string>("Target Report Descriptor").Contains("TOT: Aircraft")).CopyToDataTable();
+                        DataView dataView = new DataView(this.MapCAT10);
+                        this.inside_taxi_zone = this.MapCAT10.Clone();
+                        this.inside_taxi_zone.Clear();
+                        this.inside_runway_zone = this.MapCAT10.Clone();
+                        this.inside_runway_zone.Clear();
+                        this.inside_apron_zone = this.MapCAT10.Clone();
+                        this.inside_apron_zone.Clear();
+                        this.inside_airbone1_zone = this.MapCAT10.Clone();
+                        this.inside_airbone1_zone.Clear();
+                        this.inside_airbone2_zone = this.MapCAT10.Clone();
+                        this.inside_airbone2_zone.Clear();
+                        this.inside_airbone3_zone = this.MapCAT10.Clone();
+                        this.inside_airbone3_zone.Clear();
+                        this.inside_airbone4_zone = this.MapCAT10.Clone();
+                        this.inside_airbone4_zone.Clear();
+                        this.inside_airbone5_zone = this.MapCAT10.Clone();
+                        this.inside_airbone5_zone.Clear();
+                        this.inside_airbone6_zone = this.MapCAT10.Clone();
+                        this.inside_airbone6_zone.Clear();
+                        this.inside_stand_zone = this.MapCAT10.Clone();
+                        this.inside_stand_zone.Clear();
 
-                        if (is_inside_taxi_zone == true)
+                        int x = 0;
+                        while (x < dataView.Count)
                         {
-                            DataRow sourceRow = actualflights2.Rows[x];
-                            this.inside_taxi_zone.Rows.Add(sourceRow.ItemArray);
-                            markerOverlay.Markers.Add(marker2);
-                            gMapControl1.UpdateMarkerLocalPosition(marker2);
-                        }
+                            DataTable actualflights2 = dataView.ToTable();
+                            string description2 = actualflights2.Rows[x]["Position in Cartesian Co-ordinates"].ToString();
+                            string[] lines2 = description2.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                            string firstLine2 = lines2[0];
+                            string secondLine2 = lines2[1];
+                            string latitude10 = firstLine2.Substring("X= ".Length).Trim();
+                            string longitude10 = secondLine2.Substring("Y= ".Length).Trim();
 
-                        if (is_inside_runway1_zone == true || is_inside_runway2_zone == true || is_inside_runway3_zone == true)
+                            this.AirportGeodesic = new CoordinatesWGS84(41.2970767 * (Math.PI / 180), 2.07846278 * (Math.PI / 180));
+                            this.markerCAT10 = bmpMarker3;
+
+                            try
+                            {
+                                CoordinatesXYZ ObjectCartesian = new CoordinatesXYZ(Convert.ToDouble(latitude10.Substring(0, latitude10.Length - 1)), Convert.ToDouble(longitude10.Substring(0, longitude10.Length - 1)), 0);
+                                PointLatLng pos = convertor.Cartesian_2_WGS84(ObjectCartesian, AirportGeodesic);
+                                CoordinatesWGS84 ObjectWGS84 = new CoordinatesWGS84(pos.Lat, pos.Lng, 0);
+                                marker2 = new GMarkerGoogle(new PointLatLng(ObjectWGS84.Lat, ObjectWGS84.Lon), markerCAT10);
+                                this.markerslist.Add(marker2);
+                                bool is_inside_taxi_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_TAXI);
+                                bool is_inside_runway1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_RUNWAY1);
+                                bool is_inside_runway2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_RUNWAY2);
+                                bool is_inside_runway3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_RUNWAY3);
+                                bool is_inside_apron1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_APRON1);
+                                bool is_inside_apron2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_APRON2);
+                                bool is_inside_apron3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_APRON3);
+                                bool is_inside_airbone1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE1);
+                                bool is_inside_airbone2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE2);
+                                bool is_inside_airbone3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE3);
+                                bool is_inside_airbone4_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE4);
+                                bool is_inside_airbone5_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE5);
+                                bool is_inside_airbone6_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE6);
+                                bool is_inside_stand1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND1);
+                                bool is_inside_stand2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND2);
+                                bool is_inside_stand3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND3);
+                                bool is_inside_stand4_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND4);
+
+                                if (is_inside_taxi_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_taxi_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                                if (is_inside_runway1_zone == true || is_inside_runway2_zone == true || is_inside_runway3_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_runway_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                                if (is_inside_apron1_zone == true || is_inside_apron2_zone == true || is_inside_apron3_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_apron_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                                if (is_inside_airbone1_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone1_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                                if (is_inside_airbone2_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone2_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+                                if (is_inside_airbone3_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone3_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+                                if (is_inside_airbone4_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone4_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+                                if (is_inside_airbone5_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone5_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+                                if (is_inside_airbone6_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone6_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                                if (is_inside_stand1_zone == true || is_inside_stand2_zone == true || is_inside_stand3_zone == true || is_inside_stand4_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_stand_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                            }
+                            catch { }
+
+
+
+                            x = x + 1;
+                        }
+                        gMapControl1.Overlays.Add(markerOverlay);
+                        gMapControl1.Refresh();
+
+                        int positions_taxi = this.inside_taxi_zone.Rows.Count;
+                        List<string> PID_taxi = this.inside_taxi_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_taxi_zone.Rows)
                         {
-                            DataRow sourceRow = actualflights2.Rows[x];
-                            this.inside_runway_zone.Rows.Add(sourceRow.ItemArray);
-                            markerOverlay.Markers.Add(marker2);
-                            gMapControl1.UpdateMarkerLocalPosition(marker2);
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
                         }
-
-                        if (is_inside_apron1_zone == true || is_inside_apron2_zone == true || is_inside_apron3_zone == true)
+                        try
                         {
-                            DataRow sourceRow = actualflights2.Rows[x];
-                            this.inside_apron_zone.Rows.Add(sourceRow.ItemArray);
-                            markerOverlay.Markers.Add(marker2);
-                            gMapControl1.UpdateMarkerLocalPosition(marker2);
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_taxi_zone.Rows[this.inside_taxi_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_taxi_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 400)
+                            {
+                                this.updates_taxi = this.updates_taxi + positions_taxi;
+                                this.expected_taxi = this.expected_taxi + totalSeconds;
+                            }
+                            if (PID_taxi.Count() != 0)
+                            {
+                                if (PID_taxi.Count() != 1)
+                                {
+                                    rest_pid_taxi = rest_pid_taxi + 1;
+                                }
+                            }
                         }
+                        catch { }
 
-                        if (is_inside_airbone1_zone == true || is_inside_airbone2_zone == true || is_inside_airbone3_zone == true || is_inside_airbone4_zone == true || is_inside_airbone5_zone == true || is_inside_airbone6_zone == true)
+                        int positions_runway = this.inside_runway_zone.Rows.Count;
+                        foreach (DataRow row in this.inside_runway_zone.Rows)
                         {
-                            DataRow sourceRow = actualflights2.Rows[x];
-                            this.inside_airbone_zone.Rows.Add(sourceRow.ItemArray);
-                            markerOverlay.Markers.Add(marker2);
-                            gMapControl1.UpdateMarkerLocalPosition(marker2);
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
                         }
-
-                        if (is_inside_stand1_zone == true || is_inside_stand2_zone == true || is_inside_stand3_zone == true || is_inside_stand4_zone == true)
+                        try
                         {
-                            DataRow sourceRow = actualflights2.Rows[x];
-                            this.inside_stand_zone.Rows.Add(sourceRow.ItemArray);
-                            markerOverlay.Markers.Add(marker2);
-                            gMapControl1.UpdateMarkerLocalPosition(marker2);
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_runway_zone.Rows[this.inside_runway_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_runway_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            this.updates_runway = this.updates_runway + positions_runway;
+                            this.expected_runway = this.expected_runway + totalSeconds;
+                            //this.updates_taxi = this.updates_taxi + positions_taxi;
+                            //this.expected_taxi = this.expected_taxi + totalSeconds;
                         }
+                        catch { }
 
+                        int positions_apron = this.inside_apron_zone.Rows.Count;
+                        List<string> PID_apron = this.inside_apron_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_apron_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_apron_zone.Rows[this.inside_apron_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_apron_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 400)
+                            {
+                                this.updates_apron = this.updates_apron + positions_apron;
+                                this.expected_apron = this.expected_apron + totalSeconds;
+                            }
+                            if (PID_apron.Count() != 0)
+                            {
+                                if (PID_apron.Count() != 1)
+                                {
+                                    rest_pid_apron = rest_pid_apron + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_airbone1 = this.inside_airbone1_zone.Rows.Count;
+                        List<string> PID_airbone = this.inside_airbone1_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone1_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone1_zone.Rows[this.inside_airbone1_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone1_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 300)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone1;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_airbone2 = this.inside_airbone2_zone.Rows.Count;
+                        List<string> PID_airbone2 = this.inside_airbone2_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone2_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone2_zone.Rows[this.inside_airbone2_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone2_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 280)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone2;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_airbone3 = this.inside_airbone3_zone.Rows.Count;
+                        List<string> PID_airbone3 = this.inside_airbone3_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone3_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone3_zone.Rows[this.inside_airbone3_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone3_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 280)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone3;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_airbone4 = this.inside_airbone4_zone.Rows.Count;
+                        List<string> PID_airbone4 = this.inside_airbone4_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone4_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone4_zone.Rows[this.inside_airbone4_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone4_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 280)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone4;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_airbone5 = this.inside_airbone5_zone.Rows.Count;
+                        List<string> PID_airbone5 = this.inside_airbone5_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone5_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone5_zone.Rows[this.inside_airbone5_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone5_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 280)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone5;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_airbone6 = this.inside_airbone6_zone.Rows.Count;
+                        List<string> PID_airbone6 = this.inside_airbone6_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone6_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone6_zone.Rows[this.inside_airbone6_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone6_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 280)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone6;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_stand = this.inside_stand_zone.Rows.Count;
+                        List<string> PID_stand = this.inside_stand_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_stand_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_stand_zone.Rows[this.inside_stand_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_stand_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 240)
+                            {
+                                this.updates_stand = this.updates_stand + positions_stand;
+                                this.expected_stand = this.expected_stand + totalSeconds;
+                            }
+                            if (PID_stand.Count() != 0)
+                            {
+                                if (PID_stand.Count() != 1)
+                                {
+                                    rest_pid_stand = rest_pid_stand + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        a++;
                     }
-                    catch { }
+
+                    this.updateratelist_stand = this.updates_stand / this.expected_stand;
+                    this.updateratelist_taxi = this.updates_taxi / this.expected_taxi;
+                    this.updateratelist_runway = this.updates_runway / this.expected_runway;
+                    this.updateratelist_apron = this.updates_apron / this.expected_apron;
+                    this.updateratelist_airbone = this.updates_airbone / this.expected_airbone;
+                    label25.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_stand * 100)) + " %";
+                    //circularProgressBar1.Value = Convert.ToInt32(this.updateratelist_stand*100);
+                    label2.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_apron * 100)) + " %";
+                    //circularProgressBar2.Value = Convert.ToInt32(this.updateratelist_apron * 100);
+                    label4.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_airbone * 100)) + " %";
+                    //circularProgressBar3.Value = Convert.ToInt32(this.updateratelist_airbone * 100);
+                    label6.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_taxi * 100)) + " %";
+                    //circularProgressBar4.Value = Convert.ToInt32(this.updateratelist_taxi * 100);
+                    label13.Text = Convert.ToString(this.updates_stand);
+                    label14.Text = Convert.ToString(this.expected_stand);
+                    label15.Text = Convert.ToString(this.updates_apron);
+                    label16.Text = Convert.ToString(this.expected_apron);
+                    label17.Text = Convert.ToString(this.updates_airbone);
+                    label18.Text = Convert.ToString(this.expected_airbone);
+                    label19.Text = Convert.ToString(this.updates_taxi);
+                    label20.Text = Convert.ToString(this.expected_taxi);
+                    this.button_ur = true;
+                }
+
+                if (button_pid == true)
+                {
+                    this.updateratelist_stand = this.updates_stand / this.expected_stand;
+                    this.updateratelist_taxi = this.updates_taxi / this.expected_taxi;
+                    this.updateratelist_runway = this.updates_runway / this.expected_runway;
+                    this.updateratelist_apron = this.updates_apron / this.expected_apron;
+                    this.updateratelist_airbone = this.updates_airbone / this.expected_airbone;
+                    label25.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_stand * 100)) + " %";
+                    //circularProgressBar1.Value = Convert.ToInt32(this.updateratelist_stand*100);
+                    label2.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_apron * 100)) + " %";
+                    //circularProgressBar2.Value = Convert.ToInt32(this.updateratelist_apron * 100);
+                    label4.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_airbone * 100)) + " %";
+                    //circularProgressBar3.Value = Convert.ToInt32(this.updateratelist_airbone * 100);
+                    label6.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_taxi * 100)) + " %";
+                    //circularProgressBar4.Value = Convert.ToInt32(this.updateratelist_taxi * 100);
+                    label13.Text = Convert.ToString(this.updates_stand);
+                    label14.Text = Convert.ToString(this.expected_stand);
+                    label15.Text = Convert.ToString(this.updates_apron);
+                    label16.Text = Convert.ToString(this.expected_apron);
+                    label17.Text = Convert.ToString(this.updates_airbone);
+                    label18.Text = Convert.ToString(this.expected_airbone);
+                    label19.Text = Convert.ToString(this.updates_taxi);
+                    label20.Text = Convert.ToString(this.expected_taxi);
+                }
+            }
+            else
+            {
+                exception.ShowDialog();
+            }
+        }
+
+        public int rest_pid_taxi = 0;
+        public int rest_pid_apron = 0;
+        public int rest_pid_stand = 0;
+        public int rest_pid_airbone = 0;
+
+        public bool button_ur = false;
+        public bool button_pid = false;
+
+        private void iconButton2_Click(object sender, EventArgs e)
+        {
+            if (this.fileloaded == true)
+            {
+                if (button_pid == false)
+                {
+                    DataTable MAP = this.MapCAT10;
+                    markerOverlay = new GMapOverlay("Marker");
+                    this.MapCAT10 = MAP.AsEnumerable().Where(row => row.Field<string>("Target Report Descriptor").Contains("TOT: Aircraft")).CopyToDataTable();
+                    List<string> distinctIds = this.MapCAT10.AsEnumerable().Select(row => row.Field<string>("Target_Address")).Distinct().ToList();
+                    int a = 0;
+                    while (a < distinctIds.Count)
+                    {
+                        this.MapCAT10 = MAP.AsEnumerable().Where(row => row.Field<string>("Target_Address").Contains(distinctIds[a]) && row.Field<string>("Target Report Descriptor").Contains("TOT: Aircraft")).CopyToDataTable();
+                        DataView dataView = new DataView(this.MapCAT10);
+                        this.inside_taxi_zone = this.MapCAT10.Clone();
+                        this.inside_taxi_zone.Clear();
+                        this.inside_runway_zone = this.MapCAT10.Clone();
+                        this.inside_runway_zone.Clear();
+                        this.inside_apron_zone = this.MapCAT10.Clone();
+                        this.inside_apron_zone.Clear();
+                        this.inside_airbone1_zone = this.MapCAT10.Clone();
+                        this.inside_airbone1_zone.Clear();
+                        this.inside_airbone2_zone = this.MapCAT10.Clone();
+                        this.inside_airbone2_zone.Clear();
+                        this.inside_airbone3_zone = this.MapCAT10.Clone();
+                        this.inside_airbone3_zone.Clear();
+                        this.inside_airbone4_zone = this.MapCAT10.Clone();
+                        this.inside_airbone4_zone.Clear();
+                        this.inside_airbone5_zone = this.MapCAT10.Clone();
+                        this.inside_airbone5_zone.Clear();
+                        this.inside_airbone6_zone = this.MapCAT10.Clone();
+                        this.inside_airbone6_zone.Clear();
+                        this.inside_stand_zone = this.MapCAT10.Clone();
+                        this.inside_stand_zone.Clear();
+
+                        int x = 0;
+                        while (x < dataView.Count)
+                        {
+                            DataTable actualflights2 = dataView.ToTable();
+                            string description2 = actualflights2.Rows[x]["Position in Cartesian Co-ordinates"].ToString();
+                            string[] lines2 = description2.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                            string firstLine2 = lines2[0];
+                            string secondLine2 = lines2[1];
+                            string latitude10 = firstLine2.Substring("X= ".Length).Trim();
+                            string longitude10 = secondLine2.Substring("Y= ".Length).Trim();
+
+                            this.AirportGeodesic = new CoordinatesWGS84(41.2970767 * (Math.PI / 180), 2.07846278 * (Math.PI / 180));
+                            this.markerCAT10 = bmpMarker3;
+
+                            try
+                            {
+                                CoordinatesXYZ ObjectCartesian = new CoordinatesXYZ(Convert.ToDouble(latitude10.Substring(0, latitude10.Length - 1)), Convert.ToDouble(longitude10.Substring(0, longitude10.Length - 1)), 0);
+                                PointLatLng pos = convertor.Cartesian_2_WGS84(ObjectCartesian, AirportGeodesic);
+                                CoordinatesWGS84 ObjectWGS84 = new CoordinatesWGS84(pos.Lat, pos.Lng, 0);
+                                marker2 = new GMarkerGoogle(new PointLatLng(ObjectWGS84.Lat, ObjectWGS84.Lon), markerCAT10);
+                                this.markerslist.Add(marker2);
+                                bool is_inside_taxi_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_TAXI);
+                                bool is_inside_runway1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_RUNWAY1);
+                                bool is_inside_runway2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_RUNWAY2);
+                                bool is_inside_runway3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_RUNWAY3);
+                                bool is_inside_apron1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_APRON1);
+                                bool is_inside_apron2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_APRON2);
+                                bool is_inside_apron3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_APRON3);
+                                bool is_inside_airbone1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE1);
+                                bool is_inside_airbone2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE2);
+                                bool is_inside_airbone3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE3);
+                                bool is_inside_airbone4_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE4);
+                                bool is_inside_airbone5_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE5);
+                                bool is_inside_airbone6_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_AIRBONE6);
+                                bool is_inside_stand1_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND1);
+                                bool is_inside_stand2_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND2);
+                                bool is_inside_stand3_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND3);
+                                bool is_inside_stand4_zone = IsMarkerInsidePolygon(marker2, this.polygonlist_STAND4);
+
+                                if (is_inside_taxi_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_taxi_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                                if (is_inside_runway1_zone == true || is_inside_runway2_zone == true || is_inside_runway3_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_runway_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                                if (is_inside_apron1_zone == true || is_inside_apron2_zone == true || is_inside_apron3_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_apron_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                                if (is_inside_airbone1_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone1_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                                if (is_inside_airbone2_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone2_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+                                if (is_inside_airbone3_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone3_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+                                if (is_inside_airbone4_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone4_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+                                if (is_inside_airbone5_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone5_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+                                if (is_inside_airbone6_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_airbone6_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                                if (is_inside_stand1_zone == true || is_inside_stand2_zone == true || is_inside_stand3_zone == true || is_inside_stand4_zone == true)
+                                {
+                                    DataRow sourceRow = actualflights2.Rows[x];
+                                    this.inside_stand_zone.Rows.Add(sourceRow.ItemArray);
+                                    markerOverlay.Markers.Add(marker2);
+                                    gMapControl1.UpdateMarkerLocalPosition(marker2);
+                                }
+
+                            }
+                            catch { }
 
 
 
-                    x = x + 1;
-                }
-                gMapControl1.Overlays.Add(markerOverlay);
-                gMapControl1.Refresh();
+                            x = x + 1;
+                        }
+                        gMapControl1.Overlays.Add(markerOverlay);
+                        gMapControl1.Refresh();
 
-                int positions_taxi = this.inside_taxi_zone.Rows.Count;
-                foreach (DataRow row in this.inside_taxi_zone.Rows)
-                {
-                    string timeValue = row["Time_of_Day"].ToString();
-                    row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
-                }
-                try
-                {
-                    string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_taxi_zone.Rows[this.inside_taxi_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_taxi_zone.Rows[0]["Time_of_Day"]));
-                    TimeSpan timeSpan = TimeSpan.Parse(timeStr);
-                    double totalSeconds = timeSpan.TotalSeconds;
-                    totalSeconds += 1;
-                    this.updates_taxi = this.updates_taxi + positions_taxi;
-                    this.expected_taxi = this.expected_taxi + totalSeconds;
-                }
-                catch { }
+                        int positions_taxi = this.inside_taxi_zone.Rows.Count;
+                        List<string> PID_taxi = this.inside_taxi_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_taxi_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_taxi_zone.Rows[this.inside_taxi_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_taxi_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 400)
+                            {
+                                this.updates_taxi = this.updates_taxi + positions_taxi;
+                                this.expected_taxi = this.expected_taxi + totalSeconds;
+                            }
+                            if (PID_taxi.Count() != 0)
+                            {
+                                if (PID_taxi.Count() != 1)
+                                {
+                                    rest_pid_taxi = rest_pid_taxi + 1;
+                                }
+                            }
+                        }
+                        catch { }
 
-                int positions_runway = this.inside_runway_zone.Rows.Count;
-                foreach (DataRow row in this.inside_runway_zone.Rows)
-                {
-                    string timeValue = row["Time_of_Day"].ToString();
-                    row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
-                }
-                try
-                {
-                    string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_runway_zone.Rows[this.inside_runway_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_runway_zone.Rows[0]["Time_of_Day"]));
-                    TimeSpan timeSpan = TimeSpan.Parse(timeStr);
-                    double totalSeconds = timeSpan.TotalSeconds;
-                    totalSeconds += 1;
-                    this.updates_runway = this.updates_runway + positions_runway;
-                    this.expected_runway = this.expected_runway + totalSeconds;
-                    //this.updates_taxi = this.updates_taxi + positions_taxi;
-                    //this.expected_taxi = this.expected_taxi + totalSeconds;
-                }
-                catch { }
+                        int positions_runway = this.inside_runway_zone.Rows.Count;
+                        foreach (DataRow row in this.inside_runway_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_runway_zone.Rows[this.inside_runway_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_runway_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            this.updates_runway = this.updates_runway + positions_runway;
+                            this.expected_runway = this.expected_runway + totalSeconds;
+                            //this.updates_taxi = this.updates_taxi + positions_taxi;
+                            //this.expected_taxi = this.expected_taxi + totalSeconds;
+                        }
+                        catch { }
 
-                int positions_apron = this.inside_apron_zone.Rows.Count;
-                foreach (DataRow row in this.inside_apron_zone.Rows)
-                {
-                    string timeValue = row["Time_of_Day"].ToString();
-                    row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
-                }
-                try
-                {
-                    string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_apron_zone.Rows[this.inside_apron_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_apron_zone.Rows[0]["Time_of_Day"]));
-                    TimeSpan timeSpan = TimeSpan.Parse(timeStr);
-                    double totalSeconds = timeSpan.TotalSeconds;
-                    totalSeconds += 1;
-                    this.updates_apron = this.updates_apron + positions_apron;
-                    this.expected_apron = this.expected_apron + totalSeconds;
-                }
-                catch { }
+                        int positions_apron = this.inside_apron_zone.Rows.Count;
+                        List<string> PID_apron = this.inside_apron_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_apron_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_apron_zone.Rows[this.inside_apron_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_apron_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 400)
+                            {
+                                this.updates_apron = this.updates_apron + positions_apron;
+                                this.expected_apron = this.expected_apron + totalSeconds;
+                            }
+                            if (PID_apron.Count() != 0)
+                            {
+                                if (PID_apron.Count() != 1)
+                                {
+                                    rest_pid_apron = rest_pid_apron + 1;
+                                }
+                            }
+                        }
+                        catch { }
 
-                int positions_airbone = this.inside_airbone_zone.Rows.Count;
-                foreach (DataRow row in this.inside_airbone_zone.Rows)
-                {
-                    string timeValue = row["Time_of_Day"].ToString();
-                    row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
-                }
-                try
-                {
-                    string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone_zone.Rows[this.inside_airbone_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone_zone.Rows[0]["Time_of_Day"]));
-                    TimeSpan timeSpan = TimeSpan.Parse(timeStr);
-                    double totalSeconds = timeSpan.TotalSeconds;
-                    totalSeconds += 1;
-                    this.updates_airbone = this.updates_airbone + positions_airbone;
-                    this.expected_airbone = this.expected_airbone + totalSeconds;
-                }
-                catch { }
+                        int positions_airbone1 = this.inside_airbone1_zone.Rows.Count;
+                        List<string> PID_airbone = this.inside_airbone1_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone1_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone1_zone.Rows[this.inside_airbone1_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone1_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 300)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone1;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
 
-                int positions_stand = this.inside_stand_zone.Rows.Count;
-                foreach (DataRow row in this.inside_stand_zone.Rows)
-                {
-                    string timeValue = row["Time_of_Day"].ToString();
-                    row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
-                }
-                try
-                {
-                    string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_stand_zone.Rows[this.inside_stand_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_stand_zone.Rows[0]["Time_of_Day"]));
-                    TimeSpan timeSpan = TimeSpan.Parse(timeStr);
-                    double totalSeconds = timeSpan.TotalSeconds;
-                    totalSeconds += 1;
-                    this.updates_stand = this.updates_stand + positions_stand;
-                    this.expected_stand = this.expected_stand + totalSeconds;
-                }
-                catch { }
+                        int positions_airbone2 = this.inside_airbone2_zone.Rows.Count;
+                        List<string> PID_airbone2 = this.inside_airbone2_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone2_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone2_zone.Rows[this.inside_airbone2_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone2_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 280)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone2;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
 
-                a++;
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_airbone3 = this.inside_airbone3_zone.Rows.Count;
+                        List<string> PID_airbone3 = this.inside_airbone3_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone3_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone3_zone.Rows[this.inside_airbone3_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone3_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 280)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone3;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_airbone4 = this.inside_airbone4_zone.Rows.Count;
+                        List<string> PID_airbone4 = this.inside_airbone4_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone4_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone4_zone.Rows[this.inside_airbone4_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone4_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 280)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone4;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_airbone5 = this.inside_airbone5_zone.Rows.Count;
+                        List<string> PID_airbone5 = this.inside_airbone5_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone5_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone5_zone.Rows[this.inside_airbone5_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone5_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 280)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone5;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_airbone6 = this.inside_airbone6_zone.Rows.Count;
+                        List<string> PID_airbone6 = this.inside_airbone6_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_airbone6_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_airbone6_zone.Rows[this.inside_airbone6_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_airbone6_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 280)
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone6;
+                                this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            if (PID_airbone.Count() != 0)
+                            {
+                                if (PID_airbone.Count() != 1)
+                                {
+                                    rest_pid_airbone = rest_pid_airbone + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        int positions_stand = this.inside_stand_zone.Rows.Count;
+                        List<string> PID_stand = this.inside_stand_zone.AsEnumerable().Select(row => row.Field<string>("Track Number")).Distinct().ToList();
+                        foreach (DataRow row in this.inside_stand_zone.Rows)
+                        {
+                            string timeValue = row["Time_of_Day"].ToString();
+                            row["Time_of_Day"] = DateTime.ParseExact(timeValue, "HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }
+                        try
+                        {
+                            string timeStr = Convert.ToString(Convert.ToDateTime(this.inside_stand_zone.Rows[this.inside_stand_zone.Rows.Count - 1]["Time_of_Day"]) - Convert.ToDateTime(this.inside_stand_zone.Rows[0]["Time_of_Day"]));
+                            TimeSpan timeSpan = TimeSpan.Parse(timeStr);
+                            double totalSeconds = timeSpan.TotalSeconds;
+                            totalSeconds += 1;
+                            if (totalSeconds < 240)
+                            {
+                                this.updates_stand = this.updates_stand + positions_stand;
+                                this.expected_stand = this.expected_stand + totalSeconds;
+                            }
+                            if (PID_stand.Count() != 0)
+                            {
+                                if (PID_stand.Count() != 1)
+                                {
+                                    rest_pid_stand = rest_pid_stand + 1;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        a++;
+                    }
+
+                    label8.Text = Convert.ToString(this.updates_taxi);
+                    label7.Text = Convert.ToString((this.updates_taxi - this.rest_pid_taxi));
+                    label10.Text = Convert.ToString(this.updates_airbone);
+                    label9.Text = Convert.ToString((this.updates_airbone - this.rest_pid_airbone));
+                    label22.Text = Convert.ToString(this.updates_apron);
+                    label21.Text = Convert.ToString((this.updates_apron - this.rest_pid_apron));
+                    label26.Text = Convert.ToString(this.updates_stand);
+                    label23.Text = Convert.ToString((this.updates_stand - this.rest_pid_stand));
+
+                    label32.Text = Convert.ToString(((this.updates_stand) / (this.updates_stand - this.rest_pid_stand)) * 100) + " %";
+                    label33.Text = Convert.ToString(((this.updates_apron) / (this.updates_apron - this.rest_pid_apron)) * 100) + " %";
+                    label34.Text = Convert.ToString(((this.updates_airbone) / (this.updates_airbone - this.rest_pid_airbone)) * 100) + " %";
+                    label35.Text = Convert.ToString(((this.updates_taxi) / (this.updates_taxi - this.rest_pid_taxi)) * 100) + " %";
+                    double finalpid = (((this.updates_taxi) / (this.updates_taxi - this.rest_pid_taxi)) + ((this.updates_airbone) / (this.updates_airbone - this.rest_pid_airbone)) + ((this.updates_apron) / (this.updates_apron - this.rest_pid_apron)) + ((this.updates_stand) / (this.updates_stand - this.rest_pid_stand))) / 4;
+                    label31.Text = Convert.ToString((finalpid) * 100) + " %";
+                    this.button_pid = true;
+                }
+
+                if (button_ur == true)
+                {
+                    label8.Text = Convert.ToString(this.updates_taxi);
+                    label7.Text = Convert.ToString((this.updates_taxi - this.rest_pid_taxi));
+                    label10.Text = Convert.ToString(this.updates_airbone);
+                    label9.Text = Convert.ToString((this.updates_airbone - this.rest_pid_airbone));
+                    label22.Text = Convert.ToString(this.updates_apron);
+                    label21.Text = Convert.ToString((this.updates_apron - this.rest_pid_apron));
+                    label26.Text = Convert.ToString(this.updates_stand);
+                    label23.Text = Convert.ToString((this.updates_stand - this.rest_pid_stand));
+
+                    label32.Text = Convert.ToString(((this.updates_stand) / (this.updates_stand - this.rest_pid_stand)) * 100) + " %";
+                    label33.Text = Convert.ToString(((this.updates_apron) / (this.updates_apron - this.rest_pid_apron)) * 100) + " %";
+                    label34.Text = Convert.ToString(((this.updates_airbone) / (this.updates_airbone - this.rest_pid_airbone)) * 100) + " %";
+                    label35.Text = Convert.ToString(((this.updates_taxi) / (this.updates_taxi - this.rest_pid_taxi)) * 100) + " %";
+                    double finalpid = (((this.updates_taxi) / (this.updates_taxi - this.rest_pid_taxi)) + ((this.updates_airbone) / (this.updates_airbone - this.rest_pid_airbone)) + ((this.updates_apron) / (this.updates_apron - this.rest_pid_apron)) + ((this.updates_stand) / (this.updates_stand - this.rest_pid_stand))) / 4;
+                    label31.Text = Convert.ToString((finalpid) * 100) + " %";
+                }
+            }
+            else
+            {
+                exception.ShowDialog();
             }
 
-            this.updateratelist_stand = this.updates_stand / this.expected_stand;
-            this.updateratelist_taxi = this.updates_taxi / this.expected_taxi;
-            this.updateratelist_runway = this.updates_runway / this.expected_runway;
-            this.updateratelist_apron = this.updates_apron / this.expected_apron;
-            this.updateratelist_airbone = this.updates_airbone / this.expected_airbone;
-            label25.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_stand*100)) + " %";
-            circularProgressBar1.Value = Convert.ToInt32(this.updateratelist_stand*100);
-            label2.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_apron * 100)) + " %";
-            circularProgressBar2.Value = Convert.ToInt32(this.updateratelist_apron * 100);
-            label4.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_airbone * 100)) + " %";
-            circularProgressBar3.Value = Convert.ToInt32(this.updateratelist_airbone * 100);
-            label6.Text = Convert.ToString(Convert.ToInt32(this.updateratelist_taxi * 100)) + " %";
-            circularProgressBar4.Value = Convert.ToInt32(this.updateratelist_taxi * 100);
+
+
+
+
+
+
+
+
+
+
+
+            
 
         }
     }

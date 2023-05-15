@@ -59,6 +59,8 @@ namespace Project_1
             label1.Text = "Home";
             File_Loader.Hide();
             Data_Inspector.Hide();
+            Information_Page.Hide();
+            Performance_Page.Hide();
         }
 
         //Structs
@@ -240,7 +242,6 @@ namespace Project_1
             if (this.fileloaded == true)
             {
                 Performance_Page.getMapPointsCAT10(File_Loader.getMapPointsCAT10());
-                Performance_Page.getMapPointsCAT21(File_Loader.getMapPointsCAT21());
             }
             OpenChildForm(Performance_Page);
 

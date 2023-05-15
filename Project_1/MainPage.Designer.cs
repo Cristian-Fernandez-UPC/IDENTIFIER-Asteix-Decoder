@@ -47,6 +47,7 @@
             this.iconPictureBox3 = new FontAwesome.Sharp.IconPictureBox();
             this.iconPictureBox2 = new FontAwesome.Sharp.IconPictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label5 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
@@ -61,6 +62,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(30)))), ((int)(((byte)(45)))));
+            this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.iconButton4);
             this.panel1.Controls.Add(this.iconButton3);
             this.panel1.Controls.Add(this.iconButton2);
@@ -70,7 +72,7 @@
             this.panel1.Location = new System.Drawing.Point(-73, -55);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(0, 50, 0, 0);
-            this.panel1.Size = new System.Drawing.Size(708, 1440);
+            this.panel1.Size = new System.Drawing.Size(708, 1855);
             this.panel1.TabIndex = 0;
             // 
             // iconButton4
@@ -223,7 +225,7 @@
             this.panelDesktop.Controls.Add(this.label2);
             this.panelDesktop.Location = new System.Drawing.Point(636, 153);
             this.panelDesktop.Name = "panelDesktop";
-            this.panelDesktop.Size = new System.Drawing.Size(2159, 1297);
+            this.panelDesktop.Size = new System.Drawing.Size(2159, 1712);
             this.panelDesktop.TabIndex = 3;
             // 
             // label4
@@ -315,12 +317,24 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(130, 1726);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(514, 36);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "I    D    E    N    T    I    F    I    E    R";
+            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(216F, 216F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.ClientSize = new System.Drawing.Size(2781, 1353);
+            this.ClientSize = new System.Drawing.Size(2781, 1768);
             this.Controls.Add(this.iconPictureBox4);
             this.Controls.Add(this.panelDesktop);
             this.Controls.Add(this.iconPictureBox2);
@@ -336,6 +350,7 @@
             this.Load += new System.EventHandler(this.MainPage_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainPage_MouseDown);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).EndInit();
             this.panelDesktop.ResumeLayout(false);
@@ -367,6 +382,7 @@
         private System.Windows.Forms.Label label4;
         private FontAwesome.Sharp.IconButton iconButton3;
         private FontAwesome.Sharp.IconButton iconButton4;
+        private System.Windows.Forms.Label label5;
     }
 }
 

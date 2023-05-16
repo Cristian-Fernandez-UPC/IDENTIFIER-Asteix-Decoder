@@ -18,6 +18,7 @@ using GMap.NET.MapProviders;
 using System.Globalization;
 using System.Windows.Documents;
 using System.Windows.Controls.Primitives;
+using iTextSharp.text.pdf.parser.clipper;
 
 namespace Project_1
 {
@@ -417,10 +418,7 @@ namespace Project_1
 
         private void Performance_Load(object sender, EventArgs e)
         {
-            //circularProgressBar1.Value = 0;
-            //circularProgressBar2.Value = 0;
-            //circularProgressBar3.Value = 0;
-            //circularProgressBar4.Value = 0;
+
         }
         public void getMapPointsCAT10(DataTable MAP)
         {
@@ -557,7 +555,7 @@ namespace Project_1
                                     gMapControl1.UpdateMarkerLocalPosition(marker2);
                                 }
 
-                                if (is_inside_apron1_zone == true || is_inside_apron2_zone == true || is_inside_apron3_zone == true)
+                                if (is_inside_apron2_zone == true || is_inside_apron3_zone == true)
                                 {
                                     DataRow sourceRow = actualflights2.Rows[x];
                                     this.inside_apron_zone.Rows.Add(sourceRow.ItemArray);
@@ -645,6 +643,11 @@ namespace Project_1
                                 this.updates_taxi = this.updates_taxi + positions_taxi;
                                 this.expected_taxi = this.expected_taxi + totalSeconds;
                             }
+                            else
+                            {
+                                this.updates_taxi = this.updates_taxi + positions_taxi;
+                                this.expected_taxi = this.expected_taxi + positions_taxi;
+                            }
                             if (PID_taxi.Count() != 0)
                             {
                                 if (PID_taxi.Count() != 1)
@@ -687,10 +690,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 400)
+                            if (totalSeconds < 1000)
                             {
                                 this.updates_apron = this.updates_apron + positions_apron;
                                 this.expected_apron = this.expected_apron + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_apron = this.updates_apron + positions_apron;
+                                this.expected_apron = this.expected_apron + positions_apron;
                             }
                             if (PID_apron.Count() != 0)
                             {
@@ -715,10 +723,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 300)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone1;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone1;
+                                this.expected_airbone = this.expected_airbone + positions_airbone1;
                             }
                             if (PID_airbone.Count() != 0)
                             {
@@ -743,10 +756,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 280)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone2;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone2;
+                                this.expected_airbone = this.expected_airbone + positions_airbone2;
                             }
 
                             if (PID_airbone.Count() != 0)
@@ -772,10 +790,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 280)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone3;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone3;
+                                this.expected_airbone = this.expected_airbone + positions_airbone3;
                             }
                             if (PID_airbone.Count() != 0)
                             {
@@ -800,10 +823,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 280)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone4;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone4;
+                                this.expected_airbone = this.expected_airbone + positions_airbone4;
                             }
                             if (PID_airbone.Count() != 0)
                             {
@@ -828,10 +856,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 280)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone5;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone5;
+                                this.expected_airbone = this.expected_airbone + positions_airbone5;
                             }
                             if (PID_airbone.Count() != 0)
                             {
@@ -856,10 +889,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 280)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone6;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone6;
+                                this.expected_airbone = this.expected_airbone + positions_airbone6;
                             }
                             if (PID_airbone.Count() != 0)
                             {
@@ -884,10 +922,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 240)
+                            if (totalSeconds < 1000)
                             {
                                 this.updates_stand = this.updates_stand + positions_stand;
                                 this.expected_stand = this.expected_stand + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_stand = this.updates_stand + positions_stand;
+                                this.expected_stand = this.expected_stand + positions_stand;
                             }
                             if (PID_stand.Count() != 0)
                             {
@@ -1056,7 +1099,7 @@ namespace Project_1
                                     gMapControl1.UpdateMarkerLocalPosition(marker2);
                                 }
 
-                                if (is_inside_apron1_zone == true || is_inside_apron2_zone == true || is_inside_apron3_zone == true)
+                                if (is_inside_apron2_zone == true || is_inside_apron3_zone == true)
                                 {
                                     DataRow sourceRow = actualflights2.Rows[x];
                                     this.inside_apron_zone.Rows.Add(sourceRow.ItemArray);
@@ -1144,6 +1187,11 @@ namespace Project_1
                                 this.updates_taxi = this.updates_taxi + positions_taxi;
                                 this.expected_taxi = this.expected_taxi + totalSeconds;
                             }
+                            else
+                            {
+                                this.updates_taxi = this.updates_taxi + positions_taxi;
+                                this.expected_taxi = this.expected_taxi + positions_taxi;
+                            }
                             if (PID_taxi.Count() != 0)
                             {
                                 if (PID_taxi.Count() != 1)
@@ -1186,10 +1234,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 400)
+                            if (totalSeconds < 1000)
                             {
                                 this.updates_apron = this.updates_apron + positions_apron;
                                 this.expected_apron = this.expected_apron + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_apron = this.updates_apron + positions_apron;
+                                this.expected_apron = this.expected_apron + positions_apron;
                             }
                             if (PID_apron.Count() != 0)
                             {
@@ -1214,10 +1267,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 300)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone1;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone1;
+                                this.expected_airbone = this.expected_airbone + positions_airbone1;
                             }
                             if (PID_airbone.Count() != 0)
                             {
@@ -1242,10 +1300,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 280)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone2;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone2;
+                                this.expected_airbone = this.expected_airbone + positions_airbone2;
                             }
 
                             if (PID_airbone.Count() != 0)
@@ -1271,10 +1334,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 280)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone3;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone3;
+                                this.expected_airbone = this.expected_airbone + positions_airbone3;
                             }
                             if (PID_airbone.Count() != 0)
                             {
@@ -1299,10 +1367,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 280)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone4;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone4;
+                                this.expected_airbone = this.expected_airbone + positions_airbone4;
                             }
                             if (PID_airbone.Count() != 0)
                             {
@@ -1327,10 +1400,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 280)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone5;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone5;
+                                this.expected_airbone = this.expected_airbone + positions_airbone5;
                             }
                             if (PID_airbone.Count() != 0)
                             {
@@ -1355,10 +1433,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 280)
+                            if (totalSeconds < 60)
                             {
                                 this.updates_airbone = this.updates_airbone + positions_airbone6;
                                 this.expected_airbone = this.expected_airbone + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_airbone = this.updates_airbone + positions_airbone6;
+                                this.expected_airbone = this.expected_airbone + positions_airbone6;
                             }
                             if (PID_airbone.Count() != 0)
                             {
@@ -1383,10 +1466,15 @@ namespace Project_1
                             TimeSpan timeSpan = TimeSpan.Parse(timeStr);
                             double totalSeconds = timeSpan.TotalSeconds;
                             totalSeconds += 1;
-                            if (totalSeconds < 240)
+                            if (totalSeconds < 1000)
                             {
                                 this.updates_stand = this.updates_stand + positions_stand;
                                 this.expected_stand = this.expected_stand + totalSeconds;
+                            }
+                            else
+                            {
+                                this.updates_stand = this.updates_stand + positions_stand;
+                                this.expected_stand = this.expected_stand + positions_stand;
                             }
                             if (PID_stand.Count() != 0)
                             {
@@ -1402,40 +1490,40 @@ namespace Project_1
                     }
 
                     label8.Text = Convert.ToString(this.updates_taxi);
-                    label7.Text = Convert.ToString((this.updates_taxi - this.rest_pid_taxi));
+                    label7.Text = Convert.ToString(this.rest_pid_taxi);
                     label10.Text = Convert.ToString(this.updates_airbone);
-                    label9.Text = Convert.ToString((this.updates_airbone - this.rest_pid_airbone));
+                    label9.Text = Convert.ToString(this.rest_pid_airbone);
                     label22.Text = Convert.ToString(this.updates_apron);
-                    label21.Text = Convert.ToString((this.updates_apron - this.rest_pid_apron));
+                    label21.Text = Convert.ToString(this.rest_pid_apron);
                     label26.Text = Convert.ToString(this.updates_stand);
-                    label23.Text = Convert.ToString((this.updates_stand - this.rest_pid_stand));
+                    label23.Text = Convert.ToString(this.rest_pid_stand);
 
-                    label32.Text = Convert.ToString(((this.updates_stand) / (this.updates_stand - this.rest_pid_stand)) * 100) + " %";
-                    label33.Text = Convert.ToString(((this.updates_apron) / (this.updates_apron - this.rest_pid_apron)) * 100) + " %";
-                    label34.Text = Convert.ToString(((this.updates_airbone) / (this.updates_airbone - this.rest_pid_airbone)) * 100) + " %";
-                    label35.Text = Convert.ToString(((this.updates_taxi) / (this.updates_taxi - this.rest_pid_taxi)) * 100) + " %";
-                    double finalpid = (((this.updates_taxi) / (this.updates_taxi - this.rest_pid_taxi)) + ((this.updates_airbone) / (this.updates_airbone - this.rest_pid_airbone)) + ((this.updates_apron) / (this.updates_apron - this.rest_pid_apron)) + ((this.updates_stand) / (this.updates_stand - this.rest_pid_stand))) / 4;
-                    label31.Text = Convert.ToString((finalpid) * 100) + " %";
+                    label32.Text = (((this.updates_stand - this.rest_pid_stand) / (this.updates_stand)) * 100).ToString("F2") + " %";
+                    label33.Text = (((this.updates_apron - this.rest_pid_apron) / (this.updates_apron)) * 100).ToString("F2") + " %";
+                    label34.Text = (((this.updates_airbone - this.rest_pid_airbone) / (this.updates_airbone)) * 100).ToString("F2") + " %";
+                    label35.Text = (((this.updates_taxi - this.rest_pid_taxi) / (this.updates_taxi)) * 100).ToString("F2") + " %";
+                    double finalpid = (((this.updates_taxi - this.rest_pid_taxi) / (this.updates_taxi)) + ((this.updates_airbone - this.rest_pid_airbone) / (this.updates_airbone)) + ((this.updates_apron - this.rest_pid_apron) / (this.updates_apron)) + ((this.updates_stand - this.rest_pid_stand) / (this.updates_stand))) / 4;
+                    label31.Text = ((finalpid) * 100).ToString("F2") + " %";
                     this.button_pid = true;
                 }
 
                 if (button_ur == true)
                 {
                     label8.Text = Convert.ToString(this.updates_taxi);
-                    label7.Text = Convert.ToString((this.updates_taxi - this.rest_pid_taxi));
+                    label7.Text = Convert.ToString(this.rest_pid_taxi);
                     label10.Text = Convert.ToString(this.updates_airbone);
-                    label9.Text = Convert.ToString((this.updates_airbone - this.rest_pid_airbone));
+                    label9.Text = Convert.ToString(this.rest_pid_airbone);
                     label22.Text = Convert.ToString(this.updates_apron);
-                    label21.Text = Convert.ToString((this.updates_apron - this.rest_pid_apron));
+                    label21.Text = Convert.ToString(this.rest_pid_apron);
                     label26.Text = Convert.ToString(this.updates_stand);
-                    label23.Text = Convert.ToString((this.updates_stand - this.rest_pid_stand));
+                    label23.Text = Convert.ToString(this.rest_pid_stand);
 
-                    label32.Text = Convert.ToString(((this.updates_stand) / (this.updates_stand - this.rest_pid_stand)) * 100) + " %";
-                    label33.Text = Convert.ToString(((this.updates_apron) / (this.updates_apron - this.rest_pid_apron)) * 100) + " %";
-                    label34.Text = Convert.ToString(((this.updates_airbone) / (this.updates_airbone - this.rest_pid_airbone)) * 100) + " %";
-                    label35.Text = Convert.ToString(((this.updates_taxi) / (this.updates_taxi - this.rest_pid_taxi)) * 100) + " %";
-                    double finalpid = (((this.updates_taxi) / (this.updates_taxi - this.rest_pid_taxi)) + ((this.updates_airbone) / (this.updates_airbone - this.rest_pid_airbone)) + ((this.updates_apron) / (this.updates_apron - this.rest_pid_apron)) + ((this.updates_stand) / (this.updates_stand - this.rest_pid_stand))) / 4;
-                    label31.Text = Convert.ToString((finalpid) * 100) + " %";
+                    label32.Text = (((this.updates_stand - this.rest_pid_stand) / (this.updates_stand)) * 100).ToString("F2") + " %";
+                    label33.Text = (((this.updates_apron - this.rest_pid_apron) / (this.updates_apron)) * 100).ToString("F2") + " %";
+                    label34.Text = (((this.updates_airbone - this.rest_pid_airbone) / (this.updates_airbone)) * 100).ToString("F2") + " %";
+                    label35.Text = (((this.updates_taxi - this.rest_pid_taxi) / (this.updates_taxi)) * 100).ToString("F2") + " %";
+                    double finalpid = (((this.updates_taxi - this.rest_pid_taxi) / (this.updates_taxi)) + ((this.updates_airbone - this.rest_pid_airbone) / (this.updates_airbone)) + ((this.updates_apron - this.rest_pid_apron) / (this.updates_apron)) + ((this.updates_stand - this.rest_pid_stand) / (this.updates_stand))) / 4;
+                    label31.Text = ((finalpid) * 100).ToString("F2") + " %";
                 }
             }
             else

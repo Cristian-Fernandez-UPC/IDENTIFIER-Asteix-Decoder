@@ -481,50 +481,64 @@ namespace Project_1
         {
             if (label25.Text != this.timeIntervalList[this.timeIntervalList.Count-2].ToString())
             {
-                string timeValue = timeIntervalList[x];
-                label25.Text = timeValue;
-
-
-                if (label25.Text == this.endTime.TimeOfDay.ToString())
+                try 
                 {
-                    this.Test = new DataView(this.MapCAT10);
-                    this.Test2 = new DataView(this.MapCAT21);
+                    string timeValue = timeIntervalList[x];
+                    label25.Text = timeValue;
 
-                    this.startTime = this.endTime;
-                    this.endTime = startTime.AddMinutes(5);
 
-                    this.Test2.RowFilter = string.Format("Time_of_Report_Transmission >= '{0}' AND Time_of_Report_Transmission < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
-
-                    if (this.SMRmarkers == true && this.MLATmarkers == false)
+                    if (label25.Text == this.endTime.TimeOfDay.ToString())
                     {
-                        this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 7);
-                    }
-                    if (this.SMRmarkers == false && this.MLATmarkers == true)
-                    {
-                        this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 107);
-                    }
-                    if (this.SMRmarkers == true && this.MLATmarkers == true)
-                    {
-                        this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
+                        this.Test = new DataView(this.MapCAT10);
+                        this.Test2 = new DataView(this.MapCAT21);
+
+                        this.startTime = this.endTime;
+                        this.endTime = startTime.AddMinutes(5);
+
+                        this.Test2.RowFilter = string.Format("Time_of_Report_Transmission >= '{0}' AND Time_of_Report_Transmission < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
+
+                        if (this.SMRmarkers == true && this.MLATmarkers == false)
+                        {
+                            this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 7);
+                        }
+                        if (this.SMRmarkers == false && this.MLATmarkers == true)
+                        {
+                            this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 107);
+                        }
+                        if (this.SMRmarkers == true && this.MLATmarkers == true)
+                        {
+                            this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
+                        }
+
+                        this.Table1 = this.Test.ToTable();
+                        this.Table2 = this.Test2.ToTable();
+                        this.dataView = new DataView(this.Table1);
+                        this.dataView2 = new DataView(this.Table2);
+                        this.Test = null;
+                        this.Test2 = null;
                     }
 
-                    this.Table1 = this.Test.ToTable();
-                    this.Table2 = this.Test2.ToTable();
-                    this.dataView = new DataView(this.Table1);
-                    this.dataView2 = new DataView(this.Table2);
-                    this.Test = null;
-                    this.Test2 = null;
+
+                    x++;
+                    if (x >= this.rows)
+                    {
+                        x = 0;
+                        timer1.Stop();
+                    }
+
+                    SIMULATION();
                 }
-
-
-                x++;
-                if (x >= this.rows)
+                catch 
                 {
-                    x = 0;
                     timer1.Stop();
+                    MessageBox.Show("The simulation has finished!");
+                    iconPictureBox1.IconColor = Color.White;
+                    this.x = 0;
+                    this.restartsimulation = true;
+                    this.playbuttonselected = 0;
+                    label25.Text = this.first_time;
                 }
-
-                SIMULATION();
+                
             }
             else
             {
@@ -982,53 +996,61 @@ namespace Project_1
                     {
                         if (this.fileloaded == true)
                         {
-                            string textBoxValue = textBox1.Text;
-                            DateTime textBoxTime = DateTime.ParseExact(textBoxValue, "HH:mm:ss", CultureInfo.InvariantCulture);
-                            DateTime startTime = DateTime.ParseExact(this.first_time, "HH:mm:ss", CultureInfo.InvariantCulture);
-                            DateTime endTime = DateTime.ParseExact(this.last_time, "HH:mm:ss", CultureInfo.InvariantCulture);
-
-                            // Compare the TextBox value with the start and end times
-                            if (textBoxTime >= startTime && textBoxTime <= endTime)
+                            try
                             {
-                                textBox1.Text = "hh:mm:ss";
-                                iconPictureBox1.IconColor = Color.White;
-                                timer1.Stop();
-                                this.x = this.timeIntervalList.IndexOf(textBoxValue); ;
-                                this.restartsimulation = true;
-                                this.playbuttonselected = 0;
-                                label25.Text = textBoxValue;
+                                string textBoxValue = textBox1.Text;
+                                DateTime textBoxTime = DateTime.ParseExact(textBoxValue, "HH:mm:ss", CultureInfo.InvariantCulture);
+                                DateTime startTime = DateTime.ParseExact(this.first_time, "HH:mm:ss", CultureInfo.InvariantCulture);
+                                DateTime endTime = DateTime.ParseExact(this.last_time, "HH:mm:ss", CultureInfo.InvariantCulture);
 
-                                this.Test = new DataView(this.MapCAT10);
-                                this.Test2 = new DataView(this.MapCAT21);
-
-                                this.startTime = textBoxTime;
-                                this.endTime = startTime.AddMinutes(5);
-
-                                this.Test2.RowFilter = string.Format("Time_of_Report_Transmission >= '{0}' AND Time_of_Report_Transmission < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
-
-                                if (this.SMRmarkers == true && this.MLATmarkers == false)
+                                // Compare the TextBox value with the start and end times
+                                if (textBoxTime >= startTime && textBoxTime <= endTime)
                                 {
-                                    this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 7);
-                                }
-                                if (this.SMRmarkers == false && this.MLATmarkers == true)
-                                {
-                                    this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 107);
-                                }
-                                if (this.SMRmarkers == true && this.MLATmarkers == true)
-                                {
-                                    this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
-                                }
+                                    textBox1.Text = "hh:mm:ss";
+                                    iconPictureBox1.IconColor = Color.White;
+                                    timer1.Stop();
+                                    this.x = this.timeIntervalList.IndexOf(textBoxValue); ;
+                                    this.restartsimulation = true;
+                                    this.playbuttonselected = 0;
+                                    label25.Text = textBoxValue;
 
-                                this.Table1 = this.Test.ToTable();
-                                this.Table2 = this.Test2.ToTable();
-                                this.dataView = new DataView(this.Table1);
-                                this.dataView2 = new DataView(this.Table2);
-                                this.Test = null;
-                                this.Test2 = null;
+                                    this.Test = new DataView(this.MapCAT10);
+                                    this.Test2 = new DataView(this.MapCAT21);
+
+                                    this.startTime = textBoxTime;
+                                    this.endTime = startTime.AddMinutes(5);
+
+                                    this.Test2.RowFilter = string.Format("Time_of_Report_Transmission >= '{0}' AND Time_of_Report_Transmission < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
+
+                                    if (this.SMRmarkers == true && this.MLATmarkers == false)
+                                    {
+                                        this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 7);
+                                    }
+                                    if (this.SMRmarkers == false && this.MLATmarkers == true)
+                                    {
+                                        this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}' AND SIC = '{2}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"), 107);
+                                    }
+                                    if (this.SMRmarkers == true && this.MLATmarkers == true)
+                                    {
+                                        this.Test.RowFilter = string.Format("Time_of_Day >= '{0}' AND Time_of_Day < '{1}'", startTime.ToString("HH:mm:ss"), endTime.ToString("HH:mm:ss"));
+                                    }
+
+                                    this.Table1 = this.Test.ToTable();
+                                    this.Table2 = this.Test2.ToTable();
+                                    this.dataView = new DataView(this.Table1);
+                                    this.dataView2 = new DataView(this.Table2);
+                                    this.Test = null;
+                                    this.Test2 = null;
+                                }
+                                else
+                                {
+                                    MessageBox.Show(string.Format("Please enter a valid time between {0} and {1}", this.first_time, this.last_time));
+                                }
                             }
-                            else
+                            catch
                             {
-                                MessageBox.Show(string.Format("Please enter a valid time between {0} and {1}", this.first_time, this.last_time));
+                                MessageBox.Show(string.Format("Please write some time in the correct format (hh:mm:ss)"));
+                                textBox1.Text = "hh:mm:ss";
                             }
 
                         }

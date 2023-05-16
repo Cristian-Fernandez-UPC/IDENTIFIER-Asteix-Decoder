@@ -320,19 +320,18 @@
             // label5
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(130, 1726);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(514, 36);
+            this.label5.Size = new System.Drawing.Size(2621, 185);
             this.label5.TabIndex = 4;
             this.label5.Text = "I    D    E    N    T    I    F    I    E    R";
             // 
             // MainPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(216F, 216F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.ClientSize = new System.Drawing.Size(2781, 1768);
             this.Controls.Add(this.iconPictureBox4);
@@ -350,7 +349,6 @@
             this.Load += new System.EventHandler(this.MainPage_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainPage_MouseDown);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).EndInit();
             this.panelDesktop.ResumeLayout(false);

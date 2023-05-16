@@ -147,7 +147,7 @@
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label24.ForeColor = System.Drawing.Color.Gray;
-            this.label24.Location = new System.Drawing.Point(2350, 112);
+            this.label24.Location = new System.Drawing.Point(2350, 107);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(155, 44);
             this.label24.TabIndex = 61;
@@ -158,7 +158,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.MediumSeaGreen;
-            this.label1.Location = new System.Drawing.Point(2756, 112);
+            this.label1.Location = new System.Drawing.Point(2756, 107);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(160, 44);
             this.label1.TabIndex = 64;
@@ -448,7 +448,7 @@
             this.label9.Size = new System.Drawing.Size(115, 37);
             this.label9.TabIndex = 98;
             this.label9.Text = "No Data";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label10
             // 
@@ -523,22 +523,22 @@
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label27.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label27.Location = new System.Drawing.Point(647, 1401);
+            this.label27.Location = new System.Drawing.Point(627, 1401);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(228, 44);
+            this.label27.Size = new System.Drawing.Size(255, 44);
             this.label27.TabIndex = 92;
-            this.label27.Text = "E X P E C T E D";
+            this.label27.Text = "I N C O R R E C T";
             // 
             // label28
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label28.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label28.Location = new System.Drawing.Point(250, 1401);
+            this.label28.Location = new System.Drawing.Point(251, 1401);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(214, 44);
+            this.label28.Size = new System.Drawing.Size(205, 44);
             this.label28.TabIndex = 91;
-            this.label28.Text = "U P D A T E D";
+            this.label28.Text = "C O R R E C T";
             // 
             // panel9
             // 
@@ -596,6 +596,7 @@
             this.label31.Size = new System.Drawing.Size(94, 59);
             this.label31.TabIndex = 104;
             this.label31.Text = "0 %";
+            this.label31.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label32
             // 

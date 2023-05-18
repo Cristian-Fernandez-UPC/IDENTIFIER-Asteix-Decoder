@@ -16,7 +16,6 @@ namespace Project_1
 {
     public partial class MainPage : Form
     {
-
         // Fields
         private IconButton currentBtn;
         private Panel leftBorderBtn;
@@ -26,7 +25,7 @@ namespace Project_1
         public InformationPage Information_Page = new InformationPage();
         public MapInterface Data_Inspector = new MapInterface();
         public Performance Performance_Page = new Performance();
-
+        public bool fileloaded = false;
 
         // Constructor
         public MainPage()
@@ -44,12 +43,14 @@ namespace Project_1
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
         }
 
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             if (currentChildForm != null) 
                 currentChildForm.Hide();
             Reset();
         }
+
 
         private void Reset()
         {
@@ -64,13 +65,14 @@ namespace Project_1
             Performance_Page.Hide();
         }
 
+
+
         //Structs
         private struct RGBColors
         {
             public static Color color1 = Color.FromArgb(52,192,215);
             // Here we can add more differetn colors to the menu
         }
-
 
 
 
@@ -98,6 +100,7 @@ namespace Project_1
             }
         }
 
+
         private void DisableButton()
         {
             if (currentBtn != null)
@@ -111,13 +114,13 @@ namespace Project_1
             }
         }
 
-        public bool fileloaded = false;
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color1);
             OpenChildForm(File_Loader);
         }
+
 
         private void iconButton2_Click(object sender, EventArgs e)
         {
@@ -147,6 +150,7 @@ namespace Project_1
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
+
         private void OpenChildForm(Form childForm)
         {
             if (currentChildForm != null)
@@ -169,10 +173,12 @@ namespace Project_1
             label1.Text = childForm.Text;
         }
 
+
         private void iconPictureBox3_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
+
 
         private void iconPictureBox2_Click(object sender, EventArgs e)
         {
@@ -182,45 +188,54 @@ namespace Project_1
                 WindowState = FormWindowState.Normal;
         }
 
+
         private void iconPictureBox4_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
         }
+
 
         private void iconPictureBox3_MouseEnter(object sender, EventArgs e)
         {
             iconPictureBox3.IconColor = Color.Red;
         }
 
+
         private void iconPictureBox3_MouseLeave(object sender, EventArgs e)
         {
             iconPictureBox3.IconColor = Color.White;
         }
+
 
         private void iconPictureBox2_MouseEnter(object sender, EventArgs e)
         {
             iconPictureBox2.IconColor = Color.MediumSeaGreen;
         }
 
+
         private void iconPictureBox2_MouseLeave(object sender, EventArgs e)
         {
             iconPictureBox2.IconColor = Color.White;
         }
+
 
         private void iconPictureBox4_MouseEnter(object sender, EventArgs e)
         {
             iconPictureBox4.IconColor = Color.DarkOrange;
         }
 
+
         private void iconPictureBox4_MouseLeave(object sender, EventArgs e)
         {
             iconPictureBox4.IconColor = Color.White;
         }
 
+
         private void MainPage_Load(object sender, EventArgs e)
         {
 
         }
+
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -228,11 +243,13 @@ namespace Project_1
             label4.Text = DateTime.Now.ToString("D", new CultureInfo("en-US"));
         }
 
+
         private void iconButton3_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color1);
             OpenChildForm(Information_Page);
         }
+
 
         private void iconButton4_Click(object sender, EventArgs e)
         {

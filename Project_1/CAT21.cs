@@ -324,11 +324,9 @@ namespace Project_1
                 //    position = this.Spetial_Purpose_Field(message, position);
             }
         }
-
-
         
 
-        // Data Item I021/010 [Data Source Identifier]--------------------DONE
+        // Data Item I021/010 [Data Source Identifier]
         public int Data_Source_Identifier(string[] message, int position)
         {
             this.SAC = Convert.ToString(Convert.ToInt32(message[position], 2));
@@ -339,7 +337,8 @@ namespace Project_1
         }
 
 
-        // Data Item I021/040 [Target Report Descriptor]-----------------DONE
+
+        // Data Item I021/040 [Target Report Descriptor]
         public int Target_Report_Descriptor(string[] message, int position)
         {
             this.ATP = message[position].Substring(0, 3);
@@ -438,7 +437,8 @@ namespace Project_1
         }
 
 
-        // Data Item I021/161 [Track Number]---------------------------DONE
+
+        // Data Item I021/161 [Track Number]
         public int Track_Number(string[] message, int position)
         {
             
@@ -450,7 +450,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/015 [Service Identification]-------------------DONE
+
+        // DATA ITEM I021/015 [Service Identification]
         public int Service_Identification(string[] message, int position)
         {
             this.Service_identification = Convert.ToString(Convert.ToInt32(message[position],2));
@@ -460,7 +461,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/071 [Time of Aplicability for Position]-----------------DONE
+
+        // DATA ITEM I021/071 [Time of Aplicability for Position]
         public int Time_of_Aplicability_for_Position(string[] message, int position)
         {
             int binaryValue = Convert.ToInt32(string.Concat(message[position], message[position + 1], message[position + 2]), 2);
@@ -473,7 +475,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/130 [Position on WGS84 Coordinates]--------------------DONE
+
+        // DATA ITEM I021/130 [Position on WGS84 Coordinates]
         public int Position_in_WGS84_Coordinates(string[] message, int position)
         {
             double Latitude = convertor.TWO_Complement(string.Concat(message[position], message[position + 1], message[position + 2])) * (180.0 / Math.Pow(2, 23));
@@ -495,7 +498,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/131 [Position in WGS84 Coordinates High Resoultion]------------------DONE
+
+        // DATA ITEM I021/131 [Position in WGS84 Coordinates High Resoultion]
         public int Position_in_WGS84_Coordinates_Highres(string[] message, int position)
         {
             double Latitude = convertor.TWO_Complement(string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3])) * (180.0 / Math.Pow(2, 30));
@@ -517,7 +521,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/072 [Time of Aplicability fro Velocity]-------------------DONE
+
+        // DATA ITEM I021/072 [Time of Aplicability fro Velocity]
         public int Time_of_Aplicability_for_Velocity(string[] message, int position)
         {
             int binaryValue = Convert.ToInt32(string.Concat(message[position], message[position + 1], message[position + 2]), 2);
@@ -530,7 +535,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/150 [Air Speed]----------------------DONE
+
+        // DATA ITEM I021/150 [Air Speed]
         public int Air_Speed(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position] + 1);
@@ -549,7 +555,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/151 [True Air Speed]---------------------DONE
+
+        // DATA ITEM I021/151 [True Air Speed]
         public int True_Air_Speed(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position] + 1);
@@ -568,7 +575,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/080 [Target Adress]---------------------------DONE
+
+        // DATA ITEM I021/080 [Target Adress]
         public int Target_Address(string[] message, int position)
         {
             this.TargetAddress = String.Concat(convertor.Binary_Octet_To_Hexadecimal(message[position]), convertor.Binary_Octet_To_Hexadecimal(message[position + 1]), convertor.Binary_Octet_To_Hexadecimal(message[position + 2]));
@@ -578,7 +586,7 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/073 [Time of Message Reception of Position]---------------------DONE
+        // DATA ITEM I021/073 [Time of Message Reception of Position]
         public int Time_of_Message_Reception_of_Position(string[] message, int position)
         {
             int binaryValue = Convert.ToInt32(string.Concat(message[position], message[position + 1], message[position + 2]), 2);
@@ -591,7 +599,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/074 [Time of Message Reception of Position High Precision]---------------------DONE
+
+        // DATA ITEM I021/074 [Time of Message Reception of Position High Precision]
         public int Time_of_Message_Reception_of_Position_HighPrecision(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3]);
@@ -615,7 +624,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/075 [Time of Message reception of Velocity]----------------------DONE
+
+        // DATA ITEM I021/075 [Time of Message reception of Velocity]
         public int Time_of_Message_Reception_of_Velocity(string[] message, int position)
         {
             int binaryValue = Convert.ToInt32(string.Concat(message[position], message[position + 1], message[position + 2]), 2);
@@ -627,7 +637,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/076 [Time of Message reception of Velocity High Precission]----------------------DONE
+
+        // DATA ITEM I021/076 [Time of Message reception of Velocity High Precission]
         public int Time_of_Message_Reception_of_Velocity_HighPrecision(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3]);
@@ -651,7 +662,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/140 [Geometric Height]----------------------DONE
+
+        // DATA ITEM I021/140 [Geometric Height]
         public int Geometric_Height(string[] message, int position)
         {
             string fullmessage = String.Concat(message[position], message[position + 1]);
@@ -662,7 +674,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/140 [Quality Indicators]-------------------------DONE
+
+        // DATA ITEM I021/140 [Quality Indicators]
         public int Quality_Indicators(string[] message, int position)
         {
             NUCr_NACv = Convert.ToString(Convert.ToInt32(message[position].Substring(0, 3), 2));
@@ -721,7 +734,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/090 [MOPS Version]--------------------------DONE
+
+        // DATA ITEM I021/090 [MOPS Version]
         public int MOPS_Version(string[] message, int position)
         {
             this.VNS = message[position].Substring(1,1);
@@ -749,7 +763,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/070 [Mode 3A Code in Octal Representation]-----------------DONE
+
+        // DATA ITEM I021/070 [Mode 3A Code in Octal Representation]
         public int Mode_3A_Code(string[] message, int position)
         {
             string fullmessage = String.Concat(message[position], message[position + 1]);
@@ -760,7 +775,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/230 [Roll Angle]------------------------DONE
+
+        // DATA ITEM I021/230 [Roll Angle]
         public int Roll_Angle(string[] message, int position)
         {
             this.RollAngle = Convert.ToString(convertor.TWO_Complement(string.Concat(message[position], message[position + 1])) * 0.01) + "º";
@@ -770,7 +786,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/145 [Flight Level}-----------------------DONE
+
+        // DATA ITEM I021/145 [Flight Level]
         public int Flight_Level(string[] message, int position)
         {
             string fullmessage = String.Concat(message[position], message[position + 1]);
@@ -781,7 +798,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/152 [Magnetic Heading]------------------------DONE
+
+        // DATA ITEM I021/152 [Magnetic Heading]
         public int Magnetic_Heading(string[] message, int position)
         {
             string fullmessage = String.Concat(message[position], message[position + 1]);
@@ -792,7 +810,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/200 [Target Status]------------------------DONE
+
+        // DATA ITEM I021/200 [Target Status]
         public int Target_Status(string[] message, int position)
         {
             this.ICF = message[position].Substring(0, 1);
@@ -824,7 +843,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/155 [Barometric Vertical Rate]------------------DONE
+
+        // DATA ITEM I021/155 [Barometric Vertical Rate]
         public int Barometric_Vertical_Rate(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position+1]);
@@ -843,7 +863,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/155 [Geometric Vertical Rate]---------------DONE
+
+        // DATA ITEM I021/155 [Geometric Vertical Rate]
         public int Geometric_Vertical_Rate(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position + 1]);
@@ -862,7 +883,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/160 [Airbone Ground Vector]------------------DONE
+
+        // DATA ITEM I021/160 [Airbone Ground Vector]
         public int Airborne_Ground_Vector(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position + 1]);
@@ -888,7 +910,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/165 [Track Angle Rate]-------------------------DONE
+
+        // DATA ITEM I021/165 [Track Angle Rate]
         public int Track_Angle_Rate(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position + 1]);
@@ -899,7 +922,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/077 [Time Of Report Transmission]------------------------DONE
+
+        // DATA ITEM I021/077 [Time Of Report Transmission]
         public int Time_of_Report_Transmission(string[] message, int position)
         {
             int binaryValue = Convert.ToInt32(string.Concat(message[position], message[position + 1], message[position + 2]), 2);
@@ -912,7 +936,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/170 [Target Identification]--------------------------DONE
+
+        // DATA ITEM I021/170 [Target Identification]
         public int Target_Identification(string[] message, int position)
         {
             string charecter;
@@ -1113,7 +1138,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/020 [Emitte Category]------------------DONE
+
+        // DATA ITEM I021/020 [Emitte Category]
         public int Emitter_Category(string[] message, int position)
         {
             this.ECAT = Convert.ToString(Convert.ToInt32(message[position],2));
@@ -1153,7 +1179,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/220 [Met Information]---------------------------DONE
+
+        // DATA ITEM I021/220 [Met Information]
         public int Met_Information(string[] message, int position)
         {
             this.WS = message[position].Substring(0, 1);
@@ -1200,7 +1227,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/146 [Selected Altitude]-----------------DONE
+
+        // DATA ITEM I021/146 [Selected Altitude]
         public int Selected_Altitude(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position+1]);
@@ -1221,7 +1249,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/148 [Final State Selected Altitude]---------------DONE
+
+        // DATA ITEM I021/148 [Final State Selected Altitude]
         public int Final_State_Selected_Altitude(string[] message, int position)
         {
             string fullmessage = string.Concat(message[position], message[position+1]);
@@ -1244,7 +1273,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/110 [Trajectory Intent]-----------------DONE
+
+        // DATA ITEM I021/110 [Trajectory Intent]
         public int Trajectory_Intent(string[] message, int position)
         {
             this.TrajectoryIntent = "Data Avaiable";
@@ -1349,7 +1379,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/016 [Service Managment]-------------------DONE
+
+        // DATA ITEM I021/016 [Service Managment]
         public int Service_Managment(string[] message, int position)
         {
             this.RP = Convert.ToString(Convert.ToInt32(message[position],2) * 0.5) + " s";
@@ -1359,7 +1390,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/008 [Aircraft Operational Status]------------------------DONE
+
+        // DATA ITEM I021/008 [Aircraft Operational Status]
         public int Aircraft_operational_Status(string[] message, int position)
         {
             this.RA_Status = message[position].Substring(0, 1);
@@ -1398,7 +1430,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/271 [Surface Capabilities and Characteristics]----------------------DONE
+
+        // DATA ITEM I021/271 [Surface Capabilities and Characteristics]
         public int Surface_Capabilities_and_Characteristics(string[] message, int position)
         {
             this.POA = message[position].Substring(2, 1);
@@ -1448,7 +1481,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/132 [Message Amplitude]-----------------DONE
+
+        // DATA ITEM I021/132 [Message Amplitude]
         public int Message_Amplitude(string[] message, int position)
         {
             this.MAM = Convert.ToString(convertor.TWO_Complement(message[position])) + " dBm"; ;
@@ -1458,7 +1492,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/250 [ModeS MB Data]---------------DONE
+
+        // DATA ITEM I021/250 [ModeS MB Data]
         public int ModeS_MB_Data(string[] message, int position)
         {
             this.ModeSMBData = convertor.Binary_Octet_To_Hexadecimal(message[position]);
@@ -1484,7 +1519,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/260 [ACAS Resolution Advisory Report]-----------------------DONE
+
+        // DATA ITEM I021/260 [ACAS Resolution Advisory Report]
         public int ACAS_Resolution_Advisory_Report(string[] message, int position)
         {
             string messg = string.Concat(message[position], message[position + 1], message[position + 2], message[position + 3], message[position + 4], message[position + 5], message[position + 6]);
@@ -1502,7 +1538,8 @@ namespace Project_1
         }
 
 
-        // DATA ITEM I021/400 [Reciver ID]----------------------------DONE
+
+        // DATA ITEM I021/400 [Reciver ID]
         public int Reciever_ID(string[] message, int position)
         {
             this.RID = Convert.ToString(Convert.ToInt32(message[position],2));
@@ -1511,7 +1548,9 @@ namespace Project_1
             return position;
         }
 
-        // DATA ITEM I021/295 [Data Ages]----------------------DONE
+
+
+        // DATA ITEM I021/295 [Data Ages]
         public int Data_Ages(string[] message, int position)
         {
             int x = position;
@@ -1655,5 +1694,13 @@ namespace Project_1
 
             return position;
         }
+
     }
+
+
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
 }

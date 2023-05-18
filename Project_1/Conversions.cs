@@ -32,6 +32,7 @@ namespace Project_1
             { 'F', "1111" }
         };
 
+
         public Dictionary<string, char> Binary_To_Hexadecimal = new Dictionary<string, char>
         {
             {"0000", '0' },
@@ -52,11 +53,13 @@ namespace Project_1
             {"1111",'F' }
         };
 
+
         public string Binary_Octet_To_Hexadecimal(string binaryoctet)
         {
             string hexamessage = Convert.ToInt32(binaryoctet, 2).ToString("X");
             return hexamessage;
         }
+
 
         public string Hexadecimal_To_Binary_Octet(string hexamessage)
         {
@@ -74,6 +77,7 @@ namespace Project_1
             return Octet.ToString();
         }
 
+
         public string[] Full_Message_To_Binary(string[] message)
         {
             string[] Message_In_Binary = new string[message.Length];
@@ -86,6 +90,7 @@ namespace Project_1
 
             return Message_In_Binary;
         }
+
 
         public string Twos_Complement(string binarynumber)
         {
@@ -121,6 +126,7 @@ namespace Project_1
             return complement;
         }
 
+
         public double TWO_Complement(string bits)
         {
             if (bits[0] == '0')
@@ -140,6 +146,7 @@ namespace Project_1
             }
         }
 
+
         public double DMSToDD_Latitude(string Latitude,int pos)
         {
             string a = Convert.ToString(pos);
@@ -157,6 +164,7 @@ namespace Project_1
 
             return dd;
         }
+
 
         public double DMSToDD_Longitude(string Longitude)
         {
@@ -188,4 +196,9 @@ namespace Project_1
             return pos;
         }
     }
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
 }

@@ -47,5 +47,10 @@ namespace Project_1
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
         }
+
+        private void InformationPage_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

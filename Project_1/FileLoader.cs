@@ -46,6 +46,12 @@ namespace Project_1
         public bool dockstatus = false;
         public bool fileloaded = false;
         public int cellclick = 0;
+        public bool togglechecker1;
+        public bool togglechecker2;
+        public bool togglechecker3;
+        public bool togglechecker6;
+        public bool togglechecker7;
+        public bool togglechecker8;
 
 
         private void RoundPanelCorners(Panel panel, int radius)
@@ -78,12 +84,10 @@ namespace Project_1
         }
 
 
-
         private void FileLoader_Load(object sender, EventArgs e)
         {
 
         }
-
 
 
         private void iconPictureBox1_MouseEnter(object sender, EventArgs e)
@@ -91,10 +95,12 @@ namespace Project_1
             iconPictureBox1.IconColor = color1;
         }
 
+
         private void iconPictureBox1_MouseLeave(object sender, EventArgs e)
         {
             iconPictureBox1.IconColor = Color.White;
         }
+
 
         private void iconPictureBox1_Click(object sender, EventArgs e)
         {
@@ -124,12 +130,9 @@ namespace Project_1
                         i = 1;
                     }
 
-
                     this.dataGridView1.DataSource = read.getTableCAT10();
                     this.dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
                     this.dataGridView1.Columns.Cast<DataGridViewColumn>().ToList().ForEach(f => f.SortMode = DataGridViewColumnSortMode.NotSortable);
-
-
 
                     toggleButton1.Checked = true;
                     toggleButton2.Checked = true;
@@ -141,29 +144,25 @@ namespace Project_1
                     //this.dataGridView1.DataSource = MapCAT10;
                     MapCAT21 = read.getTableCAT21().DefaultView.ToTable(false, "Category", "SAC", "SIC", "Target_ID", "Target_Address", "Track Number", "Mode_3A_Code", "Flight Level", "Position in WGS-84 Co-ordinates", "Time_of_Report_Transmission");
                     //this.dataGridView1.DataSource = MapCAT21;
-
-                    
-
-
                 }
             }
             else
             {
                 MessageBox.Show("Please unlock the table!");
             }
-            
         }
+
 
         public DataTable getMapPointsCAT10()
         {
             return MapCAT10;
         }
+
+
         public DataTable getMapPointsCAT21()
         {
             return MapCAT21;
         }
-
-
 
 
         public bool IsFileLoaded()
@@ -172,7 +171,6 @@ namespace Project_1
             {
                 this.fileloaded = true;
             }
-
 
             return fileloaded;
         }
@@ -291,7 +289,6 @@ namespace Project_1
                         MessageBox.Show("Please unlock the table!");
                         textBox1.Text = "Enter an ID";
                     }
-                    
                 }
                 else
                 {
@@ -354,6 +351,7 @@ namespace Project_1
                 toggleButton1.CheckedChanged += toggleButton1_CheckedChanged;
             }
         }
+
 
         private void toggleButton2_CheckedChanged(object sender, EventArgs e)
         {
@@ -442,10 +440,7 @@ namespace Project_1
                 exception.ShowDialog();
                 toggleButton3.CheckedChanged += toggleButton3_CheckedChanged_1;
             }
-         }
-
-
-
+        }
 
 
         private void iconPictureBox4_MouseEnter(object sender, EventArgs e)
@@ -453,10 +448,12 @@ namespace Project_1
             iconPictureBox4.IconColor = color1;
         }
 
+
         private void iconPictureBox4_MouseLeave(object sender, EventArgs e)
         {
             iconPictureBox4.IconColor = Color.White;
         }
+
 
         private void iconPictureBox4_Click(object sender, EventArgs e)
         {
@@ -553,15 +550,16 @@ namespace Project_1
                 //    //    printDocument.Print();
                 //    //}
                 //}
+
                 if(toggleButton4.Checked == false)
                 {
                     MessageBox.Show("Please select the output format");
                 }
+
                 //if(toggleButton4.Checked == true && toggleButton5.Checked == true)
                 //{
                 //    MessageBox.Show("Please select only one format (.csv or .xml)");
                 //}
-
             }
             else
             {
@@ -576,10 +574,12 @@ namespace Project_1
             iconPictureBox3.IconColor = color1;
         }
 
+
         private void iconPictureBox5_MouseEnter(object sender, EventArgs e)
         {
             iconPictureBox5.IconColor = color1;
         }
+
 
         private void iconPictureBox6_MouseLeave(object sender, EventArgs e)
         {
@@ -589,6 +589,7 @@ namespace Project_1
             }
         }
 
+
         private void iconPictureBox6_MouseEnter(object sender, EventArgs e)
         {
             if (this.dockstatus == false)
@@ -597,15 +598,18 @@ namespace Project_1
             }
         }
 
+
         private void iconPictureBox5_MouseLeave(object sender, EventArgs e)
         {
             iconPictureBox5.IconColor = Color.White;
         }
 
+
         private void iconPictureBox3_MouseLeave(object sender, EventArgs e)
         {
             iconPictureBox3.IconColor = Color.White;
         }
+
 
         private void iconPictureBox3_Click(object sender, EventArgs e)
         {
@@ -629,6 +633,7 @@ namespace Project_1
             }
         }
 
+
         public void togglesrestart()
         {
             toggleButton1.CheckedChanged -= toggleButton1_CheckedChanged;
@@ -643,6 +648,7 @@ namespace Project_1
             this.previous_case = 0;
             this.previous_case2 = 0;
         }
+
 
         private void iconPictureBox5_Click(object sender, EventArgs e)
         {
@@ -664,6 +670,7 @@ namespace Project_1
                 exception.ShowDialog();
             }
         }
+
 
         private void iconPictureBox6_Click(object sender, EventArgs e)
         {
@@ -695,6 +702,7 @@ namespace Project_1
 
         }
 
+
         private void toggleButton6_CheckedChanged(object sender, EventArgs e)
         {
             if (this.dockstatus == false)
@@ -711,6 +719,7 @@ namespace Project_1
                 }
             }
         }
+
 
         private void toggleButton7_CheckedChanged(object sender, EventArgs e)
         {
@@ -729,6 +738,7 @@ namespace Project_1
             }
         }
 
+
         private void toggleButton8_CheckedChanged(object sender, EventArgs e)
         {
             if (this.dockstatus == false)
@@ -745,12 +755,8 @@ namespace Project_1
                 }
             }
         }
-        public bool togglechecker1;
-        public bool togglechecker2;
-        public bool togglechecker3;
-        public bool togglechecker6;
-        public bool togglechecker7;
-        public bool togglechecker8;
+
+        
         private void toggleButton1_Click(object sender, EventArgs e)
         {
             if (this.dockstatus == true)

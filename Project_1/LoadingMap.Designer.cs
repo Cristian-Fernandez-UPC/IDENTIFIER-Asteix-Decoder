@@ -69,6 +69,7 @@
             this.Name = "LoadingMap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LoadingMap";
+            this.Load += new System.EventHandler(this.LoadingMap_Load);
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

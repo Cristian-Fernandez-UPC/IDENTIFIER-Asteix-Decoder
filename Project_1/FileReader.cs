@@ -23,16 +23,18 @@ namespace Project_1
 
         Conversions convertor = new Conversions();
 
-
-
         // TABLE
         public DataTable CAT10_table = new DataTable();       // We create a table that will be fulfilled with all the data needed
         public DataTable CAT21_table = new DataTable();       // We create a table that will be fulfilled with all the data needed
+        public string REPmessage;
+        public string MB_Data_ModeSmessage;
+
 
         public DataTable getTableCAT10()
         {
             return CAT10_table;
         }
+
 
         public DataTable getTableCAT21()
         {
@@ -40,14 +42,12 @@ namespace Project_1
         }
 
 
-        public string REPmessage;
-        public string MB_Data_ModeSmessage;
-
         public FileReader()
         {
             this.Generate_Table_CAT10(); // We generate the columns of the table
             this.Generate_Table_CAT21(); // We generate the columns of the table
         }
+
 
 
         // READING PROCESS
@@ -93,7 +93,6 @@ namespace Project_1
             for (int q = 0; q < hexadecimallist.Count; q++)
             {
                 //hexadecimallist.Count
-                //  EN VEZ DE 3 hexadecimallist.Count
                 string[] arraystring = hexadecimallist[q];
                 int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
 
@@ -112,6 +111,8 @@ namespace Project_1
                 }
             }
         }
+
+
 
         // TABLE GENERATION
         public void Generate_Table_CAT10()
@@ -144,6 +145,7 @@ namespace Project_1
             CAT10_table.Columns.Add("Amplitude of Primary Plot");
             CAT10_table.Columns.Add("Calculated Acceleration");
         }
+
 
         public void Generate_Table_CAT21()
         {
@@ -194,11 +196,7 @@ namespace Project_1
         }
 
 
-
-
-
-
-        // How we will add the information to our table
+        // HOW WE ADD INFORMATION TO OUR TABLE
         public void ADD_Row_Table_CAT10(CAT10 newrow)
         {
             // Excepcions with no data
@@ -486,4 +484,9 @@ namespace Project_1
             CAT21_table.Rows.Add(row);
         }
     }
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
+    //.....................................................................................................................................................................................
 }

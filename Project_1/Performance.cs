@@ -80,11 +80,13 @@ namespace Project_1
         double expected_apron = 0;
         double expected_airbone = 0;
         double expected_stand = 0;
+        public int rest_pid_taxi = 0;
+        public int rest_pid_apron = 0;
+        public int rest_pid_stand = 0;
+        public int rest_pid_airbone = 0;
 
-
-
-
-
+        public bool button_ur = false;
+        public bool button_pid = false;
 
         public Performance()
         {
@@ -416,19 +418,24 @@ namespace Project_1
 
         }
 
+
         private void Performance_Load(object sender, EventArgs e)
         {
 
         }
+
+
         public void getMapPointsCAT10(DataTable MAP)
         {
            this.MapCAT10= MAP;
         }
 
+
         public void getfileloaded(bool file)
         {
             this.fileloaded = file;
         }
+
 
         bool IsPointInPolygon(PointLatLng point, List<PointLatLng> polygon)
         {
@@ -454,15 +461,18 @@ namespace Project_1
             return windingNumber != 0;
         }
 
+
         double IsLeft(PointLatLng a, PointLatLng b, PointLatLng c)
         {
             return (b.Lng - a.Lng) * (c.Lat - a.Lat) - (b.Lat - a.Lat) * (c.Lng - a.Lng);
         }
 
+
         bool IsMarkerInsidePolygon(GMarkerGoogle marker, List<PointLatLng> polygon)
         {
             return IsPointInPolygon(marker.Position, polygon);
         }
+
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
@@ -1000,13 +1010,7 @@ namespace Project_1
             }
         }
 
-        public int rest_pid_taxi = 0;
-        public int rest_pid_apron = 0;
-        public int rest_pid_stand = 0;
-        public int rest_pid_airbone = 0;
-
-        public bool button_ur = false;
-        public bool button_pid = false;
+        
 
         private void iconButton2_Click(object sender, EventArgs e)
         {
@@ -1530,20 +1534,6 @@ namespace Project_1
             {
                 exception.ShowDialog();
             }
-
-
-
-
-
-
-
-
-
-
-
-
-            
-
         }
     }
 }

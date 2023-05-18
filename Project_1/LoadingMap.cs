@@ -16,5 +16,10 @@ namespace Project_1
         {
             InitializeComponent();
         }
+
+        private void LoadingMap_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

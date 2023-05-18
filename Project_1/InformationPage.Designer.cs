@@ -109,7 +109,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(52)))), ((int)(((byte)(75)))));
             this.ClientSize = new System.Drawing.Size(2723, 1950);
             this.Controls.Add(this.iconPictureBox1);
             this.Controls.Add(this.label11);
@@ -119,6 +119,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "InformationPage";
             this.Text = "Information";
+            this.Load += new System.EventHandler(this.InformationPage_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();

@@ -23,6 +23,7 @@ using System.ComponentModel;
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 using PrintDialog = System.Windows.Forms.PrintDialog;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Newtonsoft.Json.Linq;
 
 namespace Project_1
 {
@@ -877,190 +878,45 @@ namespace Project_1
         }
 
 
+        private Dictionary<Point, string> cellContents = new Dictionary<Point, string>();
+
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (dataGridView1.Rows[e.RowIndex].Height < dataGridView1.Rows[e.RowIndex].MinimumHeight)
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                dataGridView1.Rows[e.RowIndex].Height = dataGridView1.Rows[e.RowIndex].MinimumHeight;
-            }
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "Track Status")
-            {
-                string content = e.Value.ToString();
-                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "Track Status" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "Target Report Descriptor" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "Quality Indicators" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "MOPS Version" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "Target Status" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "Aircraft Operational Status" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "Data Ages")
                 {
-                    e.Value = "Click to expand";
-                    e.FormattingApplied = true;
+                    string content = e.Value?.ToString();
+                    if (content != null && content.Length > 5)
+                    {
+                        e.Value = "Click to expand";
+                        e.FormattingApplied = true;
+                    }
                 }
             }
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "Target Report Descriptor")
-            {
-                string content = e.Value.ToString();
-                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
-                {
-                    e.Value = "Click to expand";
-                    e.FormattingApplied = true;
-                }
-            }
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "Quality Indicators")
-            {
-                string content = e.Value.ToString();
-                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
-                {
-                    e.Value = "Click to expand";
-                    e.FormattingApplied = true;
-                }
-            }
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "MOPS Version")
-            {
-                string content = e.Value.ToString();
-                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
-                {
-                    e.Value = "Click to expand";
-                    e.FormattingApplied = true;
-                }
-            }
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "Target Status")
-            {
-                string content = e.Value.ToString();
-                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
-                {
-                    e.Value = "Click to expand";
-                    e.FormattingApplied = true;
-                }
-            }
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "Aircraft Operational Status")
-            {
-                string content = e.Value.ToString();
-                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
-                {
-                    e.Value = "Click to expand";
-                    e.FormattingApplied = true;
-                }
-            }
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "Data Ages")
-            {
-                string content = e.Value.ToString();
-                if (content.Length > 5) // Replace 50 with the maximum length of the content you want to display
-                {
-                    e.Value = "Click to expand";
-                    e.FormattingApplied = true;
-                }
-            }
-
-
         }
 
-        
-        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (cellclick == 0)
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                if (dataGridView1.Columns[e.ColumnIndex].Name == "Track Status")
+                DataGridViewCell clickedCell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                Point cellKey = new Point(e.ColumnIndex, e.RowIndex);
+
+                string content = clickedCell.Value?.ToString();
+                if (content != null && content.Length > 5 && content != "Click to expand")
                 {
-                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    if (content != "Click to expand")
-                    {
-                        // Show the full content of the cell in a message box or a dialog box
-                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
-                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
-                        dataGridView1.Refresh();
-                    }
-                    this.cellclick = 1;
+                    cellContents[cellKey] = content;
+                    MessageBox.Show(content);
+                    dataGridView1.Refresh();
                 }
-
-                if (dataGridView1.Columns[e.ColumnIndex].Name == "Target Report Descriptor")
-                {
-                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    if (content != "Click to expand")
-                    {
-                        // Show the full content of the cell in a message box or a dialog box
-                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
-                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
-                        dataGridView1.Refresh();
-
-                    }
-                    this.cellclick = 1;
-                }
-
-                if (dataGridView1.Columns[e.ColumnIndex].Name == "Quality Indicators")
-                {
-                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    if (content != "Click to expand")
-                    {
-                        // Show the full content of the cell in a message box or a dialog box
-                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
-                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
-                        dataGridView1.Refresh();
-
-                    }
-                    this.cellclick = 1;
-                }
-
-                if (dataGridView1.Columns[e.ColumnIndex].Name == "MOPS Version")
-                {
-                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    if (content != "Click to expand")
-                    {
-                        // Show the full content of the cell in a message box or a dialog box
-                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
-                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
-                        dataGridView1.Refresh();
-
-                    }
-                    this.cellclick = 1;
-                }
-
-                if (dataGridView1.Columns[e.ColumnIndex].Name == "Target Status")
-                {
-                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    if (content != "Click to expand")
-                    {
-                        // Show the full content of the cell in a message box or a dialog box
-                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
-                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
-                        dataGridView1.Refresh();
-
-                    }
-                    this.cellclick = 1;
-                }
-
-                if (dataGridView1.Columns[e.ColumnIndex].Name == "Aircraft Operational Status")
-                {
-                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    if (content != "Click to expand")
-                    {
-                        // Show the full content of the cell in a message box or a dialog box
-                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
-                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
-                        dataGridView1.Refresh();
-
-                    }
-                    this.cellclick = 1;
-                }
-
-                if (dataGridView1.Columns[e.ColumnIndex].Name == "Data Ages")
-                {
-                    string content = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    if (content != "Click to expand")
-                    {
-                        // Show the full content of the cell in a message box or a dialog box
-                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = content;
-                        dataGridView1.CellFormatting -= dataGridView1_CellFormatting;
-                        dataGridView1.Refresh();
-
-                    }
-                    this.cellclick = 1;
-                }
-
-
             }
-            else
-            {
-                dataGridView1.CellFormatting += dataGridView1_CellFormatting;
-                dataGridView1.Refresh();
-                this.cellclick = 0;
-            }
-            
         }
     }
 }

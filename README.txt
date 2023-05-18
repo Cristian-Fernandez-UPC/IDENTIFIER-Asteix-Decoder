@@ -22,18 +22,17 @@ Features:
 Upon opening the program, you will see the main page with the time in the center, and a small menu on the left-hand side 
 that takes you to the selected windows, whether it be the file uploader for .ast files, the map, or the information page.
 
-Screenshot:
-
 On the file uploader page, there is also automatic decoding of Asterix files of category 21 and 10. In addition to 
 displaying all information in a table, there is a filter that can be applied to the table, whether by category, radar, 
 aircraft identifier, and much more. It can also be exported to csv files.
-Screenshot:
 
 On the map page, there is simulation of the position of aircraft on a world map, where you can pause, fast forward, filter, 
 and view information about each flight by hovering over the plane. There is also a detailed visualization of information 
 about each aircraft, including its speed, altitude, and more. Aircraft detected by different systems may have more than 
 one point, differentiating them with different colors for each radar.
-Screenshot:
+
+It can also be calculated on the performance screen, different parameters that will help determine the efficiency of the 
+MLAT radar, such as the Update Rate or the Probability of Identification, both specified in the Eurocade ED-117 document.
 
 
 System requirements:
